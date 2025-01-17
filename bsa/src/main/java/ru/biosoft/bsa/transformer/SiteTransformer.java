@@ -19,8 +19,8 @@ import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.StrandType;
 import ru.biosoft.util.TextUtil;
 import ru.biosoft.util.bean.StaticDescriptor;
-import biouml.standard.type.DatabaseReference;
-import biouml.standard.type.Publication;
+import ru.biosoft.type.DatabaseReference;
+import ru.biosoft.type.Publication;
 
 import com.developmentontheedge.beans.DynamicProperty;
 

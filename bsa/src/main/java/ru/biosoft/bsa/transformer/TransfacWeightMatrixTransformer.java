@@ -23,7 +23,7 @@ import ru.biosoft.bsa.Const;
 import ru.biosoft.bsa.Nucleotide15LetterAlphabet;
 import ru.biosoft.bsa.TranscriptionFactor;
 import ru.biosoft.bsa.analysis.FrequencyMatrix;
-import biouml.standard.type.Publication;
+import ru.biosoft.type.Publication;
 
 
 /**

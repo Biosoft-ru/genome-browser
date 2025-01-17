@@ -26,7 +26,6 @@ import gnu.trove.list.array.TIntArrayList;
 import kotlin.Pair;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.Repository;
 import ru.biosoft.access.core.VectorDataCollection;
@@ -35,6 +34,7 @@ import ru.biosoft.bsa.Sequence;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.StrandType;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.TempFiles;
 
 //Not thread safe, only Track methods are thread safe

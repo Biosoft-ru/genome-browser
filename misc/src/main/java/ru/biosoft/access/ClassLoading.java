@@ -1,32 +1,21 @@
 package ru.biosoft.access;
 
 import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.jar.Manifest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-
-import com.developmentontheedge.application.Application;
-
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.exception.Assert;
-import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.exception.ExceptionRegistry;
+import ru.biosoft.exception.InternalException;
 import ru.biosoft.exception.LoggedClassCastException;
 import ru.biosoft.exception.LoggedClassNotFoundException;
 import ru.biosoft.util.TextUtil;
@@ -37,13 +26,13 @@ public class ClassLoading
 
     private static final Map<String, String[]> movedClasses = new HashMap<>();
 
-    private static final Map<String, Bundle> packageToBundle = new ConcurrentHashMap<>();
+    //private static final Map<String, Bundle> packageToBundle = new ConcurrentHashMap<>();
 
     static {
         initBundles();
-        initMovedClasses();
     }
-    private static final ClassLoader classLoader = new ClassLoader(CollectionFactoryUtils.class.getClassLoader())
+    //private static final ClassLoader classLoader = new ClassLoader(CollectionFactoryUtils.class.getClassLoader())
+    private static final ClassLoader classLoader = new ClassLoader(ClassLoading.class.getClassLoader())
     {
         @Override
         protected Class<?> findClass(String name) throws ClassNotFoundException
@@ -61,60 +50,60 @@ public class ClassLoading
 
     private static void initBundles()
     {
-        Bundle bundle = Platform.getBundle( "ru.biosoft.access" );
-        if(bundle == null) // no bundles: likely launched without OSGi (as unit test?)
-            return;
-        Bundle[] bundles = bundle.getBundleContext().getBundles();
-        String bundleInfo = StreamEx.of( bundles )
-                .map( b -> "|- " + b.getSymbolicName() ).mapLast( name -> "\\" + name.substring( 1 ) )
-                .joining( "\n", "Loaded bundles:\n", "" );
-        log.config( bundleInfo );
-        for(Bundle b : bundles)
-        {
-            URL resource = b.getResource( "META-INF/MANIFEST.MF" );
-            if(resource == null)
-                continue;
-            try(InputStream is = resource.openStream())
-            {
-                Manifest m = new Manifest(is);
-                String value = m.getMainAttributes().getValue( "Export-Package" );
-                if(value != null)
-                {
-                    for(String packageName : OsgiManifestParser.getStrings( value ))
-                    {
-                        Bundle oldBundle = packageToBundle.put( packageName, b );
-                        if(oldBundle != null && oldBundle != b && !packageName.startsWith( "org.eclipse.core" ))
-                        {
-                            log.warning( "Package "+packageName+" exported both from "+oldBundle.getSymbolicName()+" and "+b.getSymbolicName() );
-                        }
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                log.log(Level.SEVERE,  "Exception parsing manifest for bundle "+b.getSymbolicName(), ex );
-            }
-        }
-        log.config( "Found "+packageToBundle.size()+" exported packages" );
+        //        Bundle bundle = Platform.getBundle( "ru.biosoft.access" );
+        //        if(bundle == null) // no bundles: likely launched without OSGi (as unit test?)
+        //            return;
+        //        Bundle[] bundles = bundle.getBundleContext().getBundles();
+        //        String bundleInfo = StreamEx.of( bundles )
+        //                .map( b -> "|- " + b.getSymbolicName() ).mapLast( name -> "\\" + name.substring( 1 ) )
+        //                .joining( "\n", "Loaded bundles:\n", "" );
+        //        log.config( bundleInfo );
+        //        for(Bundle b : bundles)
+        //        {
+        //            URL resource = b.getResource( "META-INF/MANIFEST.MF" );
+        //            if(resource == null)
+        //                continue;
+        //            try(InputStream is = resource.openStream())
+        //            {
+        //                Manifest m = new Manifest(is);
+        //                String value = m.getMainAttributes().getValue( "Export-Package" );
+        //                if(value != null)
+        //                {
+        //                    for(String packageName : OsgiManifestParser.getStrings( value ))
+        //                    {
+        //                        Bundle oldBundle = packageToBundle.put( packageName, b );
+        //                        if(oldBundle != null && oldBundle != b && !packageName.startsWith( "org.eclipse.core" ))
+        //                        {
+        //                            log.warning( "Package "+packageName+" exported both from "+oldBundle.getSymbolicName()+" and "+b.getSymbolicName() );
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //            catch(Exception ex)
+        //            {
+        //                log.log(Level.SEVERE,  "Exception parsing manifest for bundle "+b.getSymbolicName(), ex );
+        //            }
+        //        }
+        //        log.config( "Found "+packageToBundle.size()+" exported packages" );
     }
 
-    private static void initMovedClasses()
-    {
-        IExtensionRegistry registry = Application.getExtensionRegistry();
-        if( registry == null )
-            return;
-        IConfigurationElement[] extensions = registry.getConfigurationElementsFor("ru.biosoft.access.movedClass");
-        if( extensions == null )
-            return;
-        for( IConfigurationElement extension : extensions )
-        {
-            String pluginId = extension.getNamespaceIdentifier();
-            String name = extension.getAttribute("name").trim();
-            String[] descriptor = new String[] {pluginId, name};
-            for(String oldName: TextUtil.split(extension.getAttribute("oldNames"), ','))
-                movedClasses.put(oldName.trim(), descriptor);
-        }
-    }
+    //    private static void initMovedClasses()
+    //    {
+    //        IExtensionRegistry registry = Application.getExtensionRegistry();
+    //        if( registry == null )
+    //            return;
+    //        IConfigurationElement[] extensions = registry.getConfigurationElementsFor("ru.biosoft.access.movedClass");
+    //        if( extensions == null )
+    //            return;
+    //        for( IConfigurationElement extension : extensions )
+    //        {
+    //            String pluginId = extension.getNamespaceIdentifier();
+    //            String name = extension.getAttribute("name").trim();
+    //            String[] descriptor = new String[] {pluginId, name};
+    //            for(String oldName: TextUtil.split(extension.getAttribute("oldNames"), ','))
+    //                movedClasses.put(oldName.trim(), descriptor);
+    //        }
+    //    }
     @SuppressWarnings ( "unchecked" )
     static public @Nonnull <T> Class<? extends T> loadSubClass(@Nonnull String className, @Nonnull Class<T> superClass)
             throws LoggedClassNotFoundException, LoggedClassCastException
@@ -140,30 +129,36 @@ public class ClassLoading
      */
     static public @Nonnull Class<?> loadClass(@Nonnull String className) throws LoggedClassNotFoundException
     {
-        Assert.notNull("className", className);
+        if( className == null )
+            throw new InternalException("Null encountered where non-null expected: className");
         String[] newDescriptor = movedClasses.get(className);
         if(newDescriptor != null)
             return loadClass(newDescriptor[1], newDescriptor[0]);
 
-        String plugin = getPluginForClass( className );
-        if(plugin == null)
-        {
-            Class<?> result = tryLoad(className, null);
-            if(result != null)
-                return result;
-            throw new LoggedClassNotFoundException( className, null );
-        }
-        try
-        {
-            Bundle bundle = Platform.getBundle(plugin);
-            Class<?> clazz = bundle.loadClass(className);
-            clazz.getConstructors();
-            return clazz;
-        }
-        catch( Throwable t )
-        {
-            throw new LoggedClassNotFoundException( t, className, plugin );
-        }
+        //        String plugin = getPluginForClass( className );
+        //        if(plugin == null)
+        //        {
+        //            Class<?> result = tryLoad(className, null);
+        //            if(result != null)
+        //                return result;
+        //            throw new LoggedClassNotFoundException( className, null );
+        //        }
+        //        try
+        //        {
+        //            Bundle bundle = Platform.getBundle(plugin);
+        //            Class<?> clazz = bundle.loadClass(className);
+        //            clazz.getConstructors();
+        //            return clazz;
+        //        }
+        //        catch( Throwable t )
+        //        {
+        //            throw new LoggedClassNotFoundException( t, className, plugin );
+        //        }
+
+        Class<?> result = tryLoad(className, null);
+        if( result != null )
+            return result;
+        throw new LoggedClassNotFoundException(className, null);
     }
 
     /**
@@ -178,24 +173,24 @@ public class ClassLoading
             pluginNames = newDescriptor[0];
         }
         Class<?> c = tryLoad(className, null);
-        if( c == null )
-        {
-            Set<String> plugins = getPluginList(pluginNames);
-            for( String pluginId : plugins )
-            {
-                c = loadClassFromPlugin( className, pluginId );
-                if(c != null)
-                    break;
-            }
-            if(c == null)
-            {
-                String pluginForClass = getPluginForClass( className );
-                if(pluginForClass != null)
-                    c = loadClassFromPlugin( className, pluginForClass );
-                if(c != null)
-                    log.warning( "Class "+className+" was requested from plugins "+pluginNames+"; but actually it's located in "+pluginForClass );
-            }
-        }
+        //        if( c == null )
+        //        {
+        //            Set<String> plugins = getPluginList(pluginNames);
+        //            for( String pluginId : plugins )
+        //            {
+        //                c = loadClassFromPlugin( className, pluginId );
+        //                if(c != null)
+        //                    break;
+        //            }
+        //            if(c == null)
+        //            {
+        //                String pluginForClass = getPluginForClass( className );
+        //                if(pluginForClass != null)
+        //                    c = loadClassFromPlugin( className, pluginForClass );
+        //                if(c != null)
+        //                    log.warning( "Class "+className+" was requested from plugins "+pluginNames+"; but actually it's located in "+pluginForClass );
+        //            }
+        //        }
 
         if( c == null )
             throw new LoggedClassNotFoundException(className, pluginNames);
@@ -212,31 +207,31 @@ public class ClassLoading
         return c;
     }
 
-    private static Class<?> loadClassFromPlugin(String className, String pluginId)
-    {
-        try
-        {
-            Bundle bundle = Platform.getBundle(pluginId);
-            if( bundle != null )
-            {
-                return bundle.loadClass(className);
-            }
-            else
-            {
-                if(!SecurityManager.isTestMode())
-                    log.log(Level.SEVERE, "Plugin '" + pluginId + "' is necessary for class '" + className + "'");
-            }
-        }
-        catch( ClassNotFoundException | NoClassDefFoundError e )
-        {
-            // just try another plugin
-        }
-        catch( Throwable t )
-        {
-            throw new LoggedClassNotFoundException(t, className, pluginId);
-        }
-        return null;
-    }
+    //    private static Class<?> loadClassFromPlugin(String className, String pluginId)
+    //    {
+    //        try
+    //        {
+    //            Bundle bundle = Platform.getBundle(pluginId);
+    //            if( bundle != null )
+    //            {
+    //                return bundle.loadClass(className);
+    //            }
+    //            else
+    //            {
+    //                if(!SecurityManager.isTestMode())
+    //                    log.log(Level.SEVERE, "Plugin '" + pluginId + "' is necessary for class '" + className + "'");
+    //            }
+    //        }
+    //        catch( ClassNotFoundException | NoClassDefFoundError e )
+    //        {
+    //            // just try another plugin
+    //        }
+    //        catch( Throwable t )
+    //        {
+    //            throw new LoggedClassNotFoundException(t, className, pluginId);
+    //        }
+    //        return null;
+    //    }
 
     private static Class<?> tryLoad(String className, String pluginId)
     {
@@ -251,74 +246,74 @@ public class ClassLoading
                 //log.log( Level.SEVERE, "Class '" + className + "' not found (no plugin)", e );
             }
         }
-        else
-        {
-            Bundle bundle = Platform.getBundle( pluginId );
-            if( bundle != null )
-            {
-                try
-                {
-                    packageToBundle.putIfAbsent( pluginId, bundle );
-                    return bundle.loadClass( className );
-                }
-                catch( ClassNotFoundException e )
-                {
-                    log.log(Level.SEVERE, "Class '" + className + "' not found in " + pluginId + ", reason = " + e.getMessage(), e );
-                }
-            }
-        }
+        //        else
+        //        {
+        //            Bundle bundle = Platform.getBundle( pluginId );
+        //            if( bundle != null )
+        //            {
+        //                try
+        //                {
+        //                    packageToBundle.putIfAbsent( pluginId, bundle );
+        //                    return bundle.loadClass( className );
+        //                }
+        //                catch( ClassNotFoundException e )
+        //                {
+        //                    log.log(Level.SEVERE, "Class '" + className + "' not found in " + pluginId + ", reason = " + e.getMessage(), e );
+        //                }
+        //            }
+        //        }
         return null;
     }
 
     /**
      *  Get ClassLoader for class
      */
-    static public ClassLoader getClassLoader(String className, String pluginNames)
-    {
-        Class<?> c = null;
-        for( String pluginId : getPluginList(pluginNames) )
-        {
-            try
-            {
-                Bundle bundle = Platform.getBundle(pluginId);
-                if( bundle != null )
-                {
-                    ClassLoader cl = new BundleDelegatingClassLoader(bundle, null);
-                    c = cl.loadClass(className);
-                    if( c != null )
-                    {
-                        return cl;
-                    }
-                }
-            }
-            catch( Throwable t )
-            {
-                //just try another plugin
-            }
-        }
-        return null;
-    }
+    //    static public ClassLoader getClassLoader(String className, String pluginNames)
+    //    {
+    //        Class<?> c = null;
+    //        for( String pluginId : getPluginList(pluginNames) )
+    //        {
+    //            try
+    //            {
+    //                Bundle bundle = Platform.getBundle(pluginId);
+    //                if( bundle != null )
+    //                {
+    //                    ClassLoader cl = new BundleDelegatingClassLoader(bundle, null);
+    //                    c = cl.loadClass(className);
+    //                    if( c != null )
+    //                    {
+    //                        return cl;
+    //                    }
+    //                }
+    //            }
+    //            catch( Throwable t )
+    //            {
+    //                //just try another plugin
+    //            }
+    //        }
+    //        return null;
+    //    }
 
     static public ClassLoader getClassLoader(Class<?> clazz)
     {
         String className = clazz.getName();
-        Class<?> c = null;
-        try
-        {
-            Bundle bundle = Platform.getBundle(getPluginForClass(className));
-            if( bundle != null )
-            {
-                ClassLoader cl = new BundleDelegatingClassLoader(bundle, null);
-                c = cl.loadClass(className);
-                if( c != null )
-                {
-                    return cl;
-                }
-            }
-        }
-        catch( Throwable t )
-        {
-        }
+        //        Class<?> c = null;
+        //        try
+        //        {
+        //            Bundle bundle = Platform.getBundle(getPluginForClass(className));
+        //            if( bundle != null )
+        //            {
+        //                ClassLoader cl = new BundleDelegatingClassLoader(bundle, null);
+        //                c = cl.loadClass(className);
+        //                if( c != null )
+        //                {
+        //                    return cl;
+        //                }
+        //            }
+        //        }
+        //        catch( Throwable t )
+        //        {
+        //        }
         return getClassLoader();
     }
 
@@ -358,7 +353,8 @@ public class ClassLoading
     public static String getPluginForClass(String className)
     {
         // First try plugins which names are package name substring
-        Assert.notNull("className", className);
+        if( className == null )
+            throw new InternalException("Null encountered where non-null expected: className");
         int pos = className.lastIndexOf( '.' );
         if(pos == -1)
         {
@@ -378,11 +374,11 @@ public class ClassLoading
             return null;
         }
         String packageName = className.substring( 0, pos );
-        Bundle b = packageToBundle.get( packageName );
-        if(b != null)
-            return b.getSymbolicName();
-        if(SecurityManager.isTestMode()) // no bundles in tests
-            return null;
+        //        Bundle b = packageToBundle.get( packageName );
+        //        if(b != null)
+        //            return b.getSymbolicName();
+        //        if(SecurityManager.isTestMode()) // no bundles in tests
+        //            return null;
         //TODO: think about better solution.
         // We do not log warning, since java.lang classes are loaded automatically
         if( !packageName.startsWith( "java.lang" ) )
@@ -426,14 +422,14 @@ public class ClassLoading
     public static URL getResourceURL(Class<?> baseClass, String resource)
     {
         URL url = null;
-        try
-        {
-            long id = Platform.getBundle(getPluginForClass(baseClass.getName())).getBundleId();
-            url = new URL("bundleresource", String.valueOf(id), 0, resource.replaceFirst("\\/[^\\/]+$", "/"));
-        }
-        catch( Exception e )
-        {
-        }
+        //        try
+        //        {
+        //            long id = Platform.getBundle(getPluginForClass(baseClass.getName())).getBundleId();
+        //            url = new URL("bundleresource", String.valueOf(id), 0, resource.replaceFirst("\\/[^\\/]+$", "/"));
+        //        }
+        //        catch( Exception e )
+        //        {
+        //        }
         if( url == null )
             url = getClassLoader(baseClass).getResource(resource.replaceFirst("\\/[^\\/]+$", "/"));
         return url;

@@ -16,8 +16,8 @@ import ru.biosoft.bsa.Const;
 import ru.biosoft.bsa.TransfacTranscriptionFactor;
 import ru.biosoft.util.TextUtil;
 import ru.biosoft.util.bean.StaticDescriptor;
-import biouml.standard.type.DatabaseReference;
-import biouml.standard.type.Publication;
+import ru.biosoft.type.DatabaseReference;
+import ru.biosoft.type.Publication;
 
 /**
  * Converts {@link Entry} to the {@link TransfacTranscriptionFactor} and back

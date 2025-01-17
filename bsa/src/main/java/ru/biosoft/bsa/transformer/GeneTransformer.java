@@ -9,9 +9,9 @@ import one.util.streamex.StreamEx;
 
 import com.developmentontheedge.beans.DynamicProperty;
 
-import biouml.standard.type.DatabaseReference;
-import biouml.standard.type.Gene;
-import biouml.standard.type.Publication;
+import ru.biosoft.type.DatabaseReference;
+import ru.biosoft.type.Gene;
+import ru.biosoft.type.Publication;
 import ru.biosoft.access.Entry;
 import ru.biosoft.bsa.Const;
 import ru.biosoft.util.TextUtil;

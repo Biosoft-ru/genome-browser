@@ -20,7 +20,6 @@ import com.google.common.collect.Lists;
 
 import kotlin.Pair;
 import ru.biosoft.access.ClassLoading;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Repository;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
@@ -29,6 +28,7 @@ import ru.biosoft.access.core.VectorDataCollection;
 import ru.biosoft.access.security.Permission;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.WithSite;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.LazyValue;
 import ru.biosoft.util.TempFiles;
 

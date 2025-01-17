@@ -8,11 +8,11 @@ import javax.annotation.Nonnull;
 import com.developmentontheedge.beans.annot.PropertyName;
 
 import ru.biosoft.access.core.DataCollection;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.RepositoryException;
 import ru.biosoft.access.core.ClassIcon;
 import ru.biosoft.bsa.view.TrackViewBuilder;
+import ru.biosoft.util.DataCollectionUtils;
 
 /**
  * Base interface for tracks

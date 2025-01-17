@@ -10,7 +10,6 @@ import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementImporter;
 import ru.biosoft.access.Repository;
@@ -18,6 +17,7 @@ import ru.biosoft.access.security.Permission;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.importer.TrackImportProperties;
 import ru.biosoft.jobcontrol.FunctionJobControl;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.TempFiles;
 import ru.biosoft.util.TextUtil;

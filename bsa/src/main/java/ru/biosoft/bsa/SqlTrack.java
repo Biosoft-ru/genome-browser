@@ -33,7 +33,6 @@ import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
 
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.SqlDataInfo;
 import ru.biosoft.access.core.AbstractDataCollection;
 import ru.biosoft.access.core.CloneableDataElement;
@@ -63,6 +62,7 @@ import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.exception.LoggedException;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.BeanUtil;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.ListUtil;
 import ru.biosoft.util.TextUtil;

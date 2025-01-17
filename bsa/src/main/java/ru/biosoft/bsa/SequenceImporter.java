@@ -16,7 +16,6 @@ import com.developmentontheedge.beans.annot.PropertyName;
 
 import one.util.streamex.EntryStream;
 import ru.biosoft.access.CollectionFactoryUtils;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.EntryCollection;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.JDBM2Index;
@@ -33,6 +32,7 @@ import ru.biosoft.bsa.transformer.FastaTransformer;
 import ru.biosoft.bsa.transformer.FastqTransformer;
 import ru.biosoft.bsa.transformer.GenbankTransformer;
 import ru.biosoft.jobcontrol.FunctionJobControl;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.bean.BeanInfoEx2;
 
 public class SequenceImporter implements DataElementImporter

@@ -6,8 +6,8 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.exception.LoggedException;
+import ru.biosoft.type.Species;
 import ru.biosoft.bsa.TrackUtils;
-import biouml.standard.type.Species;
 
 public class SequencesDatabaseInfo
 {

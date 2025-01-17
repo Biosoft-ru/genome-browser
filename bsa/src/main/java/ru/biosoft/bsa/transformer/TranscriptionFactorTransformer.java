@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import ru.biosoft.access.CollectionFactoryUtils;
-import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.Repository;
@@ -19,6 +18,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.TransformedDataCollection;
 import ru.biosoft.bsa.TranscriptionFactor;
+import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.TextUtil;
 
