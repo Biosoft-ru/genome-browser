@@ -11,6 +11,7 @@ import gnu.trove.list.array.TDoubleArrayList;
 import one.util.streamex.DoubleStreamEx;
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.CollectionFactoryUtils;
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.Repository;
@@ -31,7 +32,6 @@ import ru.biosoft.bsa.analysis.LogOddsWeightMatrixModel;
 import ru.biosoft.bsa.analysis.LogWeightMatrixModel;
 import ru.biosoft.bsa.analysis.MatchSiteModel;
 import ru.biosoft.bsa.analysis.WeightMatrixModel;
-import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.TextUtil;
 

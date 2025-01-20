@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import ru.biosoft.type.DatabaseReference;
-import ru.biosoft.type.Publication;
+import biouml.standard.type.DatabaseReference;
+import biouml.standard.type.Publication;
 import ru.biosoft.access.core.AbstractTransformer;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;

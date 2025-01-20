@@ -12,6 +12,7 @@ import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.access.core.ClassIcon;
 import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
+
 import ru.biosoft.util.bean.StaticDescriptor;
 
 import com.developmentontheedge.beans.DynamicProperty;

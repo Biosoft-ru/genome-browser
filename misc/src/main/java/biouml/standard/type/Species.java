@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.lang.StringEscapeUtils;
+//import org.apache.commons.lang.StringEscapeUtils;
 
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.core.DataCollection;
@@ -16,7 +16,7 @@ import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.ClassIcon;
-import ru.biosoft.plugins.jsconsistent.JavaScriptConsistent;
+//import ru.biosoft.plugins.jsconsistent.JavaScriptConsistent;
 
 /**
  * General definition for 'Species' concept.
@@ -27,7 +27,10 @@ import ru.biosoft.plugins.jsconsistent.JavaScriptConsistent;
  * @pending ru.biosoft.access.core.DataElement.origin should refer to species classification.
  */
 @ClassIcon( "resources/species.gif" )
-public class Species extends BaseSupport implements JavaScriptConsistent
+
+//TODO: commented, JavaScriptConsistent
+//public class Species extends BaseSupport implements JavaScriptConsistent
+public class Species extends BaseSupport
 {
     private static final long serialVersionUID = 1L;
     public static final DataElementPath SPECIES_PATH = DataElementPath.create("databases/Utils/Species");
@@ -195,9 +198,10 @@ public class Species extends BaseSupport implements JavaScriptConsistent
         throw new InvalidObjectException( "Proxy required" );
     }
 
-    @Override
-    public String toJaveScriptString()
-    {
-        return "'" + StringEscapeUtils.escapeJava( getName() ) + "'";
-    }
+    //TODO: commented, JavaScriptConsistent
+    //    @Override
+    //    public String toJaveScriptString()
+    //    {
+    //        return "'" + StringEscapeUtils.escapeJava( getName() ) + "'";
+    //    }
 }

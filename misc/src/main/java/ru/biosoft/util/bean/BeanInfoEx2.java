@@ -8,11 +8,11 @@ import com.developmentontheedge.beans.BeanInfoEx;
 import com.developmentontheedge.beans.PropertyDescriptorEx;
 import com.developmentontheedge.beans.web.HtmlPropertyInspector;
 
+import ru.biosoft.access.biohub.ReferenceType;
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.repository.DataElementPathEditor;
 import ru.biosoft.exception.ExceptionRegistry;
-import ru.biosoft.util.DataElementPathEditor;
 import ru.biosoft.util.OptionEx;
-import ru.biosoft.util.ReferenceType;
 
 /**
  * @author lan

@@ -2,11 +2,11 @@ package ru.biosoft.bsa.access;
 
 import java.util.Properties;
 
+import biouml.standard.type.Species;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.exception.LoggedException;
-import ru.biosoft.type.Species;
 import ru.biosoft.bsa.TrackUtils;
 
 public class SequencesDatabaseInfo

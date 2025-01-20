@@ -1,6 +1,7 @@
 package ru.biosoft.bsa.transformer;
 
 import java.io.BufferedReader;
+
 import ru.biosoft.access.Entry;
 import ru.biosoft.bsa.AnnotatedSequence;
 import ru.biosoft.bsa.Sequence;

@@ -38,10 +38,11 @@ public class MessageBundle extends ListResourceBundle
     String[] proteinModifications = {"none", "phosphorylated", "fatty_acylation", "prenylation", "cholesterolation", "ubiquitination",
             "sumolation", "glycation", "gpi_anchor", "unknown"};
 
-    String[] specieRoles = {SpecieReference.REACTANT, SpecieReference.PRODUCT, SpecieReference.MODIFIER};
-    String[] modifierActions = {SpecieReference.ACTION_CATALYST, SpecieReference.ACTION_INHIBITOR, SpecieReference.ACTION_SWITCH_ON,
-            SpecieReference.ACTION_SWITCH_OFF};
-    String[] participationTypes = {Relation.PARTICIPATION_DIRECT, Relation.PARTICIPATION_INDIRECT, Relation.PARTICIPATION_UNKNOWN};
+    //TODO: commented, not copied types
+    //    String[] specieRoles = {SpecieReference.REACTANT, SpecieReference.PRODUCT, SpecieReference.MODIFIER};
+    //    String[] modifierActions = {SpecieReference.ACTION_CATALYST, SpecieReference.ACTION_INHIBITOR, SpecieReference.ACTION_SWITCH_ON,
+    //            SpecieReference.ACTION_SWITCH_OFF};
+    //    String[] participationTypes = {Relation.PARTICIPATION_DIRECT, Relation.PARTICIPATION_INDIRECT, Relation.PARTICIPATION_UNKNOWN};
 
     /** @pending move in some utility class */
     static String makeHtmlList(String[] values)
@@ -387,32 +388,33 @@ public class MessageBundle extends ListResourceBundle
             {"PN_RELATION_TYPE", "Relation type"},
             {"PD_RELATION_TYPE", "Indicates role of relation."},
 
-            {"PARTICIPATION_TYPES", participationTypes},
-            {"PN_PARTICIPATION_TYPE", "Participation"},
-            {
-                    "PD_PARTICIPATION_TYPE",
-                    "Specifies whether the element directly involved into relation.<br>" + "Possible values are: "
-                            + makeHtmlList(participationTypes)},
-
-            {"CN_SPECIE_REFERENCE", "Specie reference"},
-            {"CD_SPECIE_REFERENCE", "Reference to specie involved into the reaction, its role and stoichiometry."},
-
-            {"PN_SPECIE_NAME", "Variable"},
-            {"PD_SPECIE_NAME", "Name of specie involved into the reaction."},
-
-            {"SPECIE_ROLES", specieRoles},
-            {"PN_SPECIE_ROLE", "Role"},
-            {"PD_SPECIE_ROLE", "Role of specie in the reaction.<br>" + "Possible values are: " + makeHtmlList(specieRoles)},
-
-            {"PN_STOICHIOMETRY", "Stoichiometry"},
-            {"PD_STOICHIOMETRY", "Specifies the involved molecule stoichiometry."},
-
-            {"MODIFIER_ACTIONS", modifierActions},
-            {"PN_MODIFIER_ACTION", "Modifier action"},
-            {
-                    "PD_MODIFIER_ACTION",
-                    "Specifies the modifier action. <br>" + "This value is needed only if role is MODIFIER, othervise it should be empty."
-                            + "Possible values are: " + makeHtmlList(modifierActions)},
+            //TODO: commented, not copied types
+            //            {"PARTICIPATION_TYPES", participationTypes},
+            //            {"PN_PARTICIPATION_TYPE", "Participation"},
+            //            {
+            //                    "PD_PARTICIPATION_TYPE",
+            //                    "Specifies whether the element directly involved into relation.<br>" + "Possible values are: "
+            //                            + makeHtmlList(participationTypes)},
+            //
+            //            {"CN_SPECIE_REFERENCE", "Specie reference"},
+            //            {"CD_SPECIE_REFERENCE", "Reference to specie involved into the reaction, its role and stoichiometry."},
+            //
+            //            {"PN_SPECIE_NAME", "Variable"},
+            //            {"PD_SPECIE_NAME", "Name of specie involved into the reaction."},
+            //
+            //            {"SPECIE_ROLES", specieRoles},
+            //            {"PN_SPECIE_ROLE", "Role"},
+            //            {"PD_SPECIE_ROLE", "Role of specie in the reaction.<br>" + "Possible values are: " + makeHtmlList(specieRoles)},
+            //
+            //            {"PN_STOICHIOMETRY", "Stoichiometry"},
+            //            {"PD_STOICHIOMETRY", "Specifies the involved molecule stoichiometry."},
+            //
+            //            {"MODIFIER_ACTIONS", modifierActions},
+            //            {"PN_MODIFIER_ACTION", "Modifier action"},
+            //            {
+            //                    "PD_MODIFIER_ACTION",
+            //                    "Specifies the modifier action. <br>" + "This value is needed only if role is MODIFIER, othervise it should be empty."
+            //                            + "Possible values are: " + makeHtmlList(modifierActions)},
 
             {"CN_KINETIC_TYPE", "Kinetic type"},
             {"CD_KINETIC_TYPE", "Reaction kinetic type"},

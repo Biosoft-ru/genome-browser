@@ -8,9 +8,8 @@ import java.util.Properties;
 
 import javax.annotation.Nonnull;
 
-import ru.biosoft.type.Gene;
-import ru.biosoft.type.Species;
-import ru.biosoft.type.Transcript;
+import biouml.standard.type.Gene;
+import biouml.standard.type.Species;
 import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.core.DataCollection;

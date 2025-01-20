@@ -15,7 +15,8 @@ import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
 
 import one.util.streamex.EntryStream;
-import ru.biosoft.access.CollectionFactoryUtils;
+//import ru.biosoft.access.CollectionFactoryUtils;
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.EntryCollection;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.JDBM2Index;
@@ -24,15 +25,15 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementImporter;
-import ru.biosoft.access.generic.GenericDataCollection;
-import ru.biosoft.access.security.SecurityManager;
+import ru.biosoft.access.core.DataElementPath;
+//import ru.biosoft.access.generic.GenericDataCollection;
+//import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.bsa.transformer.EmblTransformer;
 import ru.biosoft.bsa.transformer.FastaSequenceCollection;
 import ru.biosoft.bsa.transformer.FastaTransformer;
 import ru.biosoft.bsa.transformer.FastqTransformer;
 import ru.biosoft.bsa.transformer.GenbankTransformer;
 import ru.biosoft.jobcontrol.FunctionJobControl;
-import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.bean.BeanInfoEx2;
 
 public class SequenceImporter implements DataElementImporter
@@ -86,16 +87,24 @@ public class SequenceImporter implements DataElementImporter
 
         DataElement result = createElement( parent, elementName, file, format, importerProperties );
         
-        CollectionFactoryUtils.save(result);
+        //TODO: commented, CollectionFactoryUtils
+        //CollectionFactoryUtils.save(result);
+        DataElementPath.create(result).save(result);
+
         //result element become invalid in GenericDataCollection cache after put since file is changed
         //TODO: remove from cache in proper place, when file is copied
-        DataCollection<?> primaryParent = (DataCollection<?>)SecurityManager.runPrivileged( () -> {
-            return DataCollectionUtils.fetchPrimaryCollectionPrivileged( (DataCollection<?>)parent );
-        } );
-        if( primaryParent instanceof GenericDataCollection )
-        {
-            ( (GenericDataCollection)primaryParent ).removeFromCache( result.getName() );
-        }
+
+        //TODO: commented, SecurityManager
+        //        DataCollection<?> primaryParent = (DataCollection<?>)SecurityManager.runPrivileged( () -> {
+        //            return DataCollectionUtils.fetchPrimaryCollectionPrivileged( (DataCollection<?>)parent );
+        //        } );
+
+        DataCollection<?> primaryParent = DataCollectionUtils.fetchPrimaryCollectionPrivileged((DataCollection<?>) parent);
+        //TODO: commented, GenericDataCollection
+        //        if( primaryParent instanceof GenericDataCollection )
+        //        {
+        //            ( (GenericDataCollection)primaryParent ).removeFromCache( result.getName() );
+        //        }
 
         if( jobControl != null )
         {

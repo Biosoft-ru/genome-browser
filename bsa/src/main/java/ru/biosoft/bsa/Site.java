@@ -4,9 +4,9 @@ package ru.biosoft.bsa;
 import java.beans.PropertyDescriptor;
 
 import com.developmentontheedge.beans.DynamicPropertySet;
+import com.developmentontheedge.beans.annot.PropertyName;
 
 import ru.biosoft.access.core.DataElement;
-import com.developmentontheedge.beans.annot.PropertyName;
 import ru.biosoft.util.bean.StaticDescriptor;
 
 /**

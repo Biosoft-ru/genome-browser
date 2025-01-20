@@ -39,6 +39,7 @@ import com.developmentontheedge.beans.model.ComponentModel;
 import com.developmentontheedge.beans.model.Property;
 
 import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.support.SerializableAsText;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.exception.LoggedClassNotFoundException;
 import ru.biosoft.util.bean.JSONBean;

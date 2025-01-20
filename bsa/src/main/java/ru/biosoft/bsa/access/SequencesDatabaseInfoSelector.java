@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import com.developmentontheedge.beans.BeanInfoConstants;
 
-import ru.biosoft.type.Species;
+import biouml.standard.type.Species;
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;

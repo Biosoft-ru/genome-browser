@@ -7,8 +7,8 @@ import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.biohub.ReferenceTypeRegistry;
 import ru.biosoft.bsa.classification.ClassificationUnit;
 import com.developmentontheedge.beans.annot.PropertyName;
-import ru.biosoft.type.DatabaseReference;
-import ru.biosoft.type.Publication;
+import biouml.standard.type.DatabaseReference;
+import biouml.standard.type.Publication;
 
 /**
  *

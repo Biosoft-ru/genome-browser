@@ -31,16 +31,17 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Repository;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.access.security.Permission;
 import ru.biosoft.bsa.GenomeSelector.GenomeSelectorTrackUpdater;
 import ru.biosoft.bsa.view.BamTrackViewBuilder;
 import ru.biosoft.bsa.view.TrackViewBuilder;
-import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ListUtil;
 import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
+
 import ru.biosoft.util.bean.StaticDescriptor;
 
 import com.developmentontheedge.beans.BeanInfoEx;

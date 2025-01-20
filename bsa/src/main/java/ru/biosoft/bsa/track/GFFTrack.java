@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementPath;
@@ -25,7 +26,6 @@ import ru.biosoft.bsa.importer.GFFTrackImporter;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
 import ru.biosoft.bsa.view.TrackViewBuilder;
 import ru.biosoft.exception.LoggedException;
-import ru.biosoft.util.DataCollectionUtils;
 
 public class GFFTrack extends DataElementSupport implements WritableTrack
 {

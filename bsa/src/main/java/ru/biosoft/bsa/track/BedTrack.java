@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementSupport;
@@ -16,7 +17,6 @@ import ru.biosoft.bsa.WritableTrack;
 import ru.biosoft.bsa.view.TrackViewBuilder;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.exception.LoggedException;
-import ru.biosoft.util.DataCollectionUtils;
 
 public class BedTrack extends DataElementSupport implements WritableTrack
 {

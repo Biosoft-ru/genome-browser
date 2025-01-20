@@ -5,6 +5,7 @@ import java.util.Properties;
 
 import javax.annotation.Nonnull;
 
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.core.CloneableDataElement;
 import ru.biosoft.access.core.DataCollection;
@@ -16,7 +17,6 @@ import ru.biosoft.access.core.VectorDataCollection;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
 import ru.biosoft.bsa.view.TrackViewBuilder;
 import ru.biosoft.exception.ExceptionRegistry;
-import ru.biosoft.util.DataCollectionUtils;
 
 /**
  * Track which is a parent collection for sequences in Embl/Genbank file

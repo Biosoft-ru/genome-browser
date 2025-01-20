@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.CollectionFactoryUtils;
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.Repository;
@@ -29,7 +30,6 @@ import ru.biosoft.bsa.TranscriptionFactor;
 import ru.biosoft.bsa.analysis.FrequencyMatrix;
 import ru.biosoft.bsa.analysis.WeightMatrixCollection;
 import ru.biosoft.exception.ExceptionRegistry;
-import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.ExProperties;
 
 

@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.annotation.Nonnull;
 
+import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.AbstractDataCollection;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
@@ -14,7 +15,6 @@ import ru.biosoft.access.core.TransformedDataCollection;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.Track;
-import ru.biosoft.util.DataCollectionUtils;
 import ru.biosoft.util.TransformedIterator;
 
 /**
