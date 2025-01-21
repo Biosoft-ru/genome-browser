@@ -1,7 +1,7 @@
 package ru.biosoft.access;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+//import gnu.trove.map.TIntObjectMap;
+//import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.io.EOFException;
 import java.io.File;
@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -451,7 +452,9 @@ public class BTreeIndex extends AbstractMap<String, Index.IndexEntry> implements
     protected Block root = null;
 
     /** Cache */
-    private final TIntObjectMap<Reference<Block>> cache = new TIntObjectHashMap<>();
+    //TODO: commented, gnu.trove.map TIntObjectMap, TIntObjectHashMap
+    //private final TIntObjectMap<Reference<Block>> cache = new TIntObjectHashMap<>();
+    private final Map<Integer, Reference<Block>> cache = new HashMap<>();
 
     protected Block getBlock(int offset) throws IOException
     {

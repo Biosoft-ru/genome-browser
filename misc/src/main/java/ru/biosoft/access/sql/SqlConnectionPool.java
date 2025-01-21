@@ -18,7 +18,7 @@ import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.SqlDataCollection;
 import ru.biosoft.exception.LoggedException;
 import ru.biosoft.access.exception.BiosoftSQLException;
-import ru.biosoft.access.security.SessionThread;
+//import ru.biosoft.access.security.SessionThread;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.util.TextUtil;
 
@@ -126,8 +126,9 @@ public class SqlConnectionPool
             {
                 connection = new PersistentConnection(getNewConnection(url, user, password), url, user, password);
                 threadConnections.put(key, connection);
-                if( ! ( Thread.currentThread() instanceof SessionThread ) )
-                    sqlConnectionCloser.register( connection );
+                //TODO: commented, SessionThread
+                //                if( ! ( Thread.currentThread() instanceof SessionThread ) )
+                //                    sqlConnectionCloser.register( connection );
             }
             return connection;
         }

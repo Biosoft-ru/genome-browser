@@ -21,6 +21,7 @@ import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementPathSet;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.util.BeanUtil;
+import ru.biosoft.util.BeanWithAutoProperties;
 
 public class DataElementPathEditor extends CustomEditorSupport implements JSONSerializable
 {
@@ -82,6 +83,7 @@ public class DataElementPathEditor extends CustomEditorSupport implements JSONSe
         return new JLabel(title);
     }
 
+    //TODO: commented, Dialog-related
     //    public DataElementPathDialog getDialog()
     //    {
     //        init();

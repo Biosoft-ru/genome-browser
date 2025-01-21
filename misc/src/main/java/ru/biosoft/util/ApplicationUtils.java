@@ -5,12 +5,17 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.beans.SimpleBeanInfo;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
@@ -459,6 +464,67 @@ public class ApplicationUtils
                 return null;
         }
         return relative;
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    /**
+     * Reads input stream into UTF-8 string
+     * 
+     * @param src
+     * @return
+     * @throws IOException
+     */
+    public static String readAsString(File file) throws IOException
+    {
+        return readAsString(new FileInputStream(file));
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    /**
+     * Reads input stream into UTF-8 string
+     * 
+     * @param src
+     * @return
+     * @throws IOException
+     */
+    public static String readAsString(InputStream src) throws IOException
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ApplicationUtils.copyStream(baos, src);
+        return baos.toString("UTF-8");
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static void copyStream(OutputStream dst, InputStream src) throws IOException
+    {
+        final int BUFFER_SIZE = 64 * 1024;
+        BufferedInputStream bis = null;
+        BufferedOutputStream bos = null;
+        try
+        {
+            bis = src instanceof BufferedInputStream ? (BufferedInputStream) src : new BufferedInputStream(src);
+            bos = dst instanceof BufferedOutputStream ? (BufferedOutputStream) dst : new BufferedOutputStream(dst);
+
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int len;
+
+            while ( (len = bis.read(buffer)) != -1 )
+            {
+                bos.write(buffer, 0, len);
+            }
+        }
+        finally
+        {
+            if( bis != null )
+            {
+                bis.close();
+            }
+            if( bos != null )
+            {
+                bos.flush();
+                bos.close();
+            }
+        }
     }
 
 }

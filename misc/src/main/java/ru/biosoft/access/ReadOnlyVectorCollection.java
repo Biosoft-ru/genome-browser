@@ -13,7 +13,7 @@ import ru.biosoft.access.core.DataElementDescriptor;
 import ru.biosoft.access.core.DataElementReadException;
 import ru.biosoft.access.core.RepositoryAccessDeniedException;
 import ru.biosoft.access.core.VectorDataCollection;
-import ru.biosoft.access.security.SecurityManager;
+//import ru.biosoft.access.security.SecurityManager;
 
 /**
  * Class for read-only elements all of which are initialized in doInit method during the first request
@@ -150,7 +150,9 @@ public abstract class ReadOnlyVectorCollection<T extends DataElement> extends Ve
     {
         if(init)
         {
-            throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            //TODO: commented, SecurityManager 
+            //throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            throw new RepositoryAccessDeniedException(getCompletePath(), "user", "Write");
         }
         super.clear();
     }
@@ -160,7 +162,9 @@ public abstract class ReadOnlyVectorCollection<T extends DataElement> extends Ve
     {
         if(init)
         {
-            throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            //TODO: commented, SecurityManager 
+            //throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            throw new RepositoryAccessDeniedException(getCompletePath(), "user", "Write");
         }
         super.doPut(dataElement, isNew);
     }
@@ -170,7 +174,9 @@ public abstract class ReadOnlyVectorCollection<T extends DataElement> extends Ve
     {
         if(init)
         {
-            throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            //TODO: commented, SecurityManager 
+            //throw new RepositoryAccessDeniedException( getCompletePath(), SecurityManager.getSessionUser(), "Write" );
+            throw new RepositoryAccessDeniedException(getCompletePath(), "user", "Write");
         }
         super.doRemove(name);
     }
