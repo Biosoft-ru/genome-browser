@@ -8,7 +8,7 @@ import java.util.Properties;
 import one.util.streamex.DoubleStreamEx;
 import one.util.streamex.IntStreamEx;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.bsa.Interval;
@@ -21,6 +21,7 @@ import ru.biosoft.graphics.LineView;
 import ru.biosoft.graphics.Pen;
 import ru.biosoft.graphics.TextView;
 import ru.biosoft.graphics.View;
+import ru.biosoft.util.ApplicationUtils;
 
 /**
  * Basic interface for drawing track

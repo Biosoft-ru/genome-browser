@@ -1,7 +1,5 @@
 package ru.biosoft.bsa;
 
-import ru.biosoft.bsa.analysis.ProcessTrackParameters;
-
 /**
  * Resize each site on track to the specified value
  */
@@ -10,6 +8,13 @@ public class ResizedTrack extends TransformedTrack
     private final int enlargeStart;
     private final int enlargeEnd;
     private final String shrinkMode;
+
+    //TODO: copy, copied from ProcessTrackParameters to avoid analysis dependency
+    public static final String NO_SHRINK = "No shrink";
+    public static final String SHRINK_TO_START = "Shrink to start";
+    public static final String SHRINK_TO_CENTER = "Shrink to center";
+    public static final String SHRINK_TO_END = "Shrink to end";
+    public static final String SHRINK_TO_SUMMIT = "Shrink to summit";
 
     public ResizedTrack(Track source, String shrinkMode, int enlargeStart, int enlargeEnd)
     {
@@ -27,18 +32,17 @@ public class ResizedTrack extends TransformedTrack
         int length = s.getLength();
         switch(shrinkMode)
         {
-        case ProcessTrackParameters.SHRINK_TO_START:
+        case SHRINK_TO_START:
             length = 0;
             break;
-        case ProcessTrackParameters.SHRINK_TO_END:
+        case SHRINK_TO_END:
             start += length*direction;
             length = 0;
-            break;
-        case ProcessTrackParameters.SHRINK_TO_CENTER:
+            SHRINK_TO_CENTER:
             start += length*direction/2;
             length = 0;
             break;
-        case ProcessTrackParameters.SHRINK_TO_SUMMIT:
+        case SHRINK_TO_SUMMIT:
             Number summit = (Number)s.getProperties().getValue( "summit" );
             if(summit == null)
                 summit = length/2;;

@@ -2,8 +2,10 @@ package ru.biosoft.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.beans.SimpleBeanInfo;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -525,6 +527,26 @@ public class ApplicationUtils
                 bos.close();
             }
         }
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    /**
+     * Returns Graphics object which can be used for measuring font sizes This
+     * works even if there's no application frame
+     */
+    private static Graphics2D graphics;
+
+    static public Graphics2D getGraphics()
+    {
+        if( graphics == null )
+        {
+            //TODO: commented, Application
+            //if( Application.getApplicationFrame() == null )
+            graphics = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB).createGraphics();
+            //            else
+            //                graphics = (Graphics2D) Application.getApplicationFrame().getGraphics();
+        }
+        return graphics;
     }
 
 }

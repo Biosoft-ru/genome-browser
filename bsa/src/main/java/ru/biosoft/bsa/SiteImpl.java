@@ -2,7 +2,7 @@ package ru.biosoft.bsa;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.MutableDataElement;
-import ru.biosoft.bsa.analysis.FrequencyMatrix;
+//import ru.biosoft.bsa.analysis.FrequencyMatrix;
 
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetAsMap;
