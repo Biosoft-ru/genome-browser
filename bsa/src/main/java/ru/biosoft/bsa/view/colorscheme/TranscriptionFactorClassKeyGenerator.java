@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 import com.developmentontheedge.beans.DynamicProperty;
 
 import ru.biosoft.access.core.CollectionFactory;
@@ -20,6 +20,7 @@ import ru.biosoft.bsa.TranscriptionFactor;
 import ru.biosoft.bsa.TransfacTranscriptionFactor;
 import ru.biosoft.bsa.analysis.FrequencyMatrix;
 import ru.biosoft.bsa.classification.ClassificationUnit;
+import ru.biosoft.util.ApplicationUtils;
 
 /**
  * TranscriptionFactorKeyGenerator - keys are generating using information of name field in site.

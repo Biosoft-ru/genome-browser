@@ -38,6 +38,7 @@ import ru.biosoft.access.security.Permission;
 import ru.biosoft.bsa.GenomeSelector.GenomeSelectorTrackUpdater;
 import ru.biosoft.bsa.view.BamTrackViewBuilder;
 import ru.biosoft.bsa.view.TrackViewBuilder;
+import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.ListUtil;
 import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
@@ -48,7 +49,7 @@ import com.developmentontheedge.beans.BeanInfoEx;
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetSupport;
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 import ru.biosoft.jobcontrol.JobControl;
 
 public class BAMTrack extends AbstractDataCollection<DataElement> implements Track, CloneableDataElement

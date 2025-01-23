@@ -124,17 +124,17 @@ public class MessageBundle extends ListResourceBundle
         { "PD_PROJECT_NAME",               "Project name" },
         
         //--- Actions ---------------------------------------------------/
-        
-        { TracksViewPart.ADD_ACTION    + Action.SMALL_ICON           , "add.gif"},
-        { TracksViewPart.ADD_ACTION    + Action.NAME                 , "Add"},
-        { TracksViewPart.ADD_ACTION    + Action.SHORT_DESCRIPTION    , "Add track"},
-        { TracksViewPart.ADD_ACTION    + Action.ACTION_COMMAND_KEY   , "cmd-add-track"},
-        
-        { TracksViewPart.REMOVE_ACTION    + Action.SMALL_ICON           , "remove.gif"},
-        { TracksViewPart.REMOVE_ACTION    + Action.NAME                 , "Remove"},
-        { TracksViewPart.REMOVE_ACTION    + Action.SHORT_DESCRIPTION    , "Remove track"},
-        { TracksViewPart.REMOVE_ACTION    + Action.ACTION_COMMAND_KEY   , "cmd-remove-track"},
-        
+                    //TODO: commented, TracksViewPart
+                    //        { TracksViewPart.ADD_ACTION    + Action.SMALL_ICON           , "add.gif"},
+                    //        { TracksViewPart.ADD_ACTION    + Action.NAME                 , "Add"},
+                    //        { TracksViewPart.ADD_ACTION    + Action.SHORT_DESCRIPTION    , "Add track"},
+                    //        { TracksViewPart.ADD_ACTION    + Action.ACTION_COMMAND_KEY   , "cmd-add-track"},
+                    //        
+                    //        { TracksViewPart.REMOVE_ACTION    + Action.SMALL_ICON           , "remove.gif"},
+                    //        { TracksViewPart.REMOVE_ACTION    + Action.NAME                 , "Remove"},
+                    //        { TracksViewPart.REMOVE_ACTION    + Action.SHORT_DESCRIPTION    , "Remove track"},
+                    //        { TracksViewPart.REMOVE_ACTION    + Action.ACTION_COMMAND_KEY   , "cmd-remove-track"},
+                    //        
 //        { ProfileEditorViewPart.ADD_ACTION    + Action.SMALL_ICON           , "add.gif"},
 //        { ProfileEditorViewPart.ADD_ACTION    + Action.NAME                 , "Add"},
 //        { ProfileEditorViewPart.ADD_ACTION    + Action.SHORT_DESCRIPTION    , "Add selected matrices"},

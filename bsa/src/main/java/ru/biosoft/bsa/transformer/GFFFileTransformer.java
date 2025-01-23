@@ -2,11 +2,12 @@ package ru.biosoft.bsa.transformer;
 
 import java.io.File;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.bsa.track.GFFTrack;
+import ru.biosoft.util.ApplicationUtils;
 
 public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack>
 {

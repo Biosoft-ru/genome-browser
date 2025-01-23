@@ -3,7 +3,7 @@ package ru.biosoft.bsa;
 import com.developmentontheedge.beans.BeanInfoEx;
 import com.developmentontheedge.beans.PropertyDescriptorEx;
 
-import ru.biosoft.bsa.gui.MessageBundle;
+//import ru.biosoft.bsa.gui.MessageBundle;
 
 public class SqlTrackBeanInfo extends BeanInfoEx
 {

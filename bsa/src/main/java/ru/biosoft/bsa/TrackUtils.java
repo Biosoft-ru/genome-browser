@@ -20,7 +20,7 @@ import ru.biosoft.access.core.DataElementPathSet;
 import ru.biosoft.access.core.DataElementReadException;
 import ru.biosoft.access.core.VectorDataCollection;
 import ru.biosoft.exception.LoggedException;
-import ru.biosoft.journal.ProjectUtils;
+//import ru.biosoft.journal.ProjectUtils;
 
 /**
  * @author lan
@@ -104,12 +104,13 @@ public class TrackUtils
 
     public static @Nonnull DataElementPath getEnsemblPath(Species species, DataElementPath destPath) throws LoggedException
     {
-        DataElementPath projectPath = ProjectUtils.getProjectPath( destPath );
-        DataElementPath path = ProjectUtils.getPreferredDatabasePath( "Ensembl (" + species.getLatinName() + ")", projectPath );
-        if(path != null)
-        {
-            return path;
-        }
+        //TODO: commented, ProjectUtils
+        //        DataElementPath projectPath = ProjectUtils.getProjectPath( destPath );
+        //        DataElementPath path = ProjectUtils.getPreferredDatabasePath( "Ensembl (" + species.getLatinName() + ")", projectPath );
+        //        if(path != null)
+        //        {
+        //            return path;
+        //        }
         try
         {
             String pathStr = species.getAttributes().getValueAsString( ENSEMBL_PATH_PROPERTY );

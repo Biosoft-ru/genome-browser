@@ -3,16 +3,18 @@ package ru.biosoft.bsa.transformer;
 import java.io.File;
 import java.util.Properties;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
-import ru.biosoft.access.generic.PriorityTransformer;
+//import ru.biosoft.access.generic.PriorityTransformer;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.JDBM2Index;
+import ru.biosoft.access.PriorityTransformer;
 import ru.biosoft.bsa.SequenceImporter;
+import ru.biosoft.util.ApplicationUtils;
 
 public class FastaFileTransformer extends AbstractFileTransformer<FastaSequenceCollection> implements PriorityTransformer
 {

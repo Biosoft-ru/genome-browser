@@ -29,6 +29,7 @@ import ru.biosoft.bsa.Const;
 import ru.biosoft.bsa.TranscriptionFactor;
 import ru.biosoft.bsa.analysis.FrequencyMatrix;
 import ru.biosoft.bsa.analysis.WeightMatrixCollection;
+//import ru.biosoft.bsa.analysis.WeightMatrixCollection;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.util.ExProperties;
 

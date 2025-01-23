@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ru.biosoft.graphics.Brush;
-import ru.biosoft.server.JSONUtils;
+//import ru.biosoft.server.JSONUtils;
 import ru.biosoft.util.FieldMap;
 import ru.biosoft.util.JSONCompatibleEditor;
 
@@ -151,30 +151,31 @@ public class KeyColorGroupBeanInfo extends BeanInfoEx
             Object[] oldArray = (Object[])oldValue;
             Color oldColor = getBrush();
             JSONArray jsonArray = jsonObject.getJSONArray("value");
-            Color newColor = JSONUtils.parseColor(jsonArray.getString(0));
-            if( oldColor.equals(newColor) )
-            {
-                int index = 0;
-                for( Object oldObject : oldArray )
-                {
-                    CompositeProperty elementModel = null;
-                    if( oldObject instanceof CompositeProperty )
-                    {
-                        elementModel = (CompositeProperty)oldObject;
-                    }
-                    else
-                    {
-                        elementModel = ComponentFactory.getModel(oldObject, Policy.DEFAULT, true);
-                    }
-                    JSONArray jsonBean = jsonArray.getJSONArray(index + 1);
-                    JSONUtils.correctBeanOptions(elementModel, jsonBean);
-                    index++;
-                }
-            }
-            else
-            {
-                setBrush(newColor);
-            }
+            //TODO: commented, JSONUtils, ru.biosoft.server dependency
+//            Color newColor = JSONUtils.parseColor(jsonArray.getString(0));
+//            if( oldColor.equals(newColor) )
+//            {
+//                int index = 0;
+//                for( Object oldObject : oldArray )
+//                {
+//                    CompositeProperty elementModel = null;
+//                    if( oldObject instanceof CompositeProperty )
+//                    {
+//                        elementModel = (CompositeProperty)oldObject;
+//                    }
+//                    else
+//                    {
+//                        elementModel = ComponentFactory.getModel(oldObject, Policy.DEFAULT, true);
+//                    }
+//                    JSONArray jsonBean = jsonArray.getJSONArray(index + 1);
+//                    JSONUtils.correctBeanOptions(elementModel, jsonBean);
+//                    index++;
+//                }
+//            }
+//            else
+//            {
+//                setBrush(newColor);
+//            }
         }
         
         @Override
@@ -190,70 +191,71 @@ public class KeyColorGroupBeanInfo extends BeanInfoEx
 
             value.put(colorjs.toString());
 
-            ArrayProperty array = (ArrayProperty)property;
-            for( int j = 0; j < array.getPropertyCount(); j++ )
-            {
-                Property element = array.getPropertyAt(j);
-                if( element instanceof CompositeProperty )
-                {
-                    JSONArray elementModel = JSONUtils.getModelAsJSON((CompositeProperty)element,
-                            fieldMap.get(property.getName()), showMode);
-                    /*
-                     * We can not get model for "leaf" elements of KeyColorGroup in normal way,
-                     * so process them manually
-                     */
-                    if( elementModel.length() == 0 )
-                    {
-                        Class cEl = property.getPropertyEditorClass();
-                        if( cEl != null )
-                        {
-                            if( CustomEditorSupport.class.isAssignableFrom(cEl) )
-                            {
-                                CustomEditorSupport editorEl = (CustomEditorSupport)cEl.newInstance();
-                                if( editorEl instanceof ColorGroupBrushEditor )
-                                {
-                                    JSONObject pCh = new JSONObject();
-                                    pCh.put(JSONUtils.NAME_ATTR, property.getName());
-                                    pCh.put(JSONUtils.DISPLAYNAME_ATTR, element.getDisplayName());
-                                    pCh.put(JSONUtils.TYPE_ATTR, "color-selector");
-                                    Color colorEl = null;
-
-                                    for( int k = 0; k < element.getPropertyCount(); k++ )
-                                    {
-                                        Property propertyEl = element.getPropertyAt(k);
-                                        Object valueEl = propertyEl.getValue();
-                                        if( valueEl instanceof Brush )
-                                        {
-                                            colorEl = (Color) ( (Brush)valueEl ).getPaint();
-                                            continue;
-                                        }
-                                    }
-                                    if( colorEl == null )
-                                    {
-                                        //set parent's color if not found
-                                        colorEl = getBrush();
-                                    }
-                                    JSONArray colorjsEl = new JSONArray();
-                                    colorjsEl.put(colorEl.getRed());
-                                    colorjsEl.put(colorEl.getGreen());
-                                    colorjsEl.put(colorEl.getBlue());
-                                    JSONArray valueEl = new JSONArray();
-                                    valueEl.put(colorjsEl.toString());
-                                    pCh.put(JSONUtils.VALUE_ATTR, valueEl);
-                                    elementModel.put(pCh);
-                                    value.put(elementModel);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        value.put(elementModel);
-                    }
-                }
-            }
-            p.put(JSONUtils.TYPE_ATTR, "color-selector");
-            p.put(JSONUtils.VALUE_ATTR, value);
+            //TODO: commented, JSONUtils, ru.biosoft.server dependency
+            //            ArrayProperty array = (ArrayProperty)property;
+            //            for( int j = 0; j < array.getPropertyCount(); j++ )
+            //            {
+//                Property element = array.getPropertyAt(j);
+//                if( element instanceof CompositeProperty )
+//                {
+//                    JSONArray elementModel = JSONUtils.getModelAsJSON((CompositeProperty)element,
+//                            fieldMap.get(property.getName()), showMode);
+//                    /*
+//                     * We can not get model for "leaf" elements of KeyColorGroup in normal way,
+//                     * so process them manually
+//                     */
+//                    if( elementModel.length() == 0 )
+//                    {
+//                        Class cEl = property.getPropertyEditorClass();
+//                        if( cEl != null )
+//                        {
+//                            if( CustomEditorSupport.class.isAssignableFrom(cEl) )
+//                            {
+//                                CustomEditorSupport editorEl = (CustomEditorSupport)cEl.newInstance();
+//                                if( editorEl instanceof ColorGroupBrushEditor )
+//                                {
+//                                    JSONObject pCh = new JSONObject();
+//                                    pCh.put(JSONUtils.NAME_ATTR, property.getName());
+//                                    pCh.put(JSONUtils.DISPLAYNAME_ATTR, element.getDisplayName());
+//                                    pCh.put(JSONUtils.TYPE_ATTR, "color-selector");
+//                                    Color colorEl = null;
+//
+//                                    for( int k = 0; k < element.getPropertyCount(); k++ )
+//                                    {
+//                                        Property propertyEl = element.getPropertyAt(k);
+//                                        Object valueEl = propertyEl.getValue();
+//                                        if( valueEl instanceof Brush )
+//                                        {
+//                                            colorEl = (Color) ( (Brush)valueEl ).getPaint();
+//                                            continue;
+//                                        }
+//                                    }
+//                                    if( colorEl == null )
+//                                    {
+//                                        //set parent's color if not found
+//                                        colorEl = getBrush();
+//                                    }
+//                                    JSONArray colorjsEl = new JSONArray();
+//                                    colorjsEl.put(colorEl.getRed());
+//                                    colorjsEl.put(colorEl.getGreen());
+//                                    colorjsEl.put(colorEl.getBlue());
+//                                    JSONArray valueEl = new JSONArray();
+//                                    valueEl.put(colorjsEl.toString());
+//                                    pCh.put(JSONUtils.VALUE_ATTR, valueEl);
+//                                    elementModel.put(pCh);
+//                                    value.put(elementModel);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        value.put(elementModel);
+//                    }
+//                }
+//            }
+//            p.put(JSONUtils.TYPE_ATTR, "color-selector");
+//            p.put(JSONUtils.VALUE_ATTR, value);
         }
     }
 }

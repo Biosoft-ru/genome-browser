@@ -7,12 +7,13 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 import com.developmentontheedge.beans.Option;
 
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.project.Region;
+import ru.biosoft.util.ApplicationUtils;
 
 /**
  * Collect view options for regions and tracks

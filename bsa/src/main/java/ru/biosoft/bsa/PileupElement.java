@@ -14,7 +14,7 @@ import java.util.Set;
 import one.util.streamex.EntryStream;
 import one.util.streamex.StreamEx;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import net.sf.samtools.Cigar;
 import net.sf.samtools.CigarElement;

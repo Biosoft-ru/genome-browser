@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 import com.developmentontheedge.beans.PropertyDescriptorEx;
 
 import net.sf.samtools.Cigar;
@@ -37,6 +37,7 @@ import ru.biosoft.graphics.PolylineView;
 import ru.biosoft.graphics.TextView;
 import ru.biosoft.graphics.View;
 import ru.biosoft.graphics.font.ColorFont;
+import ru.biosoft.util.ApplicationUtils;
 
 public class BamTrackViewBuilder extends TrackViewBuilder
 {

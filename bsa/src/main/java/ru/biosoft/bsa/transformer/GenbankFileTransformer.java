@@ -12,7 +12,7 @@ import ru.biosoft.access.Entry;
 import ru.biosoft.access.FileEntryCollection2;
 import ru.biosoft.access.JDBM2Index;
 import ru.biosoft.access.core.TransformedDataCollection;
-import ru.biosoft.access.generic.PriorityTransformer;
+import ru.biosoft.access.PriorityTransformer;
 import ru.biosoft.bsa.AnnotatedSequence;
 import ru.biosoft.bsa.SequenceImporter;
 import ru.biosoft.bsa.GenbankSequenceCollection;

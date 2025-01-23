@@ -8,8 +8,9 @@ import ru.biosoft.bsa.Site;
 import ru.biosoft.graphics.CompositeView;
 import ru.biosoft.graphics.TextView;
 import ru.biosoft.graphics.View;
+import ru.biosoft.util.ApplicationUtils;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 /**
  * @author lan

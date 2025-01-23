@@ -17,12 +17,17 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.bsa.analysis.MatchSiteModel;
-import ru.biosoft.bsa.analysis.SiteSearchAnalysis;
+//import ru.biosoft.bsa.analysis.SiteSearchAnalysis;
 import ru.biosoft.bsa.analysis.WeightMatrixModel;
 import ru.biosoft.jobcontrol.FunctionJobControl;
 
 public class MatchResultsExporter implements DataElementExporter
 {
+    //TODO: code changed, only constant required, do not take class SiteSearchAnalysis in dependencies
+    public static final String INTERVALS_COLLECTION_PROPERTY = "IntervalsCollection";
+    public static final String TOTAL_LENGTH_PROPERTY = "TotalLength";
+    public static final String SEQUENCES_COLLECTION_PROPERTY = "SiteSearchSequencesCollection";
+    public static final String SEQUENCES_LIST_PROPERTY = "SiteSearchSequencesList";
 
     @Override
     public int accept(DataElement de)
@@ -62,7 +67,8 @@ public class MatchResultsExporter implements DataElementExporter
         }
         String sequenceCollection = properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY);
         if(sequenceCollection == null )
-            sequenceCollection = properties.getProperty(SiteSearchAnalysis.SEQUENCES_COLLECTION_PROPERTY);
+            //sequenceCollection = properties.getProperty(SiteSearchAnalysis.SEQUENCES_COLLECTION_PROPERTY);
+            sequenceCollection = properties.getProperty(SEQUENCES_COLLECTION_PROPERTY);
         if( sequenceCollection != null )
             writer.println("Sequence file: " + sequenceCollection);
         if( models != null )
@@ -114,7 +120,8 @@ public class MatchResultsExporter implements DataElementExporter
         int totalSequenceLength = -1;
         try
         {
-            totalSequenceLength = Integer.parseInt(track.getInfo().getProperty(SiteSearchAnalysis.TOTAL_LENGTH_PROPERTY));
+            //totalSequenceLength = Integer.parseInt(track.getInfo().getProperty(SiteSearchAnalysis.TOTAL_LENGTH_PROPERTY));
+            totalSequenceLength = Integer.parseInt(track.getInfo().getProperty(TOTAL_LENGTH_PROPERTY));
         }
         catch( Exception e )
         {
@@ -139,7 +146,8 @@ public class MatchResultsExporter implements DataElementExporter
         SqlTrack track = ( de instanceof TrackRegion ) ? (SqlTrack) ( (TrackRegion)de ).getTrack() : (SqlTrack)de;
 
         DataCollection<?> sequences = null;
-        String sequencesPath = track.getInfo().getProperty(SiteSearchAnalysis.INTERVALS_COLLECTION_PROPERTY);
+        //String sequencesPath = track.getInfo().getProperty(SiteSearchAnalysis.INTERVALS_COLLECTION_PROPERTY);
+        String sequencesPath = track.getInfo().getProperty(INTERVALS_COLLECTION_PROPERTY);
         if( sequencesPath != null )
             sequences = CollectionFactory.getDataCollection(sequencesPath);
         if( sequences == null )
@@ -150,7 +158,8 @@ public class MatchResultsExporter implements DataElementExporter
         }
         if( sequences == null )
         {
-            sequencesPath = track.getInfo().getProperty(SiteSearchAnalysis.SEQUENCES_COLLECTION_PROPERTY);
+            //sequencesPath = track.getInfo().getProperty(SiteSearchAnalysis.SEQUENCES_COLLECTION_PROPERTY);
+            sequencesPath = track.getInfo().getProperty(SEQUENCES_COLLECTION_PROPERTY);
             if( sequencesPath != null )
                 sequences = CollectionFactory.getDataCollection(sequencesPath);
         }

@@ -1,11 +1,14 @@
 package ru.biosoft.bsa;
 
-import com.developmentontheedge.application.Application;
+import org.json.JSONObject;
+
+//import com.developmentontheedge.application.Application;
 import com.developmentontheedge.beans.Preferences;
-import com.eclipsesource.json.JsonObject;
+//import com.eclipsesource.json.JsonObject;
 
 import ru.biosoft.access.core.DataElementPath;
-import ru.biosoft.util.JsonUtils;
+import ru.biosoft.util.TextUtil;
+//import ru.biosoft.util.JsonUtils;
 
 public class SiteModelUtils
 {
@@ -15,11 +18,13 @@ public class SiteModelUtils
     public static DataElementPath getDefaultProfile()
     {
         initProfile();
-        if( defaultProfilePath != null )
-            return defaultProfilePath;
-        Preferences preferences = Application.getPreferences();
-        DataElementPath value = DataElementPath.create(preferences.getStringValue(Const.LAST_PROFILE_PREFERENCE, ""));
-        return value.exists()?value:DataElementPath.create(Const.DEFAULT_PROFILE);
+        return defaultProfilePath;
+        //TODO: commented, Application
+        //        if( defaultProfilePath != null )
+        //            return defaultProfilePath;
+        //        Preferences preferences = Application.getPreferences();
+        //        DataElementPath value = DataElementPath.create(preferences.getStringValue(Const.LAST_PROFILE_PREFERENCE, ""));
+        //        return value.exists()?value:DataElementPath.create(Const.DEFAULT_PROFILE);
     }
 
     private static void initProfile()
@@ -29,8 +34,8 @@ public class SiteModelUtils
         try
         {
             String confFile = System.getProperty( "biouml.server.path" ) + "/appconfig/bsa/profile.json";
-            JsonObject json = JsonUtils.fromFile( confFile );
-            String pathStr = json.getString( "defaultProfile", "" );
+            JSONObject json = TextUtil.fromFile(confFile);
+            String pathStr = json.optString("defaultProfile", "");
             if( !pathStr.isEmpty() )
             {
                 DataElementPath path = DataElementPath.create( pathStr );

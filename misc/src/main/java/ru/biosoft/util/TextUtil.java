@@ -2,11 +2,13 @@ package ru.biosoft.util;
 
 import java.awt.Color;
 import java.beans.PropertyDescriptor;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +30,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.developmentontheedge.beans.DynamicProperty;
@@ -170,6 +173,27 @@ public class TextUtil
         }
 
         return null;
+    }
+
+    //TODO: copy, copied from ru.biosoft.server.JSONUtils
+    /**
+     * Parses Color string
+     * 
+     * @param str color in format [r,g,b] or empty string for absent color
+     * @return
+     * @throws JSONException
+     */
+    public static Color parseColor(String str) throws JSONException
+    {
+        Color newColor;
+        if( str.isEmpty() )
+            newColor = new Color(0, 0, 0, 0);
+        else
+        {
+            JSONArray jsobj = new JSONArray(str);
+            newColor = new Color(jsobj.getInt(0), jsobj.getInt(1), jsobj.getInt(2));
+        }
+        return newColor;
     }
 
     /**
@@ -1060,6 +1084,13 @@ public class TextUtil
             text = new StringBuffer(text).replace(pos, pos + fromText.length(), newText).toString();
         }
         return text;
+    }
+
+    //TODO: copy, copied from JsonUtils and changed to use org.json.JSONObject
+    public static JSONObject fromFile(String fileName) throws Exception
+    {
+        String json = new String(Files.readAllBytes(new File(fileName).toPath()), "utf8");
+        return new JSONObject(json);
     }
 
 }

@@ -6,13 +6,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.Entry;
 import ru.biosoft.bsa.MapAsVectorWithLazyFTInit;
 import ru.biosoft.bsa.Sequence;
+import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.TextUtil;
 
 /**

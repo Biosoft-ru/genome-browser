@@ -36,13 +36,14 @@ import ru.biosoft.graphics.Pen;
 import ru.biosoft.graphics.TextView;
 import ru.biosoft.graphics.View;
 import ru.biosoft.graphics.editor.FontEditor;
+import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.bean.BeanInfoEx2;
 import ru.biosoft.util.bean.StaticDescriptor;
 
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetAsMap;
-import com.developmentontheedge.application.ApplicationUtils;
+//import com.developmentontheedge.application.ApplicationUtils;
 
 /**
  * @author lan

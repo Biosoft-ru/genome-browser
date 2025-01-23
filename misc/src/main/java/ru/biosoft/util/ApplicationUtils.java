@@ -10,6 +10,7 @@ import java.beans.SimpleBeanInfo;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +22,10 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
@@ -181,7 +184,7 @@ public class ApplicationUtils
         }
         return fileName;
     }
-    //TODO: commented
+    //TODO: commented, Platform
     //    public static URL getResourceURL(String pluginName, String fileName)
     //    {
     //        try
@@ -215,19 +218,21 @@ public class ApplicationUtils
     //            home = System.getProperty("user.dir");
     //        return new File(home, path);
     //    }
-    //TODO: commented, Platform
-    //    /**
-    //     * Resolves path to the plugin file resource
-    //     * @param pluginPath path like "ru.biosoft.access:resource"
-    //     * @return File object pointing to the resource
-    //     */
-    //    public static PluginEntry resolvePluginPath(String pluginPath)
-    //    {
-    //        return resolvePluginPath( pluginPath, "" );
-    //    }
-    //
-    //    public static PluginEntry resolvePluginPath(String pluginPath, String parentPath)
-    //    {
+    /**
+     * Resolves path to the plugin file resource
+     * 
+     * @param pluginPath path like "ru.biosoft.access:resource"
+     * @return File object pointing to the resource
+     */
+    public static PluginEntry resolvePluginPath(String pluginPath)
+    {
+        return resolvePluginPath(pluginPath, "");
+    }
+
+    public static PluginEntry resolvePluginPath(String pluginPath, String parentPath)
+    {
+        return null;
+        //TODO: commented, Platform
     //        if(pluginPath == null)
     //            return null;
     //        int colonPos = pluginPath.indexOf( ':' );
@@ -252,7 +257,7 @@ public class ApplicationUtils
     //            path += "/";
     //        }
     //        return new BundleEntry( plugin, path );
-    //    }
+}
 
     public static int getMaxSortingSize()
     {
@@ -549,4 +554,63 @@ public class ApplicationUtils
         return graphics;
     }
 
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static void removeDir(File dir)
+    {
+        if( dir == null || !dir.isDirectory() )
+            return;
+        File[] files = dir.listFiles();
+        if( files != null )
+        {
+            for ( File file : files )
+            {
+                if( file.isDirectory() )
+                {
+                    removeDir(file);
+                }
+                if( !file.delete() )
+                {
+                    file.deleteOnExit();
+                }
+            }
+        }
+        if( !dir.delete() )
+        {
+            dir.deleteOnExit();
+        }
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static void writeString(OutputStream dst, String str) throws IOException
+    {
+        ByteArrayInputStream is = new ByteArrayInputStream(str.getBytes(StandardCharsets.UTF_8));
+        ApplicationUtils.copyStream(dst, is);
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static void writeString(File dst, String str) throws IOException
+    {
+        writeString(new FileOutputStream(dst), str);
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static String getCommonParent(String name1, String name2)
+    {
+        String delim = "/\\";
+        StringTokenizer strTok1 = new StringTokenizer(name1, delim);
+        StringTokenizer strTok2 = new StringTokenizer(name2, delim);
+        StringBuffer buffer = new StringBuffer();
+        while ( strTok1.hasMoreTokens() && strTok2.hasMoreTokens() )
+        {
+            String token1 = strTok1.nextToken();
+            String token2 = strTok2.nextToken();
+            if( token1.equals(token2) )
+            {
+                if( buffer.length() != 0 )
+                    buffer.append("/");
+                buffer.append(token1);
+            }
+        }
+        return buffer.toString();
+    }
 }

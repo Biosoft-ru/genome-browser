@@ -8,16 +8,17 @@ import java.util.List;
 import java.util.Properties;
 
 import com.developmentontheedge.beans.BeanInfoConstants;
+import com.developmentontheedge.beans.editors.GenericComboBoxEditor;
 
 import biouml.standard.type.Species;
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;
-import ru.biosoft.access.security.SecurityManager;
+//import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.util.BeanUtil;
 import ru.biosoft.util.DatabaseVersionComparator;
-import ru.biosoft.workbench.editors.GenericComboBoxEditor;
+//import ru.biosoft.workbench.editors.GenericComboBoxEditor;
 
 public class SequencesDatabaseInfoSelector extends GenericComboBoxEditor
 {
@@ -103,32 +104,58 @@ public class SequencesDatabaseInfoSelector extends GenericComboBoxEditor
         if(databases != null) return;
         try
         {
-            SecurityManager.runPrivileged(() -> {
+            //TODO: commented, SecurityManager
+            //            SecurityManager.runPrivileged(() -> {
+            //                List<SequencesDatabaseInfo> databasesList = new ArrayList<>();
+            //                DataElementPath dbPath = DataElementPath.create("databases");
+            //                if(!dbPath.exists())
+            //                    return null;
+            //                for(DataElementPath databasePath: dbPath.getChildren())
+            //                {
+            //                    try
+            //                    {
+            //                        databasesList.add(new SequencesDatabaseInfo(databasePath));
+            //                    }
+            //                    catch( Exception e )
+            //                    {
+            //                    }
+            //                }
+            //                databasesList.add(SequencesDatabaseInfo.CUSTOM_SEQUENCES);
+            //                databases = databasesList.toArray(new SequencesDatabaseInfo[databasesList.size()]);
+            //
+            //                databasesWithNull = new SequencesDatabaseInfo[databases.length+1];
+            //                System.arraycopy(databases, 0, databasesWithNull, 1, databases.length);
+            //                databasesWithNull[0] = SequencesDatabaseInfo.NULL_SEQUENCES;
+            //
+            //                databasesEnsemblHuman = databasesList.stream().filter( SequencesDatabaseInfoSelector::isEnsemblHuman )
+            //                        .toArray( SequencesDatabaseInfo[]::new );
+            //                return null;
+            //            });
+
+            //TODO: code replaced
                 List<SequencesDatabaseInfo> databasesList = new ArrayList<>();
                 DataElementPath dbPath = DataElementPath.create("databases");
-                if(!dbPath.exists())
-                    return null;
-                for(DataElementPath databasePath: dbPath.getChildren())
+                if( dbPath.exists() )
                 {
-                    try
+                    for ( DataElementPath databasePath : dbPath.getChildren() )
                     {
-                        databasesList.add(new SequencesDatabaseInfo(databasePath));
+                        try
+                        {
+                            databasesList.add(new SequencesDatabaseInfo(databasePath));
+                        }
+                        catch (Exception e)
+                        {
+                        }
                     }
-                    catch( Exception e )
-                    {
-                    }
+                    databasesList.add(SequencesDatabaseInfo.CUSTOM_SEQUENCES);
+                    databases = databasesList.toArray(new SequencesDatabaseInfo[databasesList.size()]);
+
+                    databasesWithNull = new SequencesDatabaseInfo[databases.length + 1];
+                    System.arraycopy(databases, 0, databasesWithNull, 1, databases.length);
+                    databasesWithNull[0] = SequencesDatabaseInfo.NULL_SEQUENCES;
+
+                    databasesEnsemblHuman = databasesList.stream().filter(SequencesDatabaseInfoSelector::isEnsemblHuman).toArray(SequencesDatabaseInfo[]::new);
                 }
-                databasesList.add(SequencesDatabaseInfo.CUSTOM_SEQUENCES);
-                databases = databasesList.toArray(new SequencesDatabaseInfo[databasesList.size()]);
-
-                databasesWithNull = new SequencesDatabaseInfo[databases.length+1];
-                System.arraycopy(databases, 0, databasesWithNull, 1, databases.length);
-                databasesWithNull[0] = SequencesDatabaseInfo.NULL_SEQUENCES;
-
-                databasesEnsemblHuman = databasesList.stream().filter( SequencesDatabaseInfoSelector::isEnsemblHuman )
-                        .toArray( SequencesDatabaseInfo[]::new );
-                return null;
-            });
         }
         catch( Exception e1 )
         {

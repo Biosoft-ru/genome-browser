@@ -1,6 +1,7 @@
 package ru.biosoft.bsa.access;
 
-import ru.biosoft.bsa.gui.MessageBundle;
+//TODO: use another message bundle, no properties are taken from MessageBundle file, check!
+import ru.biosoft.bsa.MessageBundle;
 
 import com.developmentontheedge.beans.BeanInfoEx;
 

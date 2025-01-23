@@ -11,13 +11,14 @@ import java.util.Properties;
 import javax.annotation.Nonnull;
 
 import com.developmentontheedge.beans.BeanInfoConstants;
+import com.developmentontheedge.beans.editors.GenericComboBoxEditor;
 
 import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.util.BeanUtil;
-import ru.biosoft.workbench.editors.GenericComboBoxEditor;
+//import ru.biosoft.workbench.editors.GenericComboBoxEditor;
 
 public class ChrNameMapping extends DataElementSupport
 {
