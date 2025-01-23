@@ -1,4 +1,4 @@
-package ru.biosoft.access;
+package ru.biosoft.access.generic;
 
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.Transformer;

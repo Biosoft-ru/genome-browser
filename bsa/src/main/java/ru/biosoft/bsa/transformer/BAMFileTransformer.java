@@ -17,7 +17,7 @@ import ru.biosoft.bsa.BAMTrack;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.TempFiles;
 
-public class BAMFileTransformer extends AbstractFileTransformer<BAMTrack> implements ru.biosoft.access.PriorityTransformer
+public class BAMFileTransformer extends AbstractFileTransformer<BAMTrack> implements ru.biosoft.access.generic.PriorityTransformer
 {
 
     @Override
