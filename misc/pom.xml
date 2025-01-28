@@ -23,11 +23,29 @@
  </parent>
  
  <dependencies>
+ 
+ <dependency>
+    <groupId>ru.biosoft</groupId>
+    <artifactId>exception</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>ru.biosoft</groupId>
+    <artifactId>util</artifactId>
+    <version>1.0.1</version>
+  </dependency>
+  
+  <dependency>
+    <groupId>ru.biosoft</groupId>
+    <artifactId>jobcontrol</artifactId>
+    <version>1.0.0</version>
+  </dependency>
 
   <dependency>
     <groupId>ru.biosoft.access</groupId>
     <artifactId>core</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.1</version>
   </dependency>
 
   <dependency>
@@ -45,20 +63,28 @@
   <dependency>
     <groupId>ru.biosoft.access</groupId>
     <artifactId>file</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
   </dependency>
   
   <dependency>
-  <groupId>commons-io</groupId>
-  <artifactId>commons-io</artifactId>
-  <version>2.18.0</version>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.18.0</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.fusesource.jdbm</groupId>
+        <artifactId>jdbm</artifactId>
+        <version>2.0.1</version>
+    </dependency>
+    
+  <!-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations -->
+<dependency>
+    <groupId>com.github.spotbugs</groupId>
+    <artifactId>spotbugs-annotations</artifactId>
+    <version>4.9.0</version>
 </dependency>
 
-<dependency>
-    <groupId>org.fusesource.jdbm</groupId>
-    <artifactId>jdbm</artifactId>
-    <version>2.0.1</version>
-</dependency>
 
 <!-- https://mvnrepository.com/artifact/one.util/streamex -->
 <!--dependency>
