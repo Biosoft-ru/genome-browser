@@ -11,6 +11,7 @@
  <modules>
   <module>misc</module>
   <module>bsa</module>
+  <module>server</module>
  </modules>
 
  <properties>

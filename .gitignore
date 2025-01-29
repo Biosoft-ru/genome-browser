@@ -1,4 +1,8 @@
 /target/
 /.settings/
+
+/.gigaide/
+/.idea/
+
 .classpath
 .project
