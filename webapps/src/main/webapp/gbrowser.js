@@ -13,14 +13,22 @@ function login(callback)
     //    {
     //        //TODO: login as anonymous failed
     //    });
-    queryBioUML("helloservlet", {"testparam": "testparam_value"}, 
-        function(data){
-            alert(data);
-            if(callback)
-                callback();
-        }, function (data){
-            alert(data.message);
-        });
+    //queryBioUML("helloservlet", {"testparam": "testparam_value"}, 
+    //    function(data){
+    //        alert(data);
+     //       if(callback)
+    //            callback();
+   //     }, function (data){
+    //        alert(data.message);
+    //    });
+    queryBioUML("/genomebrowser", {"testparam": "testparam_value"}, 
+                function(data){
+                    alert(data);
+                    if(callback)
+                        callback();
+                }, function (data){
+                    alert(data.message);
+                });
 }
 
 var appInfo = {

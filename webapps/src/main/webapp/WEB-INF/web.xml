@@ -13,9 +13,23 @@
       <param-value>Hello from webapps/hello</param-value>
     </init-param>
  </servlet>
+ 
+ <servlet>
+    <servlet-name>genomebrowserservlet</servlet-name>
+    <servlet-class>servlets.RunServicesServlet</servlet-class>
+    <init-param>
+      <param-name>message</param-name>
+      <param-value>genome-browser servlet</param-value>
+    </init-param>
+ </servlet>
   <servlet-mapping>
     <servlet-name>hello</servlet-name>
     <url-pattern>/helloservlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>genomebrowserservlet</servlet-name>
+    <url-pattern>/genomebrowser</url-pattern>
   </servlet-mapping>
   
 </web-app>
