@@ -131,14 +131,14 @@ public class WebServicesServlet extends AbstractServlet
 
             if( subServlet.equals(LOGIN) )
             {
-                try
-                {
-                    new JSONResponse(resp).error(new WebException("Login is not fixed yet"));
-                }
-                catch (IOException ioe)
-                {
-                    log.log(Level.SEVERE, "Can not send login response", ioe);
-                }
+                //                try
+                //                {
+                //                    new JSONResponse(resp).error(new WebException("Login is not fixed yet"));
+                //                }
+                //                catch (IOException ioe)
+                //                {
+                //                    log.log(Level.SEVERE, "Can not send login response", ioe);
+                //                }
 
                 if( authWebSession != null )
                 {
@@ -181,14 +181,14 @@ public class WebServicesServlet extends AbstractServlet
 
             if( subServlet.equals(LOGOUT) )
             {
-                try
-                {
-                    new JSONResponse(resp).error(new WebException("Logout is not fixed yet"));
-                }
-                catch (IOException ioe)
-                {
-                    log.log(Level.SEVERE, "Can not send logout response", ioe);
-                }
+                //                try
+                //                {
+                //                    new JSONResponse(resp).error(new WebException("Logout is not fixed yet"));
+                //                }
+                //                catch (IOException ioe)
+                //                {
+                //                    log.log(Level.SEVERE, "Can not send logout response", ioe);
+                //                }
                 logout(out, resp);
                 return;
             }

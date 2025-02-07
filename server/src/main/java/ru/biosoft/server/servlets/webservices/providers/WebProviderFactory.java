@@ -8,7 +8,9 @@ import ru.biosoft.access.exception.InitializationException;
 //TODO: new class instead of Registry-based ru.biosoft.server.servlets.webservices.providers.WebProviderFactory
 public class WebProviderFactory
 {
-    private static Map<String, WebProvider> providers;
+
+    private static WebProviderFactory instance = new WebProviderFactory();
+    private Map<String, WebProvider> providers;
 
     private volatile boolean initialized = false;
     private volatile boolean initializing = false;
@@ -38,14 +40,26 @@ public class WebProviderFactory
         }
     }
 
+    private void registerProviderInternal(String name, WebProvider provider)
+    {
+        init();
+        providers.put(name, provider);
+    }
+
+    private WebProvider getProviderInternal(String name)
+    {
+        init();
+        return providers.get(name);
+    }
+
     public static void registerProvider(String name, WebProvider provider)
     {
-        providers.put(name, provider);
+        instance.registerProviderInternal(name, provider);
     }
 
     public static WebProvider getProvider(String name)
     {
-        return providers.get(name);
+        return instance.getProviderInternal(name);
     }
 
 }

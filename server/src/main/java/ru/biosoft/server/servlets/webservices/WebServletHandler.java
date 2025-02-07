@@ -13,6 +13,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.biosoft.util.TextUtil;
 
 public class WebServletHandler
 {
@@ -104,12 +105,11 @@ public class WebServletHandler
             {
                 //???uriParameters.addAll(Arrays.asList(TextUtil.split(new String(EntityUtils.toByteArray(entity)), '&')));
             }
-            //            for ( String uriParameter : uriParameters )
-            //            {
-            //                String[] fields = TextUtil.split(uriParameter, '=');
-            //                if( fields.length > 1 )
-            //                    arguments.put(TextUtil.decodeURL(fields[0]), new String[] { TextUtil.decodeURL(fields[1]) });
-            //            }
+            for ( String uriParameter : uriParameters.keySet() )
+            {
+
+                arguments.put(TextUtil.decodeURL(uriParameter), uriParameters.get(uriParameter));
+            }
 
             //TODO: modified
             //servlet.service(subTarget, session, arguments, out, new ServerHttpResponseWrapper(response));
