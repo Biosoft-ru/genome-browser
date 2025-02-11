@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collector;
+import java.util.stream.Collector.Characteristics;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -535,6 +536,40 @@ public class TextUtil
 
             @Override
             public Set<java.util.stream.Collector.Characteristics> characteristics()
+            {
+                return EnumSet.of(Characteristics.IDENTITY_FINISH);
+            }
+        };
+    }
+
+    public static Collector<Object, ?, JSONArray> toArray()
+    {
+        return new Collector<Object, JSONArray, JSONArray>()
+        {
+
+            @Override public Supplier<JSONArray> supplier()
+            {
+                return JSONArray::new;
+            }
+
+            @Override public BiConsumer<JSONArray, Object> accumulator()
+            {
+                return JSONArray::put;
+            }
+
+            @Override public BinaryOperator<JSONArray> combiner()
+            {
+                return ((a, b) -> {
+                    throw new UnsupportedOperationException();
+                });
+            }
+
+            @Override public Function<JSONArray, JSONArray> finisher()
+            {
+                return Function.identity();
+            }
+
+            @Override public Set<java.util.stream.Collector.Characteristics> characteristics()
             {
                 return EnumSet.of(Characteristics.IDENTITY_FINISH);
             }

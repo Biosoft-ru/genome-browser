@@ -41,6 +41,7 @@ import ru.biosoft.access.file.FileBasedCollection;
 //import ru.biosoft.access.generic2.GenericDataCollection2;
 import ru.biosoft.access.repository.DataCollectionTreeModelAdapter;
 import ru.biosoft.access.security.Permission;
+import ru.biosoft.access.security.ProtectedDataCollection;
 //import ru.biosoft.access.security.ProtectedDataCollection;
 import ru.biosoft.access.sql.SqlConnectionHolder;
 import ru.biosoft.exception.MissingParameterException;
@@ -285,40 +286,39 @@ public class DataCollectionUtils
         return descriptor.getType();
     }
 
-    //TODO: commented, ProtectedDataCollection
-    //    /**
-    //     * Get protection status by {@link ru.biosoft.access.core.DataElementPath}
-    //     */
-    //    public static int getProtectionStatus(DataElementPath path)
-    //    {
-    //        DataCollection<?> parent = path.optParentCollection();
-    //        if( parent == null )
-    //            return ProtectedDataCollection.PROTECTION_PROTECTED_READ_ONLY;//the most strong protection for root collections
-    //        if( !(parent instanceof Repository) )
-    //            return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
-    //        try
-    //        {
-    //            DataElement dc = parent.get(path.getName());
-    //            if( dc instanceof ProtectedDataCollection )
-    //            {
-    //                return ProtectedDataCollection.PROTECTION_PUBLIC_READ_PROTECTED_WRITE;
-    //            }
-    //            else if( dc.getClass().getName().equals("biouml.model.ProtectedModule") || dc.getClass().getName().equals("biouml.model.Module")
-    //                    || dc.getClass().getName().equals("biouml.plugins.server.SqlModule") )
-    //            {
-    //                String protectionStatus = ((DataCollection<?>) dc).getInfo().getProperty(ProtectedDataCollection.PROTECTION_STATUS);
-    //                return protectionStatus == null ? ProtectedDataCollection.PROTECTION_NOT_PROTECTED : Byte.parseByte(protectionStatus);
-    //            }
-    //            else
-    //            {
-    //                return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
-    //        }
-    //    }
+    /**
+     * Get protection status by {@link ru.biosoft.access.core.DataElementPath}
+     */
+    public static int getProtectionStatus(DataElementPath path)
+    {
+        DataCollection<?> parent = path.optParentCollection();
+        if( parent == null )
+            return ProtectedDataCollection.PROTECTION_PROTECTED_READ_ONLY;//the most strong protection for root collections
+        if( !(parent instanceof Repository) )
+            return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
+        try
+        {
+            DataElement dc = parent.get(path.getName());
+            if( dc instanceof ProtectedDataCollection )
+            {
+                return ProtectedDataCollection.PROTECTION_PUBLIC_READ_PROTECTED_WRITE;
+            }
+            else if( dc.getClass().getName().equals("biouml.model.ProtectedModule") || dc.getClass().getName().equals("biouml.model.Module")
+                    || dc.getClass().getName().equals("biouml.plugins.server.SqlModule") )
+            {
+                String protectionStatus = ((DataCollection<?>) dc).getInfo().getProperty(ProtectedDataCollection.PROTECTION_STATUS);
+                return protectionStatus == null ? ProtectedDataCollection.PROTECTION_NOT_PROTECTED : Byte.parseByte(protectionStatus);
+            }
+            else
+            {
+                return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
+            }
+        }
+        catch (Exception e)
+        {
+            return ProtectedDataCollection.PROTECTION_NOT_APPLICABLE;
+        }
+    }
 
     private static DataCollection getTypeSpecificCollection(DataCollection<?> parent, Class<? extends DataElement> clazz, int access)
     {
