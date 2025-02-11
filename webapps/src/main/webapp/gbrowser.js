@@ -23,7 +23,7 @@ function login(callback)
     //    });
     queryBioUML("web/test", {"testparam": "testparam_value"}, 
                 function(data){
-                    alert(data);
+                    //alert(data);
                     if(callback)
                         callback();
                 }, function (data){
@@ -35,7 +35,7 @@ var appInfo = {
         name: "Genome browser",
         edition: "web edition",
         version: "1.0",
-        ensemblPath: "databases/EnsemblHuman100",
+        ensemblPath: "databases/EnsemblHuman104",
         serverPath: "../genomebrowser/"
 };
 
