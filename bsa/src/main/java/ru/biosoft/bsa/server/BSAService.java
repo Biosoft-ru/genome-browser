@@ -1,8 +1,6 @@
 package ru.biosoft.bsa.server;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +10,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
@@ -21,8 +18,6 @@ import org.json.JSONObject;
 
 //import com.developmentontheedge.application.ApplicationUtils;
 import com.developmentontheedge.beans.DynamicProperty;
-import com.developmentontheedge.beans.DynamicPropertySet;
-import com.developmentontheedge.beans.DynamicPropertySetAsMap;
 
 //import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.core.CollectionFactory;
@@ -40,8 +35,6 @@ import ru.biosoft.bsa.Slice;
 import ru.biosoft.bsa.SlicedSequence;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.TrackRegion;
-import ru.biosoft.bsa.analysis.FilteredTrack;
-import ru.biosoft.bsa.analysis.FilteredTrack.ModelTrackFilter;
 import ru.biosoft.bsa.project.Project;
 import ru.biosoft.bsa.project.ProjectAsLists;
 import ru.biosoft.bsa.project.Region;
