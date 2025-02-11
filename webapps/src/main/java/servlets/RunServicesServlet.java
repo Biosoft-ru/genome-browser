@@ -42,6 +42,8 @@ public class RunServicesServlet extends HttpServlet
     {
         super.init(config);
 
+        AccessCoreInit.init();
+
         configPath = config.getInitParameter("configPath");
         if( configPath == null )
             configPath = "config.yml";
@@ -59,7 +61,7 @@ public class RunServicesServlet extends HttpServlet
             }
         }
 
-        AccessCoreInit.init();
+
 
         initProviders();
         initServices();
