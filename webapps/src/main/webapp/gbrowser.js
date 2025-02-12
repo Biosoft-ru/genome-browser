@@ -21,7 +21,8 @@ function login(callback)
    //     }, function (data){
     //        alert(data.message);
     //    });
-    queryBioUML("web/test", {"testparam": "testparam_value"}, 
+    
+    queryBioUML("web/test", {"test": "test"}, 
                 function(data){
                     //alert(data);
                     if(callback)
@@ -30,6 +31,8 @@ function login(callback)
                     alert(data.message);
                 });
 }
+
+var tracksPath = [];
 
 var appInfo = {
         name: "Genome browser",
@@ -42,9 +45,15 @@ var appInfo = {
 function loadContent()
 {
     initBioUMLGlobals();
-    initTracks();
+    //initTracks();
     initUIMode(true);
-    loadGenomeBrowser();
+    queryBioUML("web/parameter", {"parameter_name": "tracksPath"}, 
+    function(data){
+        loadUserFasta(data.tracksPath[0]);
+    }, function (data){
+        alert(data.message);
+    });
+    //loadGenomeBrowser();
     initButtons();
 }
 
@@ -66,6 +75,37 @@ function initTracks()
     ensemblTracks["Transcripts"] = ensemblTracksPath.concat("Transcripts");
     ensemblTracks["Karyotype"] = ensemblTracksPath.concat("Karyotype");
     //ensemblTracks["Variations"] = ensemblPath.concat("Variations");
+}
+
+function loadUserFasta(sequencePath)
+{
+        var mainDiv = $("#gbrowser");
+        mainDiv.empty();
+
+        CreateSequenceDocument(sequencePath, "gb_main", function (sequenceDoc) {
+            //sequenceDoc.initialTracks = [ensemblTracks["Genes"], ensemblTracks["GC content"]];
+            sequenceDoc.open(mainDiv);
+            activeDoc = sequenceDoc;
+            let pane = $(activeDoc.viewPanesContainerDiv);
+            let docDiv = pane.parents().find("#gb_main");
+            let docContDiv = pane.parents().find("#gb_main_container");
+            docContDiv.css("width", "100%").css("border", "none");
+            //docDiv.css("height", "50%");
+            docDiv.css("width", "100%");
+            activeDoc.sequenceContainerDiv.resize();
+            activeDoc.sequenceDocument.bind("sequenceLoaded", function(){
+                mLoaded = true;
+                //adjustRegionSelector(activeDoc, karyoDoc)
+                initViewPartsGB();
+            });
+            activeDoc.sequenceDocument.bind("positionChanged", function(){
+                //adjustRegionSelector(activeDoc, karyoDoc);  
+            });
+            activeDoc.chromosomeSelector.change(function(){
+                //karyoDoc.setPosition(activeDoc.chromosomeSelector.val()+":");
+            });
+            
+        });
 }
 
 var activeDoc;
@@ -201,7 +241,7 @@ function initViewPartsGB()
     var viewPartTabs = $(document.getElementById("gb-viewPartTabs"));
     initBSAViewParts();
 
-    var tabs = viewPartTabs.tabs(
+    /*var tabs = viewPartTabs.tabs(
     {
         show: function(event, ui)
         {
@@ -223,24 +263,62 @@ function initViewPartsGB()
             }
             viewPartTabs.triggerHandler("resize");
         }
-    });
-    this.viewPartToolbar = $('<div class="ui-corner-all ui-helper-clearfix tabs-shifter" style="min-width: 115px; left: 0px; top: 2px; position:absolute; z-index:1;"></div>');
+    });*/
+    
+    var tabs = viewPartTabs.tabs(
+        {
+            activate: function(event, ui)
+            {
+                if (opennedViewPartId != null) 
+                {
+                    var vp = lookForViewPart(opennedViewPartId);
+                    if (vp != null) 
+                    {
+                        vp.save();
+                    }
+                }
+                opennedViewPartId = $(ui.newPanel).attr('data-id');
+                var vp = lookForViewPart(opennedViewPartId);
+                if (vp != null) 
+                {
+                    updateViewPartsToolbarGB(vp);
+                    if(vp.show)
+                        vp.show(opennedDocuments[activeDocumentId]);
+                }
+                viewPartTabs.triggerHandler("resize");
+            }
+        });
+    //this.viewPartToolbar = $('<div class="ui-corner-all ui-helper-clearfix tabs-shifter" style="min-width: 115px; left: 0px; top: 2px; position:absolute; z-index:1;"></div>');
+    //tabs.find('.ui-tabs-nav').append(this.viewPartToolbar);
+    this.viewPartToolbar = $('<div class="ui-corner-all ui-helper-clearfix tabs-shifter" style="min-width: 115px; left: 2px; top: 2px; position:absolute; z-index:1;"></div>');
     tabs.find('.ui-tabs-nav').append(this.viewPartToolbar);
     
+    var vpNavBar = viewPartTabs.children(".ui-tabs-nav" );
+    var vpVisible = [];
     for (var vpi = 0; vpi < viewParts.length; vpi++) 
     {
         var viewPart = viewParts[vpi];
-        (function(viewPart)
+        (function(viewPart) // using closure to isolate viewPart variable
         {
-            viewPartTabs.append(viewPart.tabDiv);
-            viewPartTabs.tabs('add', getViewPartSelector(viewPart.tabId), viewPart.tabName);
-            viewPart.explore(activeDoc);
-            if ((vps != null) && (vps == viewPart.tabId)) 
+            viewPart.isVisible(activeDoc, function(visible)
             {
-                selectViewPartGB(vps);
-                vps = null;
-            }
+                if (visible) 
+                {
+                    vpVisible.push(viewPart.tabId);
+                    viewPartTabs.append(viewPart.tabDiv);
+                    $( "<li><a href='#"+viewPart.tabId+"'>"+viewPart.tabName+"</a></li>" ).appendTo(vpNavBar);
+                    viewPart.explore(activeDoc);
+                }
+            });
         })(viewPart);
+    }
+    
+    viewPartTabs.tabs( "refresh" );
+        
+    if ((vps != null) && (vps == viewPart.tabId)) 
+    {
+        selectViewPartGB(vps);
+        vps = null;
     }
 }
 
@@ -255,26 +333,22 @@ function updateViewPartsToolbarGB(viewPart)
     }
     
     this.viewPartToolbar.append(block);
-    var leftToolbarShift = Math.max(block.children().length*22 + 5, 115)  ;
+    var leftToolbarShift = Math.max(block.children().length*22 + 5, 117)  ;
     $('#gb-viewPartTabs > ul').css("padding-left", leftToolbarShift + "px");
 }
+
 
 function selectViewPartGB(id)
 {
     viewPartToSelect = id;
-    var selector = getViewPartSelector(id);
+    var index = $('#gb-viewPartTabs a[href="#'+id+'"]').parent().index();
+    if(index < 0)
+        return;
     var anchors = $('#gb-viewPartTabs > ul > li > a');
-    var offset = 0;
-    if(anchors.length > 0 && anchors.get(0).getAttribute("href") == "#")
-        offset = 1;
-    for(var index = 0; index < anchors.length; index++)
-    {
-        
-        if(anchors.get(index).getAttribute("href") === selector)
-        {
-            $(document.getElementById("gb-viewPartTabs")).tabs('select', index-offset);
-        }
-    }
+    var offset = 1; //offset for toolbar and settings
+//    if(anchors.length > 0 && anchors.get(0).getAttribute("href") == "#")
+//        offset += 1;
+    $(document.getElementById("gb-viewPartTabs")).tabs("option", "active", index-offset);
 }
 
 

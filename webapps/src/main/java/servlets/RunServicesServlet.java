@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
@@ -24,6 +25,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.biosoft.access.AccessCoreInit;
+import ru.biosoft.access.generic.DataElementTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
 import ru.biosoft.server.ServiceRegistry;
@@ -67,9 +69,11 @@ public class RunServicesServlet extends HttpServlet
         initServices();
         initTransformers();
         initDataTypes();
+        initDataElementTypeDrivers();
         //TODO: initCommonClasses
 
     }
+
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -99,6 +103,36 @@ public class RunServicesServlet extends HttpServlet
             JSONObject obj = new JSONObject();
             obj.put("type", "ok");
             obj.write(ow);
+            ow.flush();
+        }
+        else if( target.startsWith("/genomebrowser/web/parameter") )
+        {
+            String pName = request.getParameter("parameter_name");
+
+            JSONArray vals = new JSONArray();
+            if( yaml.get(pName) != null )
+            {
+                Object pValue = yaml.get(pName);
+                if( pValue instanceof List )
+                {
+                    for ( String val : (List<String>) pValue )
+                    {
+                        vals.put(val);
+                    }
+                }
+                else
+                {
+                    vals.put(pValue.toString());
+                }
+
+            }
+            JSONObject responseObject = new JSONObject();
+            responseObject.put(pName, vals);
+            responseObject.put("type", "ok");
+            PrintWriter ow = response.getWriter();
+            response.setContentType("text/plain");
+            response.setStatus(HttpServletResponse.SC_OK);
+            responseObject.write(ow);
             ow.flush();
         }
         else
@@ -141,7 +175,7 @@ public class RunServicesServlet extends HttpServlet
 
     private void initServices()
     {
-        ServiceRegistry.registerService("bsa", new BSAService());
+        ServiceRegistry.registerService("bsa.service", new BSAService());
         ServiceRegistry.registerService("access.service", new AccessService());
     }
 
@@ -186,5 +220,15 @@ public class RunServicesServlet extends HttpServlet
     {
         DataType.addDataType("ru.biosoft.bsa.access.GenomeBrowserDataType");
         //DataType.addDataType("DT");
+    }
+
+    private void initDataElementTypeDrivers()
+    {
+        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementEntryTypeDriver");
+        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementFileTypeDriver");
+        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementGenericCollectionTypeDriver");
+        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementSQLTypeDriver");
+        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.RepositoryTypeDriver");
+
     }
 }
