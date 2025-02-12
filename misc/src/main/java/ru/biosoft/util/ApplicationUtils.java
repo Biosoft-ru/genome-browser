@@ -45,6 +45,7 @@ import com.developmentontheedge.beans.Preferences;
 import ru.biosoft.access.ClassLoading;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.jobcontrol.JobControl;
+import ru.biosoft.util.entry.RegularFileEntry;
 //import ru.biosoft.util.entry.BundleEntry;
 import ru.biosoft.access.core.PluginEntry;
 //import ru.biosoft.util.entry.RegularFileEntry;
@@ -231,32 +232,32 @@ public class ApplicationUtils
 
     public static PluginEntry resolvePluginPath(String pluginPath, String parentPath)
     {
-        return null;
-        //TODO: commented, Platform
-    //        if(pluginPath == null)
-    //            return null;
-    //        int colonPos = pluginPath.indexOf( ':' );
-    //        if(colonPos < 3)
-    //        {
-    //            File f = parentPath.isEmpty() ? new File( pluginPath ) : new File( parentPath, pluginPath );
-    //            return new RegularFileEntry( f );
-    //        }
-    //        String pluginName = pluginPath.substring( 0, colonPos );
-    //        String path = pluginPath.substring( colonPos+1 );
-    //        Bundle plugin = Platform.getBundle(pluginName);
-    //        if(plugin == null)
-    //        {
-    //            if(new File("../plugconfig").exists())
-    //                return new RegularFileEntry(new File(new File("../plugconfig", pluginName), path));
-    //            else
-    //                return new RegularFileEntry( new File( pluginPath ) );
-    //        }
-    //        path = "/" + path;
-    //        if( plugin.getEntryPaths( path ) != null )
-    //        {
-    //            path += "/";
-    //        }
-    //        return new BundleEntry( plugin, path );
+
+        if( pluginPath == null )
+            return null;
+        int colonPos = pluginPath.indexOf(':');
+        if( colonPos < 3 )
+        {
+            File f = parentPath.isEmpty() ? new File(pluginPath) : new File(parentPath, pluginPath);
+            return new RegularFileEntry(f);
+        }
+        String pluginName = pluginPath.substring(0, colonPos);
+        String path = pluginPath.substring(colonPos + 1);
+        //TODO: commented, Platform, Bundle
+        //            Bundle plugin = Platform.getBundle(pluginName);
+        //            if(plugin == null)
+        //            {
+        //                if(new File("../plugconfig").exists())
+        //                    return new RegularFileEntry(new File(new File("../plugconfig", pluginName), path));
+        //                else
+        return new RegularFileEntry(new File(pluginPath));
+        //            }
+        //            path = "/" + path;
+        //            if( plugin.getEntryPaths( path ) != null )
+        //            {
+        //                path += "/";
+        //            }
+        //            return new BundleEntry( plugin, path );
 }
 
     public static int getMaxSortingSize()

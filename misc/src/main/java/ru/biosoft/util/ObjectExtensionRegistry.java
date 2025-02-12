@@ -97,6 +97,7 @@ public class ObjectExtensionRegistry<T> implements Iterable<T>
 
     public void addElement(String name, String className)
     {
+        init();
         Class<? extends T> elementClass = getClass(className, clazz);
         try
         {

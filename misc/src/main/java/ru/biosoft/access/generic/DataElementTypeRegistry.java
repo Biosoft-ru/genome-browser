@@ -7,6 +7,7 @@ import ru.biosoft.access.core.DataElement;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.util.ObjectExtensionRegistry;
 
+//TODO: class modified
 /**
  * Type registry for GenericDataCollection
  */
@@ -70,5 +71,10 @@ public class DataElementTypeRegistry
             return extension;
         }
         throw new Exception("Can not find DataElementTypeDriver for element of type " + childClass.getName());
+    }
+
+    public static void registerDataElementTypeDriver(String className)
+    {
+        drivers.addElement(className, className);
     }
 }
