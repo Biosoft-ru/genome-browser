@@ -22,7 +22,7 @@ function login(callback)
     //        alert(data.message);
     //    });
     
-    queryBioUML("web/test", {"test": "test"}, 
+    queryBioUML("web/check", {"test": "test"}, 
                 function(data){
                     //alert(data);
                     if(callback)

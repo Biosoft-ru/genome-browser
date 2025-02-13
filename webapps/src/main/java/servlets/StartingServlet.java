@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 import biouml.plugins.server.RepositoryManager;
-import biouml.plugins.server.access.AccessService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebInitParam;
@@ -25,25 +24,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.biosoft.access.AccessCoreInit;
-import ru.biosoft.access.generic.DataElementTypeRegistry;
-import ru.biosoft.access.generic.TransformerRegistry;
-import ru.biosoft.bsa.server.BSAService;
-import ru.biosoft.server.ServiceRegistry;
+import ru.biosoft.access.AccessInitializer;
+import ru.biosoft.bsa.BSAInitializer;
+import ru.biosoft.server.ServerInitializer;
 import ru.biosoft.server.servlets.webservices.WebServletHandler;
-import ru.biosoft.server.servlets.webservices.providers.ServiceProvider;
-import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
-import ru.biosoft.table.datatype.DataType;
 
 @WebServlet(urlPatterns = { "/genomebrowser/*" }, initParams = { @WebInitParam(name = "configPath", value = "config2.yml") })
-public class RunServicesServlet extends HttpServlet
+public class StartingServlet extends HttpServlet
 {
+    private static final long serialVersionUID = 1L;
     private String configPath;
     private Map<String, Object> yaml;
 
     @Override public void init(ServletConfig config) throws ServletException
     {
         super.init(config);
-
         AccessCoreInit.init();
 
         configPath = config.getInitParameter("configPath");
@@ -63,39 +58,22 @@ public class RunServicesServlet extends HttpServlet
             }
         }
 
-
-
-        initProviders();
-        initServices();
-        initTransformers();
-        initDataTypes();
-        initDataElementTypeDrivers();
-        //TODO: initCommonClasses
-
+        AccessInitializer.initialize();
+        ServerInitializer.initialize();
+        BSAInitializer.initialize();
     }
 
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        String target = request.getRequestURI();
-        if( target.startsWith("/genomebrowser/web/test") )
-        {
-            PrintWriter ow = response.getWriter();
-            response.setContentType("text/plain");
-            response.setStatus(HttpServletResponse.SC_OK);
-            JSONObject obj = new JSONObject();
-            obj.put("type", "ok");
-            obj.write(ow);
-            ow.flush();
-        }
-        else
-            WebServletHandler.handle(request, response, "GET");
+        response.setContentType("text/plain");
+        response.getWriter().printf("Get query%n");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         String target = request.getRequestURI();
-        if( target.startsWith("/genomebrowser/web/test") )
+        if( target.startsWith("/genomebrowser/web/check") )
         {
             PrintWriter ow = response.getWriter();
             response.setContentType("text/plain");
@@ -168,67 +146,4 @@ public class RunServicesServlet extends HttpServlet
         }
     }
 
-    private void initProviders()
-    {
-        WebProviderFactory.registerProvider("data", new ServiceProvider());
-    }
-
-    private void initServices()
-    {
-        ServiceRegistry.registerService("bsa.service", new BSAService());
-        ServiceRegistry.registerService("access.service", new AccessService());
-    }
-
-    private void initTransformers()
-    {
-        //ACCESS
-        //TransformerRegistry.addTransformer("Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.ImageDataElement");
-        //TransformerRegistry.addTransformer("HTML file", "ru.biosoft.access.support.FileHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.HtmlDataElement");
-        //TransformerRegistry.addTransformer("Plain text", "ru.biosoft.access.support.FileTextTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.ImageDataElement");
-        //TransformerRegistry.addTransformer("ZIP-archive with HTML pages", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.html.ZipHtmlDataCollection");
-        //TransformerRegistry.addTransformer("Video", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.VideoDataElement");
-
-        //???
-        //TransformerRegistry.addTransformer("Analysis method element", "ru.biosoft.analysiscore.AnalysisMethodTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.analysiscore.AnalysisMethodElement");
-
-        //BSA
-        TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
-        TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
-        TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
-        TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BAMTrack");
-        //TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.VCFFileTrack");
-        //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
-        TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
-        TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
-        
-        TransformerRegistry.addTransformer("Genome browser view", "ru.biosoft.bsa.transformer.ProjectTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.project.Project");
-        TransformerRegistry.addTransformer("Site model", "ru.biosoft.bsa.transformer.SiteModelTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.SiteModel");
-        TransformerRegistry.addTransformer("Frequency matrix", "ru.biosoft.bsa.transformer.WeightMatrixTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.analysis.FrequencyMatrix");
-        
-        
-        //??TransformerRegistry.addTransformer("Filtered track", "ru.biosoft.access.XMLTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.analysis.FilteredTrack");
-        
-        //        TransformerRegistry.addTransformer("NAME", "TRANSFORMER", "ru.biosoft.access.Entry", "OUTPUT");
-        //        TransformerRegistry.addTransformer("NAME", "TRANSFORMER", "ru.biosoft.access.Entry", "OUTPUT");
-        //        
-        //        TransformerRegistry.addTransformer("NAME", "TRANFORMER", "ru.biosoft.access.FileDataElement", "OUTPUT");
-        //        TransformerRegistry.addTransformer("NAME", "TRANFORMER", "ru.biosoft.access.FileDataElement", "OUTPUT");
-        
-    }
-
-    private void initDataTypes()
-    {
-        DataType.addDataType("ru.biosoft.bsa.access.GenomeBrowserDataType");
-        //DataType.addDataType("DT");
-    }
-
-    private void initDataElementTypeDrivers()
-    {
-        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementEntryTypeDriver");
-        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementFileTypeDriver");
-        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementGenericCollectionTypeDriver");
-        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementSQLTypeDriver");
-        DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.RepositoryTypeDriver");
-
-    }
 }

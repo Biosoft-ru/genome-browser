@@ -48,7 +48,7 @@
   </dependencies>
   
   <build>
-    <finalName>server</finalName>
+    <finalName>Web genome browser</finalName>
 
     <plugins>
       <plugin>
