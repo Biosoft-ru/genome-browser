@@ -31,10 +31,13 @@ public class WebServletHandler
         }
         String sessionId = "";
 
-        for ( Cookie cookie : request.getCookies() )
+        if( request.getCookies() != null )
         {
-            if( cookie.getName().equals("JSESSIONID") )
-                sessionId = cookie.getValue();
+            for ( Cookie cookie : request.getCookies() )
+            {
+                if( cookie.getName().equals("JSESSIONID") )
+                    sessionId = cookie.getValue();
+            }
         }
         //TODO: compare with some registered session
         //        if( !sessionId.equals(this.sessionId) )
