@@ -1,0 +1,5 @@
+files:
+- name: track_fasta
+  transformer: ru.biosoft.bsa.transformer.FastaFileTransformer
+- name: alpha_inhibin_cattle
+  transformer: ru.biosoft.bsa.transformer.FastaFileTransformer

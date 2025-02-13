@@ -13,6 +13,7 @@
   <module>bsa</module>
   <module>server</module>
   <module>webapps</module>
+  <module>data</module>
  </modules>
 
  <properties>
