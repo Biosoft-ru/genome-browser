@@ -2,6 +2,7 @@ package ru.biosoft.server;
 
 import biouml.plugins.server.access.AccessService;
 import ru.biosoft.server.servlets.webservices.providers.ServiceProvider;
+import ru.biosoft.server.servlets.webservices.providers.WebBeanProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
 import ru.biosoft.util.Initializer;
 
@@ -24,10 +25,16 @@ public class ServerInitializer extends Initializer
     @Override protected void initProviders()
     {
         WebProviderFactory.registerProvider("data", new ServiceProvider());
+        WebProviderFactory.registerProvider("bean", new WebBeanProvider());
     }
 
     public static void initialize()
     {
         getInstance().init();
+    }
+
+    @Override protected void initBeans()
+    {
+        BeanRegistry.registerBeanProvider("NAME", "BEAN CLASS");
     }
 }

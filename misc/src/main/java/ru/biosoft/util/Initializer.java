@@ -69,4 +69,9 @@ public abstract class Initializer
     {
         //TransformerRegistry.addTransformer("NAME", "TRANSFORMER CLASS", "INPUT CLASS", "OUTPUT CLASS");
     }
+
+    protected void initBeans()
+    {
+        //BeanRegistry.registerBeanProvider("NAME", "BEAN CLASS");
+    }
 }
