@@ -7,9 +7,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -112,6 +115,20 @@ public class StartingServlet extends HttpServlet
             response.setStatus(HttpServletResponse.SC_OK);
             responseObject.write(ow);
             ow.flush();
+        }
+        else if( target.startsWith("/genomebrowser/web/login") )
+        {
+            Map<String, Object> extraParameters = null;
+            if( yaml.get("roots") != null )
+            {
+                Object roots = yaml.get("roots");
+                if( roots instanceof List )
+                {
+                    extraParameters = new HashMap<>();
+                    extraParameters.put("repository", new String[] { ((List<String>) roots).stream().collect(Collectors.joining(";")) });
+                }
+            }
+            WebServletHandler.handle(request, response, "POST", extraParameters);
         }
         else
             WebServletHandler.handle(request, response, "POST");

@@ -25,6 +25,11 @@ public class WebServletHandler
 
     public static void handle(final HttpServletRequest request, final HttpServletResponse response, String method) throws IOException
     {
+        handle(request, response, method, null);
+    }
+
+    public static void handle(final HttpServletRequest request, final HttpServletResponse response, String method, Map<String, Object> extraArguments) throws IOException
+    {
         if( !method.equals("GET") && !method.equals("HEAD") && !method.equals("POST") )
         {
             throw new IllegalArgumentException(method + " method not supported");
@@ -112,6 +117,10 @@ public class WebServletHandler
             {
 
                 arguments.put(TextUtil.decodeURL(uriParameter), uriParameters.get(uriParameter));
+            }
+            if( extraArguments != null )
+            {
+                arguments.putAll(extraArguments);
             }
 
             //TODO: modified

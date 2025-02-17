@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,8 +24,8 @@ import org.json.JSONObject;
 //import biouml.plugins.download.FileDownloader;
 //import biouml.plugins.download.FileDownloader.RemoteFileInfo;
 import biouml.plugins.server.access.AccessProtocol;
-import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.FileDataElement;
+import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.access.security.SessionCache;
 import ru.biosoft.access.security.SessionCacheManager;
@@ -453,11 +452,36 @@ public class WebServicesServlet extends AbstractServlet
         if( user != null && !user.isEmpty() )
             result.put( "username", user );
 
-        Map<String, String> perspectiveArguments = new HashMap<>();
-        perspectiveArguments.put("name", arguments.get("perspective"));
-        result.put("perspective", getRequestValue("perspective", perspectiveArguments, "reading perspectives info"));
+        JSONArray repositories = null;
 
-        JSONArray repositories = result.getJSONObject("perspective").getJSONObject("perspective").getJSONArray("repository");
+        Map<String, String> perspectiveArguments = new HashMap<>();
+        if(arguments.get("perspective") != null && arguments.get("perspective").equals("disabled"))
+        {
+            //no perspective
+            JSONObject resObject = new JSONObject();
+            JSONObject perspectiveDummy = new JSONObject();
+            perspectiveDummy.put("name", "disabled");
+
+            //try to init repo from arguments
+            repositories = new JSONArray();
+            if( arguments.get("repository") != null )
+            {
+                String repos = arguments.get("repository");
+                for ( String repo : repos.split(";") )
+                {
+                    repositories.put(new JSONObject().put("path", repo));
+                }
+            }
+            perspectiveDummy.put("repository", repositories);
+            resObject.put("perspective", perspectiveDummy).put("names", new JSONArray());
+            result.put("perspective", resObject);
+        }
+        else
+        {
+            perspectiveArguments.put("name", arguments.get("perspective"));
+            result.put("perspective", getRequestValue("perspective", perspectiveArguments, "reading perspectives info"));
+            repositories = result.getJSONObject("perspective").getJSONObject("perspective").getJSONArray("repository");
+        }
         JSONObject roots = new JSONObject();
         Set<String> classes = new HashSet<>();
         for(int i=0; i<repositories.length(); i++)
@@ -479,39 +503,47 @@ public class WebServicesServlet extends AbstractServlet
         }
         result.put("roots", roots);
 
-        Map<String, String> preferencesArguments = new HashMap<>();
-        preferencesArguments.put(BiosoftWebRequest.ACTION, "init");
-        result.put("preferences", getRequestValue("preferences", preferencesArguments, "reading preferences"));
+        result.put("preferences", new JSONObject());
+        result.put("context", new JSONObject());
+        result.put("scriptTypes", new JSONObject());
+        result.put("classes", new JSONObject());
+        result.put("actions", new JSONObject());
+        result.put("journals", new JSONObject());
 
-        Map<String, String> contextArguments = new HashMap<>();
-        contextArguments.put(BiosoftWebRequest.ACTION, "context");
-        result.put("context", getRequestValue("script", contextArguments, "reading script context"));
-
-        Map<String, String> scriptTypesArguments = new HashMap<>();
-        scriptTypesArguments.put(BiosoftWebRequest.ACTION, "types");
-        result.put("scriptTypes", getRequestValue("script", scriptTypesArguments, "reading script types"));
-
-        Map<String, String> classesArguments = new HashMap<>();
-        classesArguments.put("service", "access.service");
-        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
-        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
-        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
-        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
-
-        Map<String, String> actionArguments = new HashMap<>();
-        actionArguments.put("type", "toolbar");
-        JSONObject actions = new JSONObject();
-        actions.put("toolbar", getRequestValue("action", actionArguments, "reading toolbar actions"));
-        actionArguments.put("type", "tree");
-        actions.put("tree", getRequestValue("action", actionArguments, "reading tree actions"));
-        actionArguments.put("type", "dynamic");
-        actionArguments.put(BiosoftWebRequest.ACTION, "load");
-        actions.put("dynamic", getRequestValue("action", actionArguments, "reading dynamic actions"));
-        result.put("actions", actions);
-
-        Map<String, String> journalArguments = new HashMap<>();
-        journalArguments.put(BiosoftWebRequest.ACTION, "init");
-        result.put("journals", getRequestValue("journal", journalArguments, "reading projects list"));
+        //TODO: copy providers or send empty values
+        //        Map<String, String> preferencesArguments = new HashMap<>();
+        //        preferencesArguments.put(BiosoftWebRequest.ACTION, "init");
+        //        result.put("preferences", getRequestValue("preferences", preferencesArguments, "reading preferences"));
+        //
+        //        Map<String, String> contextArguments = new HashMap<>();
+        //        contextArguments.put(BiosoftWebRequest.ACTION, "context");
+        //        result.put("context", getRequestValue("script", contextArguments, "reading script context"));
+        //
+        //        Map<String, String> scriptTypesArguments = new HashMap<>();
+        //        scriptTypesArguments.put(BiosoftWebRequest.ACTION, "types");
+        //        result.put("scriptTypes", getRequestValue("script", scriptTypesArguments, "reading script types"));
+        //
+        //        Map<String, String> classesArguments = new HashMap<>();
+        //        classesArguments.put("service", "access.service");
+        //        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
+        //        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
+        //        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
+        //        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
+        //
+        //        Map<String, String> actionArguments = new HashMap<>();
+        //        actionArguments.put("type", "toolbar");
+        //        JSONObject actions = new JSONObject();
+        //        actions.put("toolbar", getRequestValue("action", actionArguments, "reading toolbar actions"));
+        //        actionArguments.put("type", "tree");
+        //        actions.put("tree", getRequestValue("action", actionArguments, "reading tree actions"));
+        //        actionArguments.put("type", "dynamic");
+        //        actionArguments.put(BiosoftWebRequest.ACTION, "load");
+        //        actions.put("dynamic", getRequestValue("action", actionArguments, "reading dynamic actions"));
+        //        result.put("actions", actions);
+        //
+        //        Map<String, String> journalArguments = new HashMap<>();
+        //        journalArguments.put(BiosoftWebRequest.ACTION, "init");
+        //        result.put("journals", getRequestValue("journal", journalArguments, "reading projects list"));
 
         result.put("experimental", !SecurityManager.isExperimentalFeatureHidden());
 
