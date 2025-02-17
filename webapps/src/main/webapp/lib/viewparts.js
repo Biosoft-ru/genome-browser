@@ -27,47 +27,8 @@ function createViewPartContainer(name)
 var pagingInitialized = false;
 function initViewParts()
 {
-    var descriptionViewPart = new DescriptionViewPart();
-    descriptionViewPart.init();
-    viewParts.push(descriptionViewPart);
-    
-    var srViewPart = new SearchResultViewPart();
-    srViewPart.init();
-    viewParts.push(srViewPart);
-    
-    var graphSearchViewPart = new GraphSearchViewPart();
-    graphSearchViewPart.init();
-    viewParts.push(graphSearchViewPart);
-    
-    var jsViewPart = new JavaScriptViewPart();
-    jsViewPart.init();
-    viewParts.push(jsViewPart);
-    
-    var clipboardViewPart = new ClipboardViewPart();
-    clipboardViewPart.init();
-    viewParts.push(clipboardViewPart);
-    
-    var scriptOutputViewPart = new ScriptOutputViewPart();
-    scriptOutputViewPart.init();
-    viewParts.push(scriptOutputViewPart);
-    
-    /*var sqlEditorViewPart = new SQLEditorViewPart();
-    sqlEditorViewPart.init();
-    viewParts.push(sqlEditorViewPart);*/
-    
-    var tasksViewPart = new TasksViewPart();
-    tasksViewPart.init();
-    viewParts.push(tasksViewPart);
-    
-    var geViewPart = new GenomeEnhancerViewPart();
-    geViewPart.init();
-    viewParts.push(geViewPart);
-    
-    var logViewPart = new LogViewPart();
-    logViewPart.init();
-    viewParts.push(logViewPart);
-
-    initWDLViewParts();
+    //initGeneralViewParts();
+    //initWDLViewParts();
 
     //var viewPartTabs = el.viewPartTabs;
 

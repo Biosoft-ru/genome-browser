@@ -1,11 +1,11 @@
 
-function createTreeItemDroppable()
-{
-}
+//function createTreeItemDroppable()
+//{
+//}
 
-function addTreeItemContextMenu()
-{
-}
+//function addTreeItemContextMenu()
+//{
+//}
 
 //var opennedDocuments = {};
 //var activeDocumentId;
@@ -13,3 +13,8 @@ function addTreeItemContextMenu()
 //function resizeDocumentsTabs()
 //{
 //}
+
+function getDefaultProjectDataPath()
+{
+    
+}

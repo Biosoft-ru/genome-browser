@@ -34,13 +34,7 @@ function login(callback)
 
 var tracksPath = [];
 
-var appInfo = {
-        name: "Genome browser",
-        edition: "web edition",
-        version: "1.0",
-        ensemblPath: "databases/EnsemblHuman104",
-        serverPath: "../genomebrowser/"
-};
+
 
 function loadContent()
 {
@@ -205,10 +199,11 @@ function pos2pixel (pos, positionInformer)
     return ( Math.ceil( pos / positionInformer.pixelWidth ) - 0.5 ) * positionInformer.pixelWidth * positionInformer.zoom;
 }
 
-function CreateSequenceDocument (name, docId, callback)
+/*function CreateSequenceDocument (name, docId, callback)
 {
     callback(new SequenceDocument(name, {}, docId));
 }
+*/
 
 var regionSelectorDiv = null;
 function removeRegionSelector()
@@ -353,7 +348,7 @@ function selectViewPartGB(id)
 
 
 
-var fullUI = true;
+/*var fullUI = true;
 function initUIMode(fu) 
 {
     if(!fu || fu  === 'false')
@@ -368,7 +363,7 @@ function initUIMode(fu)
         $("#gb-bottomPane").height("30%").show();
         $("#gb-mainPane").trigger('resize');
     }
-}
+}*/
 
 function initButtons()
 {
