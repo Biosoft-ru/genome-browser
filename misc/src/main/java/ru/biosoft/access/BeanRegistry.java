@@ -127,7 +127,13 @@ public class BeanRegistry
 
     public static void registerBeanProvider(String name, String beanProviderClass)
     {
-        instance.addElement(name, beanProviderClass);
+        try
+        {
+            instance.registerElement(name, beanProviderClass);
+        }
+        catch (Exception e)
+        {
+        }
 
     }
 

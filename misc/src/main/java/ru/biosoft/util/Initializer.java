@@ -27,6 +27,8 @@ public abstract class Initializer
                         initProviders();
                         initServices();
                         initTransformers();
+                        initBeans();
+                        initTemplates();
 
                     }
                     finally
@@ -73,5 +75,10 @@ public abstract class Initializer
     protected void initBeans()
     {
         //BeanRegistry.registerBeanProvider("NAME", "BEAN CLASS");
+    }
+
+    protected void initTemplates()
+    {
+        //TemplateRegistry.registerTemplate("TEMPLATE NAME", "ANY CLASS WITH RESOURCE FOLDER INSTEAD OF PLUGIN NAME", "OTHER ARGUMENTS FOR TEMPLATE: FILE PATH, DESCRIPTION, IS BREAF, ORDER");
     }
 }

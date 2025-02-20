@@ -25,11 +25,12 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collector;
-import java.util.stream.Collector.Characteristics;
+//import java.util.stream.Collector.Characteristics;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1077,6 +1078,24 @@ public class TextUtil
         {
             super("Can't parse " + type.getName() + " from string: " + str);
         }
+    }
+
+    /**
+     * Replace image paths in html for images to be loaded from plugin resources
+     */
+    public static String processHTMLImages(String html, String baseId)
+    {
+        Pattern pattern = Pattern.compile("<img([^>]*) src=\"([^\"]+)\"");
+        Matcher matcher = pattern.matcher(html);
+        int start = 0;
+        while ( matcher.find(start) )
+        {
+            html = html.substring(0, matcher.start()) + "<img" + matcher.group(1) + " src=\"../biouml/web/img?id=" + (matcher.group(2).contains("://") ? "" : baseId)
+                    + TextUtil.encodeURL(StringEscapeUtils.unescapeHtml4(matcher.group(2))) + "\"" + html.substring(matcher.end());
+            start = matcher.end();
+            matcher = pattern.matcher(html);
+        }
+        return html;
     }
 
     /**

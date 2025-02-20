@@ -31,6 +31,7 @@ import ru.biosoft.access.AccessInitializer;
 import ru.biosoft.bsa.BSAInitializer;
 import ru.biosoft.server.ServerInitializer;
 import ru.biosoft.server.servlets.webservices.WebServletHandler;
+import ru.biosoft.templates.TemplatesInitializer;
 
 @WebServlet(urlPatterns = { "/genomebrowser/*" }, initParams = { @WebInitParam(name = "configPath", value = "config2.yml") })
 public class StartingServlet extends HttpServlet
@@ -64,6 +65,7 @@ public class StartingServlet extends HttpServlet
         AccessInitializer.initialize();
         ServerInitializer.initialize();
         BSAInitializer.initialize();
+        TemplatesInitializer.initialize();
     }
 
 

@@ -18,7 +18,7 @@ public class AccessCoreInit
     public static void init()
     {
         Environment.setClassLoading( new BiosoftClassLoading() );
-        //Environment.setIconManager( new BiosoftIconManager() );
+        Environment.setIconManager(new BiosoftIconManager());
         
         
         ru.biosoft.access.file.Environment.INSTANCE = new ru.biosoft.access.file.Environment() {

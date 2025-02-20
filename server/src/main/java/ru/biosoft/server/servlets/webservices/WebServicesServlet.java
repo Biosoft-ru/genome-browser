@@ -469,7 +469,7 @@ public class WebServicesServlet extends AbstractServlet
                 String repos = arguments.get("repository");
                 for ( String repo : repos.split(";") )
                 {
-                    repositories.put(new JSONObject().put("path", repo));
+                    repositories.put(new JSONObject().put("path", repo).put("title", TextUtil.ucFirst(repo)));
                 }
             }
             perspectiveDummy.put("repository", repositories);

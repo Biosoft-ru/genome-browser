@@ -1,7 +1,9 @@
 repositories:
 - /home/anna/projects/github/genome-browser/data/src/main/resources/repo
+- /opt/BioUML_Server/repo/
 roots:
 - repo
+- databases
 tracksPath:
 - repo/FilesDC/track_fasta
 - databases/GB/fasta/alpha_inhibin_cattle
