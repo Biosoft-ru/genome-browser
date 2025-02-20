@@ -71,11 +71,17 @@ public class StartingServlet extends HttpServlet
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        response.setContentType("text/plain");
-        response.getWriter().printf("Get query%n");
+        processRequest(request, response);
+        //        response.setContentType("text/plain");
+        //        response.getWriter().printf("Get query%n");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        processRequest(request, response);
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         String target = request.getRequestURI();
         if( target.startsWith("/genomebrowser/web/check") )

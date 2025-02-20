@@ -3,6 +3,7 @@ package ru.biosoft.server;
 import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.server.servlets.webservices.providers.HtmlTemplateProvider;
+import ru.biosoft.server.servlets.webservices.providers.ImageProvider;
 import ru.biosoft.server.servlets.webservices.providers.ServiceProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebBeanProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
@@ -29,6 +30,7 @@ public class ServerInitializer extends Initializer
         WebProviderFactory.registerProvider("data", new ServiceProvider());
         WebProviderFactory.registerProvider("bean", new WebBeanProvider());
         WebProviderFactory.registerProvider("html", new HtmlTemplateProvider());
+        WebProviderFactory.registerProvider("img", new ImageProvider());
     }
 
     public static void initialize()

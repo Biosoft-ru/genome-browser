@@ -83,16 +83,36 @@ public class ApplicationUtils
             String pluginName = imagename.substring(0, idx);
             log.fine( "Loading image from plugin " + pluginName );
             String resource = imagename.substring(idx + 1);
-            if(pluginName.equals("default"))
+
+            URL url = ApplicationUtils.class.getClassLoader().getResource(resource);
+            if( url != null )
             {
-                URL url = ApplicationUtils.class.getClassLoader().getResource(resource);
-                if( url != null )
-                {
-                    imageIcon = getImageIcon(url);
-                    imageMap.put(imagename, imageIcon);
-                    return imageIcon;
-                }
+                imageIcon = getImageIcon(url);
+                imageMap.put(imagename, imageIcon);
+                return imageIcon;
             }
+            //            else if( resource.lastIndexOf("/") > -1 )//TODO: try only by name since maven copy all resources in target folders 
+            //            {
+            //                String resourceName = resource.substring(resource.lastIndexOf("/") + 1);
+            //                url = ApplicationUtils.class.getClassLoader().getResource(resourceName);
+            //                if( url != null )
+            //                {
+            //                    imageIcon = getImageIcon(url);
+            //                    imageMap.put(imagename, imageIcon);
+            //                    return imageIcon;
+            //                }
+            //            }
+
+            //            if(pluginName.equals("default"))
+            //            {
+            //                URL url = ApplicationUtils.class.getClassLoader().getResource(resource);
+            //                if( url != null )
+            //                {
+            //                    imageIcon = getImageIcon(url);
+            //                    imageMap.put(imagename, imageIcon);
+            //                    return imageIcon;
+            //                }
+            //            }
             //            Bundle bundle = null;
             //            try
             //            {

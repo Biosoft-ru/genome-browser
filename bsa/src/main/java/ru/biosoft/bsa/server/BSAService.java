@@ -688,8 +688,10 @@ public class BSAService extends ServiceSupport
     {
         //TODO: commented BeanRegistry
         //return (SiteViewOptions)BeanRegistry.getBean( SiteViewOptionsProvider.getBeanPath( projectPath, trackPath ), sessionCache );
-        Project project = projectPath.getDataElement(Project.class);
-        return project.getViewOptions().getTrackViewOptions(trackPath);
+        Track track = getTrack(trackPath.toString());
+        SiteViewOptions viewOptions = track.getViewBuilder().createViewOptions();
+        viewOptions.initFromTrack(track);
+        return viewOptions;
     }
 
     private void sendCreateCombinedTrack(ServiceRequest request) throws Exception
