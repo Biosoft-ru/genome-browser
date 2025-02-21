@@ -1,8 +1,12 @@
 package ru.biosoft.bsa;
 
+import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
+import ru.biosoft.bsa.server.TrackFinderProvider;
 import ru.biosoft.server.ServiceRegistry;
+import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
+import ru.biosoft.server.servlets.webservices.providers.WebTablesProvider;
 import ru.biosoft.table.datatype.DataType;
 import ru.biosoft.templates.TemplateRegistry;
 import ru.biosoft.util.Initializer;
@@ -18,6 +22,12 @@ public class BSAInitializer extends Initializer
             instance = new BSAInitializer();
         return instance;
     }
+
+    public static void initialize()
+    {
+        getInstance().init();
+    }
+
     @Override protected void initDataTypes()
     {
         DataType.addDataType("ru.biosoft.bsa.access.GenomeBrowserDataType");
@@ -55,9 +65,22 @@ public class BSAInitializer extends Initializer
      * class="ru.biosoft.bsa.SqlTrack" subclasses="yes"/> </template>
      */
 
-    public static void initialize()
+    @Override protected void initProviders()
     {
-        getInstance().init();
+        WebProviderFactory.registerProvider("track-finder", new TrackFinderProvider());
+    }
+
+    @Override protected void initBeanProviders()
+    {
+        BeanRegistry.registerBeanProvider("trackFinder/parameters", "ru.biosoft.bsa.finder.TrackFinderBeanProvider");
+        BeanRegistry.registerBeanProvider("bsa/siteviewoptions", "ru.biosoft.bsa.server.SiteViewOptionsProvider");
+        BeanRegistry.registerBeanProvider("bsa/genomebrowsercolors", "ru.biosoft.bsa.server.ColorSchemesBeanProvider");
+    }
+
+    @Override protected void initTableResolvers()
+    {
+        WebTablesProvider.addTableResolver("sites", "ru.biosoft.bsa.server.SitesTableResolver");
+        WebTablesProvider.addTableResolver("track", "ru.biosoft.bsa.server.TrackTableResolver");
     }
 
 }

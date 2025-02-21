@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.apache.commons.text.StringEscapeUtils;
 import org.json.JSONArray;
@@ -18,8 +19,10 @@ import org.json.JSONObject;
 
 //import com.developmentontheedge.application.ApplicationUtils;
 import com.developmentontheedge.beans.DynamicProperty;
+import com.developmentontheedge.beans.DynamicPropertySet;
+import com.developmentontheedge.beans.DynamicPropertySetAsMap;
 
-//import ru.biosoft.access.BeanRegistry;
+import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
@@ -60,10 +63,10 @@ import ru.biosoft.graphics.CompositeView;
 import ru.biosoft.graphics.font.ColorFont;
 import ru.biosoft.server.ServiceSupport;
 import ru.biosoft.util.ApplicationUtils;
-//import ru.biosoft.table.RowDataElement;
-//import ru.biosoft.table.TableDataCollection;
-//import ru.biosoft.templates.TemplateInfo;
-//import ru.biosoft.templates.TemplateRegistry;
+import ru.biosoft.table.RowDataElement;
+import ru.biosoft.table.TableDataCollection;
+import ru.biosoft.templates.TemplateInfo;
+import ru.biosoft.templates.TemplateRegistry;
 import ru.biosoft.util.TextUtil;
 
 public class BSAService extends ServiceSupport
@@ -452,12 +455,9 @@ public class BSAService extends ServiceSupport
         {
             Site site = tr.getSite(siteIdStr);
             String templateName = request.get( BSAServiceProtocol.TEMPLATE_NAME );
-            //TODO: commented TemplateRegistry
-            //            TemplateInfo[] templates = TemplateRegistry.getSuitableTemplates( site );
-            //            TemplateInfo templateInfo = Stream.of( templates ).filter( t -> t.getName().equals( templateName ) ).findFirst()
-            //                    .orElse( templates[0] );
-            //            String html = TemplateRegistry.mergeTemplate(site, templateInfo.getTemplate()).toString();
-            String html = "<b>Site ID</b>" + site.getName();
+            TemplateInfo[] templates = TemplateRegistry.getSuitableTemplates(site);
+            TemplateInfo templateInfo = Stream.of(templates).filter(t -> t.getName().equals(templateName)).findFirst().orElse(templates[0]);
+            String html = TemplateRegistry.mergeTemplate(site, templateInfo.getTemplate()).toString();
             html = html.replaceAll("href=\"de:([^\"]+)\"", "onclick=\"openDocument('$1');return false\" href=\"#\"");
             Pattern pattern = Pattern.compile("<img([^>]*) src=\"([^\"]+)\"");
             Matcher matcher = pattern.matcher(html);
@@ -654,44 +654,43 @@ public class BSAService extends ServiceSupport
         return getSiteViewOptionsForTrack(sessionCache, trackPath, projectPath);
     }
 
-    //    public static DynamicPropertySet getTableColorSchemes(SessionCache sessionCache, TableDataCollection table)
-    //    {
-    //        DynamicPropertySet result = new DynamicPropertySetAsMap();
-    //        if(table.getSize() > 0)
-    //        {
-    //            RowDataElement row = table.getAt(0);
-    //            for(Object value: row.getValues(true))
-    //            {
-    //                if(value instanceof Project)
-    //                {
-    //                    for(TrackInfo ti: ((Project)value).getTracks())
-    //                    {
-    //                        try
-    //                        {
-    //                            SiteColorScheme colorScheme = getSiteViewOptionsForTrack(sessionCache, DataElementPath.create(ti.getTrack()), null).getColorScheme();
-    //                            if(colorScheme != null)
-    //                            {
-    //                                result.add(new DynamicProperty(ti.getTitle(), colorScheme.getClass(), colorScheme));
-    //                            }
-    //                        }
-    //                        catch( Exception e )
-    //                        {
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        return result;
-    //    }
+    public static DynamicPropertySet getTableColorSchemes(SessionCache sessionCache, TableDataCollection table)
+    {
+        DynamicPropertySet result = new DynamicPropertySetAsMap();
+        if( table.getSize() > 0 )
+        {
+            RowDataElement row = table.getAt(0);
+            for ( Object value : row.getValues(true) )
+            {
+                if( value instanceof Project )
+                {
+                    for ( TrackInfo ti : ((Project) value).getTracks() )
+                    {
+                        try
+                        {
+                            SiteColorScheme colorScheme = getSiteViewOptionsForTrack(sessionCache, DataElementPath.create(ti.getTrack()), null).getColorScheme();
+                            if( colorScheme != null )
+                            {
+                                result.add(new DynamicProperty(ti.getTitle(), colorScheme.getClass(), colorScheme));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     public static SiteViewOptions getSiteViewOptionsForTrack(SessionCache sessionCache, DataElementPath trackPath, DataElementPath projectPath)
     {
-        //TODO: commented BeanRegistry
-        //return (SiteViewOptions)BeanRegistry.getBean( SiteViewOptionsProvider.getBeanPath( projectPath, trackPath ), sessionCache );
-        Track track = getTrack(trackPath.toString());
-        SiteViewOptions viewOptions = track.getViewBuilder().createViewOptions();
-        viewOptions.initFromTrack(track);
-        return viewOptions;
+        return (SiteViewOptions) BeanRegistry.getBean(SiteViewOptionsProvider.getBeanPath(projectPath, trackPath), sessionCache);
+        //        Track track = getTrack(trackPath.toString());
+        //        SiteViewOptions viewOptions = track.getViewBuilder().createViewOptions();
+        //        viewOptions.initFromTrack(track);
+        //        return viewOptions;
     }
 
     private void sendCreateCombinedTrack(ServiceRequest request) throws Exception

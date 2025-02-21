@@ -1147,4 +1147,15 @@ public class TextUtil
         return new JSONObject(json);
     }
 
+    //TODO: copy, copied from ru.biosoft.plugins.javascript.JavaScriptUtils
+    public static String getValidName(String name)
+    {
+        String validName = Pattern.compile("[\\W]+").matcher(name).replaceAll("_");
+        if( Pattern.compile("^\\d").matcher(validName).find() )
+        {
+            validName = "_" + validName;
+        }
+        return validName;
+    }
+
 }

@@ -234,7 +234,7 @@ public abstract class DataType
     {
         try
         {
-            DATA_TYPE_REGISTRY.registerElement(typeClass, typeClass);
+            DATA_TYPE_REGISTRY.addElement(typeClass, typeClass);
             DATA_TYPE_REGISTRY.stream().filter(t -> t.getClass().getName().equals(typeClass)).forEach(type -> {
                 registry.put(type.name(), type);
                 classMap.put(type.getType(), type);

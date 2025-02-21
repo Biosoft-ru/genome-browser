@@ -130,13 +130,15 @@ public abstract class ExtensionRegistrySupport<T> implements Iterable<T>
         return EntryStream.of( nameToExtension );
     }
 
-    protected void addElement(String name, T element)
+    protected void addElementInternal(String name, T element)
     {
         extensions.add(element);
         nameToExtension.put(name, element);
     }
 
     protected abstract T registerElement(String elementName, String className, Object... args) throws Exception;
+
+    public abstract void addElement(String elementName, String className);
 
     //TODO: may be not needed
     protected static <K> Class<? extends K> getClass(String className)

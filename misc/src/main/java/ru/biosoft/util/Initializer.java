@@ -29,6 +29,8 @@ public abstract class Initializer
                         initTransformers();
                         initBeans();
                         initTemplates();
+                        initBeanProviders();
+                        initTableResolvers();
 
                     }
                     finally
@@ -41,6 +43,12 @@ public abstract class Initializer
         }
     }
 
+
+    protected void initTableResolvers()
+    {
+        //WebTablesProvider.addTableResolver("NAME", "CLASS");
+
+    }
 
     protected void initCommonClasses()
     {
@@ -80,5 +88,10 @@ public abstract class Initializer
     protected void initTemplates()
     {
         //TemplateRegistry.registerTemplate("TEMPLATE NAME", "ANY CLASS WITH RESOURCE FOLDER INSTEAD OF PLUGIN NAME", "OTHER ARGUMENTS FOR TEMPLATE: FILE PATH, DESCRIPTION, IS BREAF, ORDER");
+    }
+
+    protected void initBeanProviders()
+    {
+        //BeanRegistry.registerBeanProvider("PREFIX", "BEAN PROVIDER CLASS");
     }
 }

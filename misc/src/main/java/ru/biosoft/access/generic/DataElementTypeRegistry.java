@@ -75,12 +75,6 @@ public class DataElementTypeRegistry
 
     public static void registerDataElementTypeDriver(String className)
     {
-        try
-        {
-            drivers.registerElement(className, className);
-        }
-        catch (Exception e)
-        {
-        }
+        drivers.addElement(className, className);
     }
 }

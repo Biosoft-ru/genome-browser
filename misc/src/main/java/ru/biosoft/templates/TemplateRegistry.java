@@ -172,7 +172,7 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
         //    
         Class clazz = getClass(className);
         TemplateInfo result = new TemplateInfo(elementName, description, isBrief, clazz, filePath, filter, order);
-        addElement(elementName, result);
+        addElementInternal(elementName, result);
         return result;
     }
 
@@ -186,6 +186,12 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
         {
             log.log(Level.WARNING, "Template " + elementName + " was not registered.", e);
         }
+    }
+
+    @Override public void addElement(String elementName, String className)
+    {
+        throw new UnsupportedOperationException("Can not add template with this method");
+
     }
 }
 

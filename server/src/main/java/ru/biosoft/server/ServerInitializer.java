@@ -7,6 +7,7 @@ import ru.biosoft.server.servlets.webservices.providers.ImageProvider;
 import ru.biosoft.server.servlets.webservices.providers.ServiceProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebBeanProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
+import ru.biosoft.server.servlets.webservices.providers.WebTablesProvider;
 import ru.biosoft.util.Initializer;
 
 public class ServerInitializer extends Initializer
@@ -31,6 +32,7 @@ public class ServerInitializer extends Initializer
         WebProviderFactory.registerProvider("bean", new WebBeanProvider());
         WebProviderFactory.registerProvider("html", new HtmlTemplateProvider());
         WebProviderFactory.registerProvider("img", new ImageProvider());
+        WebProviderFactory.registerProvider("table", new WebTablesProvider());
     }
 
     public static void initialize()

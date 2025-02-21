@@ -164,7 +164,7 @@ public class BioHubRegistry extends ObjectExtensionRegistry<ru.biosoft.access.bi
         {
             constructor = bioHubClass.getConstructor(Properties.class);
             BioHub bioHub = constructor.newInstance(properties);
-            instance.addElement(name, new BioHubInfo(name, bioHub));
+            instance.addElementInternal(name, new BioHubInfo(name, bioHub));
         }
         catch (Exception e)
         {
