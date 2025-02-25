@@ -122,7 +122,7 @@ function User()
         }
         if(!perspective && appInfo.disablePerspectiveSelector)
         {
-            perspective = "disabled";
+            //perspective = "disabled";
         }
 
         var loginData = {
