@@ -31,6 +31,7 @@ public abstract class Initializer
                         initTemplates();
                         initBeanProviders();
                         initTableResolvers();
+                        initPerspectives();
 
                     }
                     finally
@@ -93,5 +94,10 @@ public abstract class Initializer
     protected void initBeanProviders()
     {
         //BeanRegistry.registerBeanProvider("PREFIX", "BEAN PROVIDER CLASS");
+    }
+
+    protected void initPerspectives()
+    {
+        //PerspectiveRegistry.registerPerspective("NAME", "CLASS", args);
     }
 }

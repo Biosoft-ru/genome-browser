@@ -25,6 +25,7 @@ public class ObjectExtensionRegistry<T> extends ExtensionRegistrySupport<T>
     {
     }
     
+    //TODO: may be pass args
     @Override public void addElement(String name, String className)
     {
         try
@@ -41,7 +42,21 @@ public class ObjectExtensionRegistry<T> extends ExtensionRegistrySupport<T>
     {
         init();
         Class<? extends T> elementClass = getClass(className, baseClass);
-        T obj = elementClass.newInstance();
+
+        T obj = null;
+
+        if( args != null && args.length > 0 )
+        {
+            Class<?> parTypes[] = new Class<?>[args.length];
+            for ( int i = 0; i < args.length; i++ )
+            {
+                parTypes[i] = args[i].getClass();
+            }
+            obj = elementClass.getDeclaredConstructor(parTypes).newInstance(args);
+        }
+        else
+            obj = elementClass.getDeclaredConstructor().newInstance();
+
         addElementInternal(elementName, obj);
         return obj;
     }

@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import ru.biosoft.access.core.DataElementImporter;
 import ru.biosoft.access.repository.JSONSerializable;
 import ru.biosoft.util.FileItem;
+import ru.biosoft.util.ServerPreferences;
 
 import com.developmentontheedge.beans.editors.CustomEditorSupport;
 //import com.developmentontheedge.application.Application;
@@ -54,8 +55,7 @@ public class FileSelector extends CustomEditorSupport implements JSONSerializabl
             public void mousePressed(MouseEvent e)
             {
                 String key = DataElementImporter.PREFERENCES_IMPORT_DIRECTORY;
-                //TODO: commented, Application
-                String importDirectory = ".";//Application.getPreferences().getStringValue(key, ".");
+                String importDirectory = ServerPreferences.getPreferences().getStringValue(key, ".");
                 File initialValue = (getValue() instanceof File)?(File)getValue():new File(importDirectory);
                 JFileChooser fileChooser = new JFileChooser(initialValue);
                 if(title != null)
