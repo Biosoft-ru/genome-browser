@@ -7,6 +7,7 @@ import com.developmentontheedge.beans.Preferences;
 //import com.eclipsesource.json.JsonObject;
 
 import ru.biosoft.access.core.DataElementPath;
+import ru.biosoft.util.ServerPreferences;
 import ru.biosoft.util.TextUtil;
 //import ru.biosoft.util.JsonUtils;
 
@@ -18,13 +19,11 @@ public class SiteModelUtils
     public static DataElementPath getDefaultProfile()
     {
         initProfile();
-        return defaultProfilePath;
-        //TODO: commented, Application
-        //        if( defaultProfilePath != null )
-        //            return defaultProfilePath;
-        //        Preferences preferences = Application.getPreferences();
-        //        DataElementPath value = DataElementPath.create(preferences.getStringValue(Const.LAST_PROFILE_PREFERENCE, ""));
-        //        return value.exists()?value:DataElementPath.create(Const.DEFAULT_PROFILE);
+        if( defaultProfilePath != null )
+            return defaultProfilePath;
+        Preferences preferences = ServerPreferences.getPreferences();
+        DataElementPath value = DataElementPath.create(preferences.getStringValue(Const.LAST_PROFILE_PREFERENCE, ""));
+        return value.exists() ? value : DataElementPath.create(Const.DEFAULT_PROFILE);
     }
 
     private static void initProfile()
