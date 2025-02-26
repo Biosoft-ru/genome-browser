@@ -1,6 +1,11 @@
+#macro( showInfo $de )
+<b>ID</b>: $de.getName()<br>
+#end
+
 <html>
-	<body>
-		<h1>Track $de.getName()</h1>
-		<p> Test velocity run</p>
-	</body>
+<body>
+#set( $deLinkPath = $utils.getPath($de) )
+#showInfo($de)
+<p>$deLinkPath</p>
+</body>
 </html>
