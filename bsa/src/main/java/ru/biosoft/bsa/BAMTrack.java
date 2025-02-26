@@ -543,7 +543,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
         @Override
         public boolean hasNext()
         {
-            return it.hasNext();
+            return !closed && it.hasNext();
         }
         @Override
         public Site next()
