@@ -1,5 +1,7 @@
 package ru.biosoft.bsa;
 
+import java.util.Collections;
+
 import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
@@ -8,6 +10,7 @@ import ru.biosoft.server.ServiceRegistry;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
 import ru.biosoft.server.servlets.webservices.providers.WebTablesProvider;
 import ru.biosoft.table.datatype.DataType;
+import ru.biosoft.templates.TemplateFilter;
 import ru.biosoft.templates.TemplateRegistry;
 import ru.biosoft.util.Initializer;
 
@@ -56,7 +59,14 @@ public class BSAInitializer extends Initializer
 
     @Override protected void initTemplates()
     {
-        TemplateRegistry.registerTemplate("SQL track", "ru.biosoft.bsa.SqlTrack", "sqltrack2.vm", "SQL track information", false, 0);
+        //TemplateRegistry.registerTemplate("TEMPLATE NAME", "ANY CLASS WITH RESOURCE FOLDER INSTEAD OF PLUGIN NAME", "OTHER ARGUMENTS FOR TEMPLATE: FILE PATH, DESCRIPTION, IS BREAF, ORDER, FILTER");
+
+        TemplateFilter filter = new TemplateFilter("ru.biosoft.bsa.SqlTrack", true, Collections.EMPTY_LIST, null);
+        TemplateRegistry.registerTemplate("SQL track", "ru.biosoft.bsa.SqlTrack", "ru/biosoft/bsa/resources/sqltrack.vm", "SQL track information", false, 0, filter);
+        TemplateRegistry.registerTemplate("SQL track simple", "ru.biosoft.bsa.SqlTrack", "sqltrack2.vm", "SQL track information for testing template", false, 40, filter);
+
+        TemplateFilter BAMfilter = new TemplateFilter("ru.biosoft.bsa.BAMTrack", true, Collections.EMPTY_LIST, null);
+        TemplateRegistry.registerTemplate("BAM track", "ru.biosoft.bsa.BAMTrack", "ru/biosoft/bsa/resources/bamtrack.vm", "BAM track information", false, 0, BAMfilter);
     }
 
     /*
