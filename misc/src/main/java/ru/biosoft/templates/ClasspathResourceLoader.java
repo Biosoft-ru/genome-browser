@@ -1,6 +1,8 @@
 package ru.biosoft.templates;
 
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 
 import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.resource.Resource;
@@ -42,8 +44,15 @@ public class ClasspathResourceLoader extends ResourceLoader
 
     @Override public Reader getResourceReader(String source, String encoding) throws ResourceNotFoundException
     {
-        // TODO Auto-generated method stub
-        return null;
+        try
+        {
+            URL url = ClasspathResourceLoader.class.getClassLoader().getResource(source);
+            return new InputStreamReader(url.openStream());
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
 }

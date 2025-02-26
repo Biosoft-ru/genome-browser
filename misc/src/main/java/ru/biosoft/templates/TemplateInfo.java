@@ -4,6 +4,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -20,6 +22,8 @@ import ru.biosoft.util.LazyValue;
  */
 public class TemplateInfo
 {
+
+    private static Logger log = Logger.getLogger(TemplateInfo.class.getName());
     protected String name;
     protected String description;
     protected boolean isBrief;
@@ -84,14 +88,21 @@ public class TemplateInfo
             }
 
             Template template = new Template();
+            template.setName(name);
             try(Reader reader = new InputStreamReader(resource.openStream(), StandardCharsets.UTF_8))
             {
-
-                node = runtimeServices.parse(reader, template);//.parse(reader, name);
+                node = runtimeServices.parse(reader, template);
             }
             template.setRuntimeServices(runtimeServices);
             template.setData(node);
-            template.initDocument();
+            try
+            {
+                template.initDocument();
+            }
+            catch (Exception e)
+            {
+                log.log(Level.SEVERE, "Error parsing template ", e);
+            }
             return template;
         }
     };

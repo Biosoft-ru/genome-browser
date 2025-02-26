@@ -180,9 +180,10 @@ $(function() {
         block2.append(templateBox);
         infoTabs.find('.ui-tabs-nav').append(block2);
         
+        //TODO: incorrect selector
         if(infoTabs.tabs('option', 'active') != 1)//show only for Info tab
         {
-            block2.hide();
+            //block2.hide();
         }
     }
     

@@ -55,7 +55,9 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
         
             //TODO: maven requires other resources folder
             //props.setProperty("velocimacro.library", "resources/displayMacros.vm, resources/processMacros.vm");
-            //props.setProperty("velocimacro.library", "displayMacros.vm, processMacros.vm");
+            props.setProperty("velocimacro.library", "ru/biosoft/templates/displayMacros.vm, ru/biosoft/templates/processMacros.vm");
+
+            props.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
 
             // experimental, possble fix for 
             // Runtime : ran out of parsers. Creating a new one.  Please increment the parser.pool.size property. The current value is too small.
@@ -65,7 +67,14 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
             Thread.currentThread().setContextClassLoader(ClassLoading.getClassLoader());
             synchronized( TemplateRegistry.class )
             {
-                Velocity.init(props);
+                try
+                {
+                    Velocity.init(props);
+                }
+                catch (Exception e)
+                {
+                    log.log(Level.SEVERE, e.getMessage());
+                }
             }
             Thread.currentThread().setContextClassLoader(oldClassLoader);
         }
@@ -148,28 +157,10 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
         boolean isBrief = (boolean) args[2];
         int order = (int) args[3];
         TemplateFilter filter = null;
-        //TODO: filter temporary disabled
-        //    
-        //        IConfigurationElement[] filterElements = element.getChildren(FILTER_ELEMENT);
-        //        if( filterElements.length > 0 )
-        //        {
-        //            String filterClass = getStringAttribute(filterElements[0], CLASS_ATTR);
-        //            boolean filterSubclasses = getBooleanAttribute(filterElements[0], SUBCLASSES_ATTR);
-        //    
-        //            List<PropertyFilter> properties = new ArrayList<>();
-        //            for( IConfigurationElement propertyElement : filterElements[0].getChildren(PROPERTY_ELEMENT) )
-        //            {
-        //                String propertyName = getStringAttribute(propertyElement, NAME_ATTR);
-        //                String propertyValue = propertyElement.getAttribute(VALUE_ATTR);
-        //                String propertyClass = propertyElement.getAttribute(CLASS_ATTR);
-        //                boolean propertyIsRegexp = getBooleanAttribute(propertyElement, ISREGEXP_ATTR);
-        //    
-        //                properties.add(new PropertyFilter(propertyName, propertyValue, propertyClass, propertyIsRegexp));
-        //            }
-        //            String methodName = filterElements[0].getAttribute( METHOD_ATTR );
-        //            filter = new TemplateFilter( filterClass, filterSubclasses, properties, methodName );
-        //        }
-        //    
+        if( args.length > 4 )
+        {
+            filter = (TemplateFilter) args[4];
+        }
         Class clazz = getClass(className);
         TemplateInfo result = new TemplateInfo(elementName, description, isBrief, clazz, filePath, filter, order);
         addElementInternal(elementName, result);
@@ -192,6 +183,11 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
     {
         throw new UnsupportedOperationException("Can not add template with this method");
 
+    }
+
+    @Override protected void postInit()
+    {
+        contextItems.addElement("utils", "ru.biosoft.templates.Formatter");
     }
 }
 
