@@ -13,6 +13,11 @@ public class AccessInitializer extends Initializer
         return instance;
     }
 
+    public static void initialize()
+    {
+        getInstance().init();
+    }
+
     @Override protected void initDataElementTypeDrivers()
     {
         DataElementTypeRegistry.registerDataElementTypeDriver("ru.biosoft.access.generic.DataElementEntryTypeDriver");
@@ -32,9 +37,10 @@ public class AccessInitializer extends Initializer
         //TransformerRegistry.addTransformer("Video", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.VideoDataElement");
     }
 
-    public static void initialize()
+    protected void initBeanProviders()
     {
-        getInstance().init();
+        BeanRegistry.registerBeanProvider("properties/fdc", "ru.biosoft.access.FDCBeanProvider");
     }
+
 
 }

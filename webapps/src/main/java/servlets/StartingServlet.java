@@ -30,6 +30,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.biosoft.access.AccessCoreInit;
 import ru.biosoft.access.AccessInitializer;
 import ru.biosoft.bsa.BSAInitializer;
+import ru.biosoft.graphics.View;
+import ru.biosoft.graphics.View.ModelResolver;
+import ru.biosoft.graphics.access.DataElementModelResolver;
 import ru.biosoft.server.ServerInitializer;
 import ru.biosoft.server.servlets.webservices.WebServletHandler;
 import ru.biosoft.templates.TemplatesInitializer;
@@ -73,6 +76,9 @@ public class StartingServlet extends HttpServlet
         ServerInitializer.initialize();
         BSAInitializer.initialize();
         TemplatesInitializer.initialize();
+
+        ModelResolver viewModelResolver = new DataElementModelResolver();
+        View.setModelResolver(viewModelResolver);
 
         if( yaml.get("perspectives") != null )
         {

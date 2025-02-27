@@ -9,7 +9,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.generic.PriorityTransformer;
 import ru.biosoft.bsa.Track;
-import ru.biosoft.bsa.VCFFileTrack;
+import ru.biosoft.bsa.track.VCFFileTrack;
 
 public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> implements PriorityTransformer
 {
