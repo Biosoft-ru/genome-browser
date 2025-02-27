@@ -523,13 +523,13 @@ public class WebServicesServlet extends AbstractServlet
         //        scriptTypesArguments.put(BiosoftWebRequest.ACTION, "types");
         //        result.put("scriptTypes", getRequestValue("script", scriptTypesArguments, "reading script types"));
         //
-        //        Map<String, String> classesArguments = new HashMap<>();
-        //        classesArguments.put("service", "access.service");
-        //        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
-        //        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
-        //        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
-        //        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
-        //
+        Map<String, String> classesArguments = new HashMap<>();
+        classesArguments.put("service", "access.service");
+        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
+        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
+        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
+        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
+
         Map<String, String> actionArguments = new HashMap<>();
         actionArguments.put("type", "toolbar");
         JSONObject actions = new JSONObject();

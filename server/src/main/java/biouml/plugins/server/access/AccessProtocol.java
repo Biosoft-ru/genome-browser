@@ -356,29 +356,28 @@ public class AccessProtocol
             file.setOriginalName("");
         } else
         {
-            file = null;
-            //TODO: commented, TransformerRegistry
-            //            Transformer transformer = TransformerRegistry.getBestTransformer(de, FileDataElement.class);
-            //            if(transformer == null)
-            //            {
-            //                transformer = TransformerRegistry.getBestTransformer(de, ru.biosoft.access.Entry.class);
-            //                if(transformer == null)
-            //                    throw new Exception("No transformer for "+DataElementPath.create(de));
-            //                if(!transformer.isOutputType(de.getClass()))
-            //                    throw new Exception("Invalid transformer for "+DataElementPath.create(de));
-            //                ru.biosoft.access.Entry entry = (ru.biosoft.access.Entry)transformer.transformOutput(de);
-            //                file = new FileItem(TempFiles.file("element", entry.getEntryData()));
-            //                file.setOriginalName(transformer.getClass().getName());
-            //            } else
-            //            {
-            //                if(!(transformer instanceof AbstractFileTransformer))
-            //                    throw new Exception("No transformer for "+DataElementPath.create(de));
-            //                if(!transformer.isOutputType(de.getClass()))
-            //                    throw new Exception("Invalid transformer for "+DataElementPath.create(de));
-            //                file = new FileItem(TempFiles.file("element"));
-            //                file.setOriginalName(transformer.getClass().getName());
-            //                ( (AbstractFileTransformer)transformer ).save(file, de);
-            //            }
+            Transformer transformer = TransformerRegistry.getBestTransformer(de, FileDataElement.class);
+            if( transformer == null )
+            {
+                transformer = TransformerRegistry.getBestTransformer(de, ru.biosoft.access.Entry.class);
+                if( transformer == null )
+                    throw new Exception("No transformer for " + DataElementPath.create(de));
+                if( !transformer.isOutputType(de.getClass()) )
+                    throw new Exception("Invalid transformer for " + DataElementPath.create(de));
+                ru.biosoft.access.Entry entry = (ru.biosoft.access.Entry) transformer.transformOutput(de);
+                file = new FileItem(TempFiles.file("element", entry.getEntryData()));
+                file.setOriginalName(transformer.getClass().getName());
+            }
+            else
+            {
+                if( !(transformer instanceof AbstractFileTransformer) )
+                    throw new Exception("No transformer for " + DataElementPath.create(de));
+                if( !transformer.isOutputType(de.getClass()) )
+                    throw new Exception("Invalid transformer for " + DataElementPath.create(de));
+                file = new FileItem(TempFiles.file("element"));
+                file.setOriginalName(transformer.getClass().getName());
+                ((AbstractFileTransformer) transformer).save(file, de);
+            }
         }
         return file;
     }

@@ -40,14 +40,11 @@ public class ServerInitializer extends Initializer
         WebProviderFactory.registerProvider("perspective", new PerspectivesProvider());
 
         WebProviderFactory.registerProvider("action", new WebActionsProvider());
-        //WebProviderFactory.registerProvider("perspective", new PerspectivesProvider());
 
         /*
          * <extension point="ru.biosoft.server.servlets.webProvider"> <provider
          * prefix="diagram" class=
          * "ru.biosoft.server.servlets.webservices.providers.WebDiagramsProvider"
-         * /> <provider prefix="action" class=
-         * "ru.biosoft.server.servlets.webservices.providers.WebActionsProvider"
          * /> <provider prefix="content" class=
          * "ru.biosoft.server.servlets.webservices.providers.ContentProvider"/>
          * <provider prefix="html_page" class=
@@ -103,4 +100,26 @@ public class ServerInitializer extends Initializer
     {
         //BeanRegistry.registerBeanProvider("NAME", "BEAN CLASS");
     }
+
+
+
+    protected void initCommonClasses()
+    {
+        AccessService.addCommonClass("ru.biosoft.access.core.DataCollection");
+        AccessService.addCommonClass("ru.biosoft.access.FileDataElement");
+        AccessService.addCommonClass("ru.biosoft.access.FileCollection");
+        AccessService.addCommonClass("ru.biosoft.access.core.TransformedDataCollection");
+        AccessService.addCommonClass("ru.biosoft.access.LocalRepository");
+        AccessService.addCommonClass("ru.biosoft.access.security.NetworkRepository");
+        AccessService.addCommonClass("ru.biosoft.access.SqlDataCollection");
+        AccessService.addCommonClass("ru.biosoft.access.security.NetworkDataCollection");
+
+        /*
+         * <class class="ru.biosoft.access.TextDataElement"/> <class
+         * class="ru.biosoft.access.HtmlDataElement"/> <class
+         * class="ru.biosoft.access.ImageDataElement"/> </extension>
+         * 
+         */
+    }
+
 }

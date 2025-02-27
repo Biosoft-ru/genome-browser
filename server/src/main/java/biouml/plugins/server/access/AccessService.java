@@ -64,6 +64,7 @@ import ru.biosoft.server.Service;
 import ru.biosoft.server.ServiceSupport;
 import ru.biosoft.server.ServiceSupport.ServiceRequest;
 import ru.biosoft.util.ApplicationUtils;
+import ru.biosoft.util.ClassExtensionRegistry;
 //import ru.biosoft.util.ClassExtensionRegistry;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.FileItem;
@@ -211,8 +212,12 @@ public class AccessService extends AccessProtocol implements Service
         return true;
     }
 
-    //TODO: commented ClassExtensionRegistry
-    //private final ClassExtensionRegistry<Object> commonClasses = new ClassExtensionRegistry<>("ru.biosoft.access.commonClass", Object.class);
+    private static final ClassExtensionRegistry<Object> commonClasses = new ClassExtensionRegistry<>("ru.biosoft.access.commonClass", Object.class);
+
+    public static void addCommonClass(String className)
+    {
+        commonClasses.addElement(className, className);
+    }
 
     /**
      * Sends tree of superclasses and superinterfaces for given class name
@@ -244,15 +249,14 @@ public class AccessService extends AccessProtocol implements Service
             request.error("Class not found");
             return;
         }
-        //TODO: commented ClassExtensionRegistry
-        //        if(addCommonClasses)
-        //        {
-        //            for(Class<?> commonClass: commonClasses)
-        //            {
-        //                classMap.put(commonClass, new HashSet<Class<?>>());
-        //                toAdd.add(commonClass);
-        //            }
-        //        }
+        if( addCommonClasses )
+        {
+            for ( Class<?> commonClass : commonClasses )
+            {
+                classMap.put(commonClass, new HashSet<Class<?>>());
+                toAdd.add(commonClass);
+            }
+        }
         while( !toAdd.isEmpty() )
         {
             Set<Class<?>> newToAdd = new HashSet<>();

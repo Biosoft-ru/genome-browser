@@ -2,6 +2,7 @@ package ru.biosoft.bsa;
 
 import java.util.Collections;
 
+import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
@@ -69,12 +70,6 @@ public class BSAInitializer extends Initializer
         TemplateRegistry.registerTemplate("BAM track", "ru.biosoft.bsa.BAMTrack", "ru/biosoft/bsa/resources/bamtrack.vm", "BAM track information", false, 0, BAMfilter);
     }
 
-    /*
-     * <template name="SQL track" file="ru/biosoft/bsa/resources/sqltrack.vm"
-     * description="SQL track information" isBrief="no" order="0"> <filter
-     * class="ru.biosoft.bsa.SqlTrack" subclasses="yes"/> </template>
-     */
-
     @Override protected void initProviders()
     {
         WebProviderFactory.registerProvider("track-finder", new TrackFinderProvider());
@@ -93,4 +88,14 @@ public class BSAInitializer extends Initializer
         WebTablesProvider.addTableResolver("track", "ru.biosoft.bsa.server.TrackTableResolver");
     }
 
+    protected void initCommonClasses()
+    {
+        AccessService.addCommonClass("ru.biosoft.bsa.SqlTrack");
+        AccessService.addCommonClass("ru.biosoft.bsa.AnnotatedSequence");
+        AccessService.addCommonClass("ru.biosoft.bsa.SiteModel");
+        AccessService.addCommonClass("ru.biosoft.bsa.SiteModelCollection");
+        AccessService.addCommonClass("ru.biosoft.bsa.analysis.WeightMatrixCollection");
+        AccessService.addCommonClass("ru.biosoft.bsa.analysis.FrequencyMatrix");
+        AccessService.addCommonClass("ru.biosoft.bsa.SequenceCollection");
+    }
 }
