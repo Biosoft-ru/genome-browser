@@ -61,10 +61,11 @@ public abstract class TrackImporter implements DataElementImporter
 
     protected static String normalizeChromosome(String name)
     {
-        String smallName = name.toLowerCase();
-        if( smallName.startsWith( "chr" ) )
-            name = name.substring("chr".length());
-        return name.equals("M") ? "MT" : name;
+        //        String smallName = name.toLowerCase();
+        //        if( smallName.startsWith( "chr" ) )
+        //            name = name.substring("chr".length());
+        //        return name.equals("M") ? "MT" : name;
+        return name;
     }
 
     @Override
