@@ -15,8 +15,8 @@ Change paths in config file webapps/config2.yml
 
 ```
 repositories:
-- /home/anna/projects/github/genome-browser/data/src/main/resources/repo
-- /home/anna/projects/github/genome-browser/data/src/main/resources/databases
+- genome-browser/data/src/main/resources/repo
+- genome-browser/data/src/main/resources/databases
 roots:
 - repo
 - databases
@@ -29,8 +29,8 @@ roots:
 Then launch Genome browser Web edition.
 
 ```sh
-mvn jetty:run -Djetty.http.port=9999
+mvn jetty:run
 ```
 
-Use your browser to open it at http://localhost:9999/
+Use your browser to open it at http://localhost:8000/
 
