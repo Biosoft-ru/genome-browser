@@ -37,12 +37,11 @@ import ru.biosoft.access.exception.BiosoftSQLException;
 import ru.biosoft.access.exception.DataElementExistsException;
 import ru.biosoft.access.exception.QuotaException;
 import ru.biosoft.access.file.FileBasedCollection;
-//import ru.biosoft.access.generic.GenericDataCollection;
+import ru.biosoft.access.generic.GenericDataCollection;
 //import ru.biosoft.access.generic2.GenericDataCollection2;
 import ru.biosoft.access.repository.DataCollectionTreeModelAdapter;
 import ru.biosoft.access.security.Permission;
 import ru.biosoft.access.security.ProtectedDataCollection;
-//import ru.biosoft.access.security.ProtectedDataCollection;
 import ru.biosoft.access.sql.SqlConnectionHolder;
 import ru.biosoft.exception.MissingParameterException;
 import ru.biosoft.util.Clazz;
@@ -328,11 +327,10 @@ public class DataCollectionUtils
             parent = ((SymbolicLinkDataCollection) parent).getPrimaryCollection();
             parent = (DataCollection<?>) doFetchPrimaryElement(parent, access);
         }
-        //TODO: commented, GenericDataCollection
-        //        if( parent instanceof GenericDataCollection )
-        //        {
-        //            parent = ((GenericDataCollection) parent).getTypeSpecificCollection(clazz);
-        //        }
+        if( parent instanceof GenericDataCollection )
+        {
+            parent = ((GenericDataCollection) parent).getTypeSpecificCollection(clazz);
+        }
         //TODO: commented, GenericDataCollection2, probably not used in BioUML 
         //        if( parent instanceof GenericDataCollection2 && DataCollection.class.isAssignableFrom(clazz) )
         //        {

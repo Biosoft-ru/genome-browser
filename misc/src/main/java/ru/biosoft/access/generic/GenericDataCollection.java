@@ -16,13 +16,11 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
-//import gnu.trove.map.TObjectLongMap;
-//import gnu.trove.map.hash.TObjectLongHashMap;
+import gnu.trove.map.TObjectLongMap;
+import gnu.trove.map.hash.TObjectLongHashMap;
 
 //import com.developmentontheedge.application.ApplicationUtils;
 
-//import gnu.trove.map.TObjectLongMap;
-//import gnu.trove.map.hash.TObjectLongHashMap;
 import one.util.streamex.EntryStream;
 import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.CollectionFactoryUtils;
@@ -87,9 +85,8 @@ public class GenericDataCollection extends DerivedDataCollection<ru.biosoft.acce
     private final Set<String> removingNames = ConcurrentHashMap.newKeySet();
     private final Set<String> savingNames = ConcurrentHashMap.newKeySet();
     protected volatile long diskSize = -1;
-    //TODO: commented, gnu.trove.map TObjectLongMap, TObjectLongHashMap
-    //private final TObjectLongMap<String> childSizes = new TObjectLongHashMap<>(10, 0.75f, -1);
-    private final Map<String, Long> childSizes = new HashMap<>();
+    private final TObjectLongMap<String> childSizes = new TObjectLongHashMap<>(10, 0.75f, -1);
+    //private final Map<String, Long> childSizes = new HashMap<>();
 
     public GenericDataCollection(DataCollection<?> parent, Properties properties) throws Exception
     {

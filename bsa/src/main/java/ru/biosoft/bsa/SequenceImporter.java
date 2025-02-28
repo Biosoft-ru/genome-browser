@@ -15,6 +15,7 @@ import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
 
 import one.util.streamex.EntryStream;
+import ru.biosoft.access.CollectionFactoryUtils;
 //import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.EntryCollection;
@@ -26,7 +27,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementImporter;
 import ru.biosoft.access.core.DataElementPath;
-//import ru.biosoft.access.generic.GenericDataCollection;
+import ru.biosoft.access.generic.GenericDataCollection;
 //import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.bsa.transformer.EmblTransformer;
 import ru.biosoft.bsa.transformer.FastaSequenceCollection;
@@ -87,9 +88,7 @@ public class SequenceImporter implements DataElementImporter
 
         DataElement result = createElement( parent, elementName, file, format, importerProperties );
         
-        //TODO: commented, CollectionFactoryUtils
-        //CollectionFactoryUtils.save(result);
-        DataElementPath.create(result).save(result);
+        CollectionFactoryUtils.save(result);
 
         //result element become invalid in GenericDataCollection cache after put since file is changed
         //TODO: remove from cache in proper place, when file is copied
@@ -100,11 +99,10 @@ public class SequenceImporter implements DataElementImporter
         //        } );
 
         DataCollection<?> primaryParent = DataCollectionUtils.fetchPrimaryCollectionPrivileged((DataCollection<?>) parent);
-        //TODO: commented, GenericDataCollection
-        //        if( primaryParent instanceof GenericDataCollection )
-        //        {
-        //            ( (GenericDataCollection)primaryParent ).removeFromCache( result.getName() );
-        //        }
+                if( primaryParent instanceof GenericDataCollection )
+                {
+                    ( (GenericDataCollection)primaryParent ).removeFromCache( result.getName() );
+                }
 
         if( jobControl != null )
         {

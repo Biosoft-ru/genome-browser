@@ -1,7 +1,7 @@
 package ru.biosoft.access.subaction;
 
-//import gnu.trove.map.TObjectIntMap;
-//import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import java.awt.Event;
 import java.awt.event.KeyEvent;
@@ -176,10 +176,9 @@ public class DynamicActionFactory extends ExtensionRegistrySupport<DynamicAction
         return 0;
     }
 
-    private static LazyValue<Map<String, Integer>> keyEventName2Code = new LazyValue<>("Key names", () ->
+    private static LazyValue<TObjectIntMap<String>> keyEventName2Code = new LazyValue<>("Key names", () ->
     {
-        Map<String, Integer> keyEventName2Code = new HashMap<>();
-        //TObjectIntMap<String> keyEventName2Code = new TObjectIntHashMap<>();
+        TObjectIntMap<String> keyEventName2Code = new TObjectIntHashMap<>();
         for( Field field : KeyEvent.class.getFields() )
         {
             try

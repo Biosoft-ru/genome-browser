@@ -7,7 +7,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: commented, library package changed use method StringEscapeUtils.unescapeHtml4 insetead of StringEscapeUtils.unescapeHtml
 import org.apache.commons.text.StringEscapeUtils;
 
 import ru.biosoft.access.core.DataElement;
