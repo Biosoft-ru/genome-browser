@@ -47,8 +47,6 @@ import ru.biosoft.util.TextUtil;
 @PropertyName ( "track" )
 public class VCFFileTrack extends AbstractDataCollection<DataElement> implements Track
 {
-    public static final String INDEX_PATH_PROPERTY="indexPath";
-    
     private File vcfFile;
     private static final Logger log = Logger.getLogger(VCFFileTrack.class.getName());
     private ChrCache chrCache;

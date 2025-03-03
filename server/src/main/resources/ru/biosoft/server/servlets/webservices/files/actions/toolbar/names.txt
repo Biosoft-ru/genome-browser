@@ -6,11 +6,9 @@ toggle_repository.json
 account_info.json
 project_properties.json
 help.json
-legend.json
 
 save.json
 saveas.json
-revert.json
 export.json
 import.json:Import
 
