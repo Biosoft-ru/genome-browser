@@ -2,6 +2,7 @@ package ru.biosoft.server;
 
 import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
+import ru.biosoft.server.servlets.webservices.providers.DocumentProvider;
 import ru.biosoft.server.servlets.webservices.providers.HtmlTemplateProvider;
 import ru.biosoft.server.servlets.webservices.providers.ImageProvider;
 import ru.biosoft.server.servlets.webservices.providers.PerspectivesProvider;
@@ -40,6 +41,7 @@ public class ServerInitializer extends Initializer
         WebProviderFactory.registerProvider("perspective", new PerspectivesProvider());
 
         WebProviderFactory.registerProvider("action", new WebActionsProvider());
+        WebProviderFactory.registerProvider("doc", new DocumentProvider());
 
         /*
          * <extension point="ru.biosoft.server.servlets.webProvider"> <provider
@@ -60,8 +62,8 @@ public class ServerInitializer extends Initializer
          * <provider prefix="tasks"
          * class="ru.biosoft.server.servlets.webservices.providers.TaskProvider"
          * /> <provider prefix="work" class=
-         * "ru.biosoft.server.servlets.webservices.providers.WorksProvider"/>
-         * /> <provider prefix="export" class=
+         * "ru.biosoft.server.servlets.webservices.providers.WorksProvider"/> />
+         * <provider prefix="export" class=
          * "ru.biosoft.server.servlets.webservices.providers.ExportProvider"/>
          * <provider prefix="import" class=
          * "ru.biosoft.server.servlets.webservices.providers.ImportProvider"/>
@@ -69,9 +71,7 @@ public class ServerInitializer extends Initializer
          * class="ru.biosoft.server.servlets.webservices.imports.ImportProvider"
          * /> <provider prefix="treetable" class=
          * "ru.biosoft.server.servlets.webservices.providers.WebTreeTablesProvider"
-         * /> <provider prefix="doc" class=
-         * "ru.biosoft.server.servlets.webservices.providers.DocumentProvider"/>
-         * <provider prefix="newElement" class=
+         * /> <provider prefix="newElement" class=
          * "ru.biosoft.server.servlets.webservices.providers.NewElementProvider"
          * /> <provider prefix="wikihelp" class=
          * "ru.biosoft.server.servlets.webservices.providers.WikiHelpProvider"/>
@@ -113,9 +113,9 @@ public class ServerInitializer extends Initializer
         AccessService.addCommonClass("ru.biosoft.access.security.NetworkRepository");
         AccessService.addCommonClass("ru.biosoft.access.SqlDataCollection");
         AccessService.addCommonClass("ru.biosoft.access.security.NetworkDataCollection");
+        AccessService.addCommonClass("ru.biosoft.access.TextDataElement");
 
         /*
-         * <class class="ru.biosoft.access.TextDataElement"/> <class
          * class="ru.biosoft.access.HtmlDataElement"/> <class
          * class="ru.biosoft.access.ImageDataElement"/> </extension>
          * 
