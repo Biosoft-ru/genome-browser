@@ -100,7 +100,7 @@ public class ClassLoading
     //            String pluginId = extension.getNamespaceIdentifier();
     //            String name = extension.getAttribute("name").trim();
     //            String[] descriptor = new String[] {pluginId, name};
-    //            for(String oldName: TextUtil.split(extension.getAttribute("oldNames"), ','))
+    //            for(String oldName: TextUtilities.split(extension.getAttribute("oldNames"), ','))
     //                movedClasses.put(oldName.trim(), descriptor);
     //        }
     //    }

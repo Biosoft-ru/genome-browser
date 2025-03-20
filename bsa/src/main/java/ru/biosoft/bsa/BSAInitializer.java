@@ -1,6 +1,9 @@
 package ru.biosoft.bsa;
 
 import ru.biosoft.access.BeanRegistry;
+import ru.biosoft.access.core.FileTypePriority;
+import ru.biosoft.access.file.FileType;
+import ru.biosoft.access.file.FileTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
 import ru.biosoft.bsa.server.TrackFinderProvider;
@@ -83,4 +86,16 @@ public class BSAInitializer extends Initializer
         WebTablesProvider.addTableResolver("track", "ru.biosoft.bsa.server.TrackTableResolver");
     }
 
+    @Override
+    protected void initFileTypes()
+    {
+        //String[] extensions, String transformerClassName, FileTypePriority priority, String description
+        FileTypeRegistry
+                .register(new FileType("fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "FASTA file"));
+        FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
+        FileTypeRegistry
+                .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY, "GFF track file"));
+        FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
+    }
 }

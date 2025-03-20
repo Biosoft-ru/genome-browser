@@ -94,4 +94,10 @@ public abstract class Initializer
     {
         //BeanRegistry.registerBeanProvider("PREFIX", "BEAN PROVIDER CLASS");
     }
+
+    protected void initFileTypes()
+    {
+        // FileTypeRegistry.register(String name, String[] extensions, String transformerClassName, FileTypePriority priority, String description);
+
+    }
 }
