@@ -121,11 +121,13 @@
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.14.0</version>
    </plugin>
 
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-javadoc-plugin</artifactId>
+    <version>3.11.2</version>
     <executions>
      <execution>
       <id>attach-javadocs</id>
@@ -142,16 +144,20 @@
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-jar-plugin</artifactId>
+    <version>3.4.2</version>
    </plugin>
    
    <plugin>
     <groupId>org.apache.felix</groupId>
     <artifactId>maven-bundle-plugin</artifactId>
+    <version>6.0.0</version>
    </plugin>
    
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-source-plugin</artifactId>
+    <version>3.3.1</version>
+    
    </plugin>
 
   </plugins>

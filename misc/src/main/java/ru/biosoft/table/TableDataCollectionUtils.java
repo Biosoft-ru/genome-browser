@@ -20,8 +20,8 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.developmentontheedge.beans.swing.PropertyInspector;
 
-//import gnu.trove.list.TDoubleList;
-//import gnu.trove.list.array.TDoubleArrayList;
+import gnu.trove.list.TDoubleList;
+import gnu.trove.list.array.TDoubleArrayList;
 import one.util.streamex.IntStreamEx;
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.DataCollectionUtils;
@@ -757,9 +757,7 @@ public abstract class TableDataCollectionUtils
         {
             return null;
         }
-        //TODO: commented, gnu.trove
-        //TDoubleList rowValues = new TDoubleArrayList();
-        List<Double> rowValues = new ArrayList<>();
+        TDoubleList rowValues = new TDoubleArrayList();
         for( int columnIndex : columnIndices )
         {
             double value;
@@ -775,7 +773,7 @@ public abstract class TableDataCollectionUtils
             }
             rowValues.add(value);
         }
-        return rowValues.stream().mapToDouble(Double::doubleValue).toArray();
+        return rowValues.toArray();
     }
 
     public static double[] getDoubleRow(TableDataCollection table, String rowName)

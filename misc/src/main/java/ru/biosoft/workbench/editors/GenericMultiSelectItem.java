@@ -1,7 +1,7 @@
 package ru.biosoft.workbench.editors;
 
-//import gnu.trove.list.TIntList;
-//import gnu.trove.list.array.TIntArrayList;
+import gnu.trove.list.TIntList;
+import gnu.trove.list.array.TIntArrayList;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -100,16 +100,14 @@ public class GenericMultiSelectItem
         for(int i = 0; i < availableValues.length; i++)
             valToIdx.put( availableValues[i].toString(), i );
 
-        //TODO: commented, gnu.trove.list.TIntList
-        //TIntList indexes = new TIntArrayList();
-        List<Integer> indexes = new ArrayList<>();
+        TIntList indexes = new TIntArrayList();
         for( int i = 0; i < values.length; i++)
         {
             Integer index = valToIdx.get( values[i].toString() );
             if(index != null)
                 indexes.add(index);
         }
-        this.indexes = indexes.stream().mapToInt(i -> i).toArray();
+        this.indexes = indexes.toArray();
         
         this.values = (Object[])Array.newInstance( availableValues.getClass().getComponentType(), this.indexes.length );
         for(int i=0; i<this.indexes.length; i++)

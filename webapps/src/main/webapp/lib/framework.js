@@ -89,7 +89,7 @@ function loadApplication(startupInfo)
         canUseExperimental = true;
     
     // load common classes
-    //TODO: instanceOf.parseClasses($.evalJSON(startupInfo.classes));
+    instanceOf.parseClasses($.evalJSON(startupInfo.classes));
     
     //TODO: initScripting(startupInfo.scriptTypes);
     

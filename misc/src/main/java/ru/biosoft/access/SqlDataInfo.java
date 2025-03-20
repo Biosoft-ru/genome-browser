@@ -22,7 +22,7 @@ import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementRemoveException;
 import ru.biosoft.access.sql.Query;
 import ru.biosoft.access.sql.SqlUtil;
-//import ru.biosoft.table.SqlTableDataCollection;
+import ru.biosoft.table.SqlTableDataCollection;
 
 
 /**
@@ -223,35 +223,35 @@ public class SqlDataInfo
                 throw new DataElementRemoveException( e, origin.getCompletePath().getChildPath( name ) );
             }
         }
-        //TODO: commented, SqlTableDataCollection
-        //        if(!DataCollectionUtils.checkPrimaryElementType(origin, SqlTableDataCollection.class))
-        //        {
+        if( !DataCollectionUtils.checkPrimaryElementType(origin, SqlTableDataCollection.class) )
+        {
             String id = generateTableId(conn, DataElementPath.create(origin, name), prefix);
-            id = id.substring(prefix.length()+1);
+            id = id.substring(prefix.length() + 1);
             return id;
-            //        } else
-            //        {
-            //            SqlUtil.execute( conn, DELETE_QUERY.str( "name", name ).str( "parent", origin.getCompletePath().toString() ) );
-            //            String query = "INSERT INTO data_element(name,parent) VALUES(?,?)";
-            //            try(PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))
-            //            {
-            //                ps.setString(1, name);
-            //                ps.setString(2, origin.getCompletePath().toString());
-            //                ps.execute();
-            //                try(ResultSet rs = ps.getGeneratedKeys())
-            //                {
-            //                    if(!rs.next())
-            //                        throw new SQLException("Internal error: no id generated");
-            //                    int id = rs.getInt(1);
-            //                    storeProperties(conn, id, prop);
-            //                    return String.valueOf(id);
-            //                }
-            //            }
-            //            catch( SQLException e )
-            //            {
-            //                throw new BiosoftSQLException( conn, query, e );
-            //            }
-            //        }
+        }
+        else
+        {
+            SqlUtil.execute(conn, DELETE_QUERY.str("name", name).str("parent", origin.getCompletePath().toString()));
+            String query = "INSERT INTO data_element(name,parent) VALUES(?,?)";
+            try (PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))
+            {
+                ps.setString(1, name);
+                ps.setString(2, origin.getCompletePath().toString());
+                ps.execute();
+                try (ResultSet rs = ps.getGeneratedKeys())
+                {
+                    if( !rs.next() )
+                        throw new SQLException("Internal error: no id generated");
+                    int id = rs.getInt(1);
+                    storeProperties(conn, id, prop);
+                    return String.valueOf(id);
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new BiosoftSQLException(conn, query, e);
+            }
+        }
     }
 
     public static int getColumnContentLength(String columnType)

@@ -31,6 +31,7 @@ public abstract class Initializer
                         initTemplates();
                         initBeanProviders();
                         initTableResolvers();
+                        initPerspectives();
 
                     }
                     finally
@@ -98,6 +99,10 @@ public abstract class Initializer
     protected void initFileTypes()
     {
         // FileTypeRegistry.register(String name, String[] extensions, String transformerClassName, FileTypePriority priority, String description);
+    }
 
+    protected void initPerspectives()
+    {
+        //PerspectiveRegistry.registerPerspective("NAME", "CLASS", args);
     }
 }

@@ -1,5 +1,8 @@
 package ru.biosoft.bsa;
 
+import java.util.Collections;
+
+import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
 import ru.biosoft.access.core.FileTypePriority;
 import ru.biosoft.access.file.FileType;
@@ -11,6 +14,7 @@ import ru.biosoft.server.ServiceRegistry;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
 import ru.biosoft.server.servlets.webservices.providers.WebTablesProvider;
 import ru.biosoft.table.datatype.DataType;
+import ru.biosoft.templates.TemplateFilter;
 import ru.biosoft.templates.TemplateRegistry;
 import ru.biosoft.util.Initializer;
 
@@ -47,7 +51,8 @@ public class BSAInitializer extends Initializer
         TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
         TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
         TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BAMTrack");
-        //TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.VCFFileTrack");
+        TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
+        TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
         //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
         TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
         TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
@@ -59,14 +64,15 @@ public class BSAInitializer extends Initializer
 
     @Override protected void initTemplates()
     {
-        TemplateRegistry.registerTemplate("SQL track", "ru.biosoft.bsa.SqlTrack", "sqltrack2.vm", "SQL track information", false, 0);
-    }
+        //TemplateRegistry.registerTemplate("TEMPLATE NAME", "ANY CLASS WITH RESOURCE FOLDER INSTEAD OF PLUGIN NAME", "OTHER ARGUMENTS FOR TEMPLATE: FILE PATH, DESCRIPTION, IS BREAF, ORDER, FILTER");
 
-    /*
-     * <template name="SQL track" file="ru/biosoft/bsa/resources/sqltrack.vm"
-     * description="SQL track information" isBrief="no" order="0"> <filter
-     * class="ru.biosoft.bsa.SqlTrack" subclasses="yes"/> </template>
-     */
+        TemplateFilter filter = new TemplateFilter("ru.biosoft.bsa.SqlTrack", true, Collections.EMPTY_LIST, null);
+        TemplateRegistry.registerTemplate("SQL track", "ru.biosoft.bsa.SqlTrack", "ru/biosoft/bsa/resources/sqltrack.vm", "SQL track information", false, 0, filter);
+        TemplateRegistry.registerTemplate("SQL track simple", "ru.biosoft.bsa.SqlTrack", "sqltrack2.vm", "SQL track information for testing template", false, 40, filter);
+
+        TemplateFilter BAMfilter = new TemplateFilter("ru.biosoft.bsa.BAMTrack", true, Collections.EMPTY_LIST, null);
+        TemplateRegistry.registerTemplate("BAM track", "ru.biosoft.bsa.BAMTrack", "ru/biosoft/bsa/resources/bamtrack.vm", "BAM track information", false, 0, BAMfilter);
+    }
 
     @Override protected void initProviders()
     {
@@ -97,5 +103,17 @@ public class BSAInitializer extends Initializer
         FileTypeRegistry
                 .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY, "GFF track file"));
         FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
+    }
+
+    @Override
+    protected void initCommonClasses()
+    {
+        AccessService.addCommonClass("ru.biosoft.bsa.SqlTrack");
+        AccessService.addCommonClass("ru.biosoft.bsa.AnnotatedSequence");
+        AccessService.addCommonClass("ru.biosoft.bsa.SiteModel");
+        AccessService.addCommonClass("ru.biosoft.bsa.SiteModelCollection");
+        AccessService.addCommonClass("ru.biosoft.bsa.analysis.WeightMatrixCollection");
+        AccessService.addCommonClass("ru.biosoft.bsa.analysis.FrequencyMatrix");
+        AccessService.addCommonClass("ru.biosoft.bsa.SequenceCollection");
     }
 }

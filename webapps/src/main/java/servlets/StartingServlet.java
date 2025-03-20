@@ -7,7 +7,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,8 @@ import org.json.JSONObject;
 import org.yaml.snakeyaml.Yaml;
 
 import biouml.plugins.server.RepositoryManager;
+import biouml.workbench.perspective.PerspectiveRegistry;
+import biouml.workbench.perspective.YAMLPerspective;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebInitParam;
@@ -29,9 +30,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.biosoft.access.AccessCoreInit;
 import ru.biosoft.access.AccessInitializer;
 import ru.biosoft.bsa.BSAInitializer;
+import ru.biosoft.graphics.View;
+import ru.biosoft.graphics.View.ModelResolver;
+import ru.biosoft.graphics.access.DataElementModelResolver;
 import ru.biosoft.server.ServerInitializer;
 import ru.biosoft.server.servlets.webservices.WebServletHandler;
 import ru.biosoft.templates.TemplatesInitializer;
+import ru.biosoft.util.ServerPreferences;
 
 @WebServlet(urlPatterns = { "/genomebrowser/*" }, initParams = { @WebInitParam(name = "configPath", value = "config2.yml") })
 public class StartingServlet extends HttpServlet
@@ -62,10 +67,39 @@ public class StartingServlet extends HttpServlet
             }
         }
 
+        if( yaml.get("preferences") != null )
+        {
+            ServerPreferences.loadPreferences((String) yaml.get("preferences"));
+        }
+
         AccessInitializer.initialize();
         ServerInitializer.initialize();
         BSAInitializer.initialize();
         TemplatesInitializer.initialize();
+
+        ModelResolver viewModelResolver = new DataElementModelResolver();
+        View.setModelResolver(viewModelResolver);
+
+        if( yaml.get("perspectives") != null )
+        {
+            try
+            {
+                List<Object> perspectives = (List<Object>) yaml.get("perspectives");
+                for ( Object perspective : perspectives )
+                {
+                    if( perspective instanceof Map )
+                    {
+                        Map<String, Object> perspProps = (Map<String, Object>) ((Map) perspective).get("perspective");
+                        String name = (String) perspProps.getOrDefault("name", "Unknown");
+                        PerspectiveRegistry.registerPerspective(name, YAMLPerspective.class.getName(), perspProps);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO: do nothing if can not init
+            }
+        }
     }
 
 

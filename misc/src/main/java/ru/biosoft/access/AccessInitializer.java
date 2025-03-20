@@ -1,6 +1,7 @@
 package ru.biosoft.access;
 
 import ru.biosoft.access.generic.DataElementTypeRegistry;
+import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.util.Initializer;
 
 public class AccessInitializer extends Initializer
@@ -11,6 +12,11 @@ public class AccessInitializer extends Initializer
         if( instance == null )
             instance = new AccessInitializer();
         return instance;
+    }
+
+    public static void initialize()
+    {
+        getInstance().init();
     }
 
     @Override protected void initDataElementTypeDrivers()
@@ -27,14 +33,15 @@ public class AccessInitializer extends Initializer
         //ACCESS
         //TransformerRegistry.addTransformer("Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.ImageDataElement");
         //TransformerRegistry.addTransformer("HTML file", "ru.biosoft.access.support.FileHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.HtmlDataElement");
-        //TransformerRegistry.addTransformer("Plain text", "ru.biosoft.access.support.FileTextTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.ImageDataElement");
+        TransformerRegistry.addTransformer("Plain text", "ru.biosoft.access.support.FileTextTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.TextDataElement");
         //TransformerRegistry.addTransformer("ZIP-archive with HTML pages", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.html.ZipHtmlDataCollection");
         //TransformerRegistry.addTransformer("Video", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.VideoDataElement");
     }
 
-    public static void initialize()
+    protected void initBeanProviders()
     {
-        getInstance().init();
+        BeanRegistry.registerBeanProvider("properties/fdc", "ru.biosoft.access.FDCBeanProvider");
     }
+
 
 }

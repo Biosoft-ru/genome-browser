@@ -1,11 +1,7 @@
 package ru.biosoft.access.generic;
 
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -13,36 +9,37 @@ import javax.annotation.Nonnull;
 //import org.eclipse.core.runtime.IConfigurationElement;
 
 import one.util.streamex.StreamEx;
+import ru.biosoft.access.FileDataElement;
 
 //import org.eclipse.core.runtime.IConfigurationElement;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
-import ru.biosoft.access.ClassLoading;
-import ru.biosoft.access.FileDataElement;
 import ru.biosoft.access.core.Transformer;
-import ru.biosoft.access.exception.InitializationException;
-import ru.biosoft.access.exception.ParameterNotAcceptableException;
-import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.util.Clazz;
 //import ru.biosoft.util.ExtensionRegistrySupport;
+import ru.biosoft.util.ExtensionRegistrySupport;
 
 //Class modified to eliminate ExtensionRegistry usage
 /**
- * Registry which stores information on different transformers
- * Useful to handle elements within GenericDataCollection
+ * Registry which stores information on different transformers Useful to handle
+ * elements within GenericDataCollection
+ * 
  * @author lan
+ * @author anna refactored
  */
-public class TransformerRegistry implements Iterable<TransformerRegistry.TransformerInfo> //extends ExtensionRegistrySupport<TransformerRegistry.TransformerInfo>
+public class TransformerRegistry extends ExtensionRegistrySupport<TransformerRegistry.TransformerInfo> //extends ExtensionRegistrySupport<TransformerRegistry.TransformerInfo>
 {
+    private TransformerRegistry()
+    {
+        super("ru.biosoft.access.transformer", "name");
+        // TODO Auto-generated constructor stub
+    }
+
     public static final String INPUT_CLASS = "inputClass";
     public static final String OUTPUT_CLASS = "outputClass";
     public static final String TRANSFORMER_CLASS = "transformerClass";
     
-    private Map<String, TransformerInfo> transformers;
-    private volatile boolean initialized = false;
-    private volatile boolean initializing = false;
-
     private static final TransformerRegistry instance = new TransformerRegistry();
 
     public static class TransformerInfo
@@ -145,7 +142,7 @@ public class TransformerRegistry implements Iterable<TransformerRegistry.Transfo
     
     private TransformerInfo getTransformerInternal(String name)
     {
-        return transformers.get(name);
+        return getExtension(name);
     }
 
     public static TransformerInfo getTransformerInfo(Class<? extends Transformer> clazz)
@@ -179,12 +176,6 @@ public class TransformerRegistry implements Iterable<TransformerRegistry.Transfo
         return result;
     }
 
-    //TODO: commented old registry
-    //    private TransformerRegistry()
-    //    {
-    //        super("ru.biosoft.access.transformer", "name");
-    //    }
-    
     //    @Override
     //    protected TransformerInfo loadElement(IConfigurationElement element, String elementName) throws Exception
     //    {
@@ -195,53 +186,11 @@ public class TransformerRegistry implements Iterable<TransformerRegistry.Transfo
     //        return new TransformerInfo(elementName, transformerClass, inputClass, outputClass);
     //    }
 
-    @Override public Iterator<TransformerInfo> iterator()
-    {
-        init();
-        return Collections.unmodifiableCollection(transformers.values()).iterator();
-    }
-
-    protected final void init()
-    {
-        if( !initialized )
-        {
-            synchronized (this)
-            {
-                if( !initialized )
-                {
-                    if( initializing )
-                        throw new InitializationException("Concurrent initialization in TransformerRegistry");
-                    initializing = true;
-                    try
-                    {
-                        transformers = new HashMap<>();
-                    }
-                    finally
-                    {
-                        initializing = false;
-                        initialized = true;
-                    }
-                }
-            }
-        }
-    }
-
-    public StreamEx<TransformerInfo> stream()
-    {
-        init();
-        return StreamEx.of(transformers.values());
-    }
 
     public static void addTransformer(TransformerInfo ti)
     {
-        instance.addTransformerInternal(ti);
-    }
-
-    private void addTransformerInternal(TransformerInfo ti)
-    {
-        init();
-        transformers.put(ti.getName(), ti);
-
+        instance.init();
+        instance.addElementInternal(ti.getName(), ti);
     }
 
     public static void addTransformer(String name, Class<? extends Transformer> transformerClass, Class<? extends DataElement> inputClass, Class<? extends DataElement> outputClass)
@@ -255,17 +204,13 @@ public class TransformerRegistry implements Iterable<TransformerRegistry.Transfo
                 getClass(outputClassName, DataElement.class)));
     }
 
-    protected static <K> Class<? extends K> getClass(String className, @Nonnull Class<K> parentClass)
+    @Override protected TransformerInfo registerElement(String elementName, String className, Object... args) throws Exception
     {
-        Class<? extends K> clazz;
-        try
-        {
-            clazz = ClassLoading.loadSubClass(className, parentClass);
-        }
-        catch (Exception e)
-        {
-            throw ExceptionRegistry.translateException(e);
-        }
-        return clazz;
+        return null;
+    }
+
+    @Override public void addElement(String elementName, String className)
+    {
+
     }
 }

@@ -507,13 +507,13 @@ public class WebServicesServlet extends AbstractServlet
         result.put("context", new JSONObject());
         result.put("scriptTypes", new JSONObject());
         result.put("classes", new JSONObject());
-        result.put("actions", new JSONObject());
+        //result.put("actions", new JSONObject());
         result.put("journals", new JSONObject());
 
         //TODO: copy providers or send empty values
-        //        Map<String, String> preferencesArguments = new HashMap<>();
-        //        preferencesArguments.put(BiosoftWebRequest.ACTION, "init");
-        //        result.put("preferences", getRequestValue("preferences", preferencesArguments, "reading preferences"));
+        Map<String, String> preferencesArguments = new HashMap<>();
+        preferencesArguments.put(BiosoftWebRequest.ACTION, "init");
+        result.put("preferences", getRequestValue("preferences", preferencesArguments, "reading preferences"));
         //
         //        Map<String, String> contextArguments = new HashMap<>();
         //        contextArguments.put(BiosoftWebRequest.ACTION, "context");
@@ -523,23 +523,23 @@ public class WebServicesServlet extends AbstractServlet
         //        scriptTypesArguments.put(BiosoftWebRequest.ACTION, "types");
         //        result.put("scriptTypes", getRequestValue("script", scriptTypesArguments, "reading script types"));
         //
-        //        Map<String, String> classesArguments = new HashMap<>();
-        //        classesArguments.put("service", "access.service");
-        //        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
-        //        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
-        //        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
-        //        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
-        //
-        //        Map<String, String> actionArguments = new HashMap<>();
-        //        actionArguments.put("type", "toolbar");
-        //        JSONObject actions = new JSONObject();
-        //        actions.put("toolbar", getRequestValue("action", actionArguments, "reading toolbar actions"));
-        //        actionArguments.put("type", "tree");
-        //        actions.put("tree", getRequestValue("action", actionArguments, "reading tree actions"));
-        //        actionArguments.put("type", "dynamic");
-        //        actionArguments.put(BiosoftWebRequest.ACTION, "load");
-        //        actions.put("dynamic", getRequestValue("action", actionArguments, "reading dynamic actions"));
-        //        result.put("actions", actions);
+        Map<String, String> classesArguments = new HashMap<>();
+        classesArguments.put("service", "access.service");
+        classesArguments.put("command", String.valueOf(AccessProtocol.DB_GET_CLASS_HIERARCHY));
+        classesArguments.put(AccessProtocol.ADD_COMMON_CLASSES, "yes");
+        classesArguments.put(AccessProtocol.CLASS_NAME, String.join(",", classes));
+        result.put("classes", getRequestValue("data", classesArguments, "reading common classes"));
+
+        Map<String, String> actionArguments = new HashMap<>();
+        actionArguments.put("type", "toolbar");
+        JSONObject actions = new JSONObject();
+        actions.put("toolbar", getRequestValue("action", actionArguments, "reading toolbar actions"));
+        actionArguments.put("type", "tree");
+        actions.put("tree", getRequestValue("action", actionArguments, "reading tree actions"));
+        actionArguments.put("type", "dynamic");
+        actionArguments.put(BiosoftWebRequest.ACTION, "load");
+        actions.put("dynamic", getRequestValue("action", actionArguments, "reading dynamic actions"));
+        result.put("actions", actions);
         //
         //        Map<String, String> journalArguments = new HashMap<>();
         //        journalArguments.put(BiosoftWebRequest.ACTION, "init");

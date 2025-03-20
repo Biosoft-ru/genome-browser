@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<dynamicPropertySet> 
+    <property name="DataCollectionPaths" type="com.developmentontheedge.beans.Preferences" display-name="DataCollectionPaths" short-description="DataCollectionPaths">
+        <dynamicPropertySet> 
+        </dynamicPropertySet> 
+    </property> 
+    <property name="Global" type="com.developmentontheedge.beans.Preferences" display-name="Global" short-description="Global" hidden="true">
+        <dynamicPropertySet> 
+        </dynamicPropertySet> 
+    </property> 
+    <property name="Perspective" type="java.lang.String" value="Default" display-name="Perspective" short-description="Perspective" property-editor="biouml.workbench.perspective.PerspectiveSelector"/> 
+    <property name="currentJournal" type="java.lang.String" value="" display-name="Current journal" short-description="Current journal"/> 
+</dynamicPropertySet> 

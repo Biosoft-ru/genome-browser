@@ -283,22 +283,21 @@ public class ApplicationUtils
     public static int getMaxSortingSize()
     {
         int maxSortingSize = DEFAULT_MAX_SORTING_SIZE;
-        //TODO: commented, Application
-        //        try
-        //        {
-        //            Preferences preferences = Application.getPreferences();
-        //            DynamicProperty property = preferences.getProperty(MAX_SORTING_SIZE_PREFERENCE);
-        //            if( property == null || property.getValue().equals(0) )
-        //            {
-        //                property = new DynamicProperty(MAX_SORTING_SIZE_PREFERENCE, "Max sorting size",
-        //                        "Maximum size of the table which supports sorting", Integer.class, DEFAULT_MAX_SORTING_SIZE);
-        //                preferences.add(property);
-        //            }
-        //            maxSortingSize = (Integer)property.getValue();
-        //        }
-        //        catch( Exception e )
-        //        {
-        //        }
+        try
+        {
+            Preferences preferences = ServerPreferences.getPreferences();
+            DynamicProperty property = preferences.getProperty(MAX_SORTING_SIZE_PREFERENCE);
+            if( property == null || property.getValue().equals(0) )
+            {
+                property = new DynamicProperty(MAX_SORTING_SIZE_PREFERENCE, "Max sorting size", "Maximum size of the table which supports sorting", Integer.class,
+                        DEFAULT_MAX_SORTING_SIZE);
+                preferences.add(property);
+            }
+            maxSortingSize = (Integer) property.getValue();
+        }
+        catch (Exception e)
+        {
+        }
         return maxSortingSize;
     }
 
@@ -306,28 +305,26 @@ public class ApplicationUtils
     {
         int nThreads = 0;
 
-        //TODO: commented, Application
-        //        Preferences preferences = Application.getPreferences();
-        //        
-        //        if( preferences != null )
-        //        {
-        //            DynamicProperty property = preferences.getProperty(THREADS_NUMBER_PREFERENCE);
-        //            if( property == null )
-        //            {
-        //                property = new DynamicProperty(THREADS_NUMBER_PREFERENCE, "Preferred number of threads",
-        //                        "Set 0 for number of processors available", Integer.class, 0);
-        //                preferences.add(property);
-        //            }
-        //
-        //            try
-        //            {
-        //                nThreads = (Integer)property.getValue();
-        //            }
-        //            catch( Exception e )
-        //            {
-        //                property.setValue(0);
-        //            }
-        //        }
+        Preferences preferences = ServerPreferences.getPreferences();
+
+        if( preferences != null )
+        {
+            DynamicProperty property = preferences.getProperty(THREADS_NUMBER_PREFERENCE);
+            if( property == null )
+            {
+                property = new DynamicProperty(THREADS_NUMBER_PREFERENCE, "Preferred number of threads", "Set 0 for number of processors available", Integer.class, 0);
+                preferences.add(property);
+            }
+
+            try
+            {
+                nThreads = (Integer) property.getValue();
+            }
+            catch (Exception e)
+            {
+                property.setValue(0);
+            }
+        }
 
         if( nThreads <= 0 )
         {
@@ -492,6 +489,25 @@ public class ApplicationUtils
                 return null;
         }
         return relative;
+    }
+
+    //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils
+    public static String readAsString(File src, int maxChars) throws IOException
+    {
+        char[] result = new char[maxChars];
+        int offset = 0;
+        try (FileInputStream in = new FileInputStream(src); InputStreamReader reader = new InputStreamReader(in, StandardCharsets.UTF_8))
+        {
+            while ( true )
+            {
+                int read = reader.read(result, offset, maxChars - offset);
+                if( read == -1 )
+                    return new String(result, 0, offset);
+                offset += read;
+                if( offset >= maxChars )
+                    return new String(result);
+            }
+        }
     }
 
     //TODO: copy, code copied from com.developmentontheedge.application.ApplicationUtils

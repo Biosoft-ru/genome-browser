@@ -1,7 +1,7 @@
 package ru.biosoft.table;
 
-//import gnu.trove.map.TObjectIntMap;
-//import gnu.trove.map.hash.TObjectIntHashMap;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,9 +38,7 @@ public class ColumnModel implements Iterable<TableColumn>
     public static final String NEW_COLUMN_NAME = "New Column";
 
     protected TableColumn[] columnsInfo = new TableColumn[0];
-    //TODO: commented, gnu.trove.map TObjectLongMap, TObjectLongHashMap
-    //protected TObjectIntMap<String> columnName2Index = new TObjectIntHashMap<>( 10, 0.5f, -1 );
-    protected Map<String, Integer> columnName2Index = new HashMap<>();
+    protected TObjectIntMap<String> columnName2Index = new TObjectIntHashMap<>(10, 0.5f, -1);
 
     protected TableDataCollection origin;
     // Whether there are columns with expressions (used to speed up some operations)
