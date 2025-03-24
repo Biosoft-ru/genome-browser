@@ -28,7 +28,8 @@ public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> im
         properties.setProperty( DataCollectionConfigConstants.FILE_PROPERTY, input.getAbsolutePath() );
         
         String configDir = origin.getInfo().getProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY );
-        properties.setProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir );
+        if( configDir != null )
+            properties.setProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir);
         
         String seqBase = origin.getInfo().getProperty( Track.SEQUENCES_COLLECTION_PROPERTY );
         if(seqBase != null)

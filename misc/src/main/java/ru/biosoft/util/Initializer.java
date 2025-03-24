@@ -32,6 +32,7 @@ public abstract class Initializer
                         initBeanProviders();
                         initTableResolvers();
                         initPerspectives();
+                        initFileTypes();
 
                     }
                     finally

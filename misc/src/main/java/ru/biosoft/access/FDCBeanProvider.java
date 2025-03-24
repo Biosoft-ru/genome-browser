@@ -12,6 +12,7 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.Transformer;
 import ru.biosoft.access.file.FileDataCollection;
+import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.access.generic.TransformerRegistry.TransformerInfo;
 import ru.biosoft.util.BeanAsMapUtil;

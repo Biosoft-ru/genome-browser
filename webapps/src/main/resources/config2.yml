@@ -1,6 +1,7 @@
 repositories:
 - data/src/main/resources/repo
 - data/src/main/resources/databases
+- data/src/main/resources/GenericFDC
 roots:
 - repo
 - databases
@@ -18,6 +19,9 @@ perspectives:
                 title: Databases
                 path: databases
                 databases: true
+            - tab:
+                title: Generic FDC
+                path: GenericFDC
         viewparts:
             - rule:
                 name: allow

@@ -47,15 +47,15 @@ public class BSAInitializer extends Initializer
 
     @Override protected void initTransformers()
     {
-        TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
-        TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
-        TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
-        TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BAMTrack");
-        TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
-        TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
-        //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
-        TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
-        TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
+        TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
+        TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
+        TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
+        TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BAMTrack");
+        TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
+        TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
+        //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
+        TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
+        TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
         
         TransformerRegistry.addTransformer("Genome browser view", "ru.biosoft.bsa.transformer.ProjectTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.project.Project");
         TransformerRegistry.addTransformer("Site model", "ru.biosoft.bsa.transformer.SiteModelTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.SiteModel");
@@ -101,8 +101,16 @@ public class BSAInitializer extends Initializer
                         "FASTA file"));
         FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
         FileTypeRegistry
-                .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY, "GFF track file"));
+                .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "Generic Feature Format (gff) track file"));
         FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
+        FileTypeRegistry.register(new FileType("vcf", new String[] { "vcf" }, "ru.biosoft.bsa.transformer.VCFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                "Variant Call Format (vcf) track file"));
+        FileTypeRegistry
+                .register(new FileType("wigggle", new String[] { "wig" }, "ru.biosoft.bsa.transformer.WiggleFileTransformer", FileTypePriority.HIGH_PRIORITY, "Wiggle track file"));
+        FileTypeRegistry
+                .register(new FileType("genbank", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY, "VCF track file"));
+        //?? combined track
     }
 
     @Override

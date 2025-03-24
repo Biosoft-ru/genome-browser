@@ -50,6 +50,11 @@ public class StartingServlet extends HttpServlet
         super.init(config);
         AccessCoreInit.init();
 
+        AccessInitializer.initialize();
+        ServerInitializer.initialize();
+        BSAInitializer.initialize();
+        TemplatesInitializer.initialize();
+
         configPath = config.getInitParameter("configPath");
         if( configPath == null )
             configPath = "config.yml";
@@ -71,11 +76,6 @@ public class StartingServlet extends HttpServlet
         {
             ServerPreferences.loadPreferences((String) yaml.get("preferences"));
         }
-
-        AccessInitializer.initialize();
-        ServerInitializer.initialize();
-        BSAInitializer.initialize();
-        TemplatesInitializer.initialize();
 
         ModelResolver viewModelResolver = new DataElementModelResolver();
         View.setModelResolver(viewModelResolver);

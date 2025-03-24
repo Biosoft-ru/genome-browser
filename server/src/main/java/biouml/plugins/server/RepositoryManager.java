@@ -36,6 +36,7 @@ public class RepositoryManager
                     properties.put(DataCollectionConfigConstants.CLASS_PROPERTY, GenericFileDataCollection.class.getName());
                     properties.put(DataCollectionConfigConstants.NAME_PROPERTY, DataElementPath.create(path).getName());
                     properties.put(DataCollectionConfigConstants.FILE_PATH_PROPERTY, path);
+                    properties.put(DataCollectionConfigConstants.IS_ROOT, "true");
                     dc = CollectionFactory.createCollection(null, properties);
                 }
             }

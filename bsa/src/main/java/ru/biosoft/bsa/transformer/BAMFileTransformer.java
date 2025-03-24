@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.file.FileBasedCollection;
-import ru.biosoft.access.FileDataElement;
+import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;

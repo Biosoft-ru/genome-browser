@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 //import org.eclipse.core.runtime.IConfigurationElement;
 
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.FileDataElement;
+import ru.biosoft.access.file.FileDataElement;
 
 //import org.eclipse.core.runtime.IConfigurationElement;
 
