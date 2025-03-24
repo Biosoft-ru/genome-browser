@@ -4,13 +4,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
-import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.file.GenericFileDataCollection;
 import ru.biosoft.exception.ExceptionRegistry;
 
@@ -32,12 +30,12 @@ public class RepositoryManager
                 File file = new File(path, DataCollectionConfigConstants.DEFAULT_CONFIG_FILE);
                 if(!file.exists())//Try to create GenericFileDataCollection
                 {
-                    Properties properties = new Properties();
-                    properties.put(DataCollectionConfigConstants.CLASS_PROPERTY, GenericFileDataCollection.class.getName());
-                    properties.put(DataCollectionConfigConstants.NAME_PROPERTY, DataElementPath.create(path).getName());
-                    properties.put(DataCollectionConfigConstants.FILE_PATH_PROPERTY, path);
-                    properties.put(DataCollectionConfigConstants.IS_ROOT, "true");
-                    dc = CollectionFactory.createCollection(null, properties);
+                    //                    Properties properties = new Properties();
+                    //                    properties.put(DataCollectionConfigConstants.CLASS_PROPERTY, GenericFileDataCollection.class.getName());
+                    //                    properties.put(DataCollectionConfigConstants.NAME_PROPERTY, DataElementPath.create(path).getName());
+                    //                    properties.put(DataCollectionConfigConstants.FILE_PATH_PROPERTY, path);
+                    //                    properties.put(DataCollectionConfigConstants.IS_ROOT, "true");
+                    dc = GenericFileDataCollection.initGenericFileDataCollection(null, new File(path));
                 }
             }
             if( dc != null )
