@@ -1,7 +1,7 @@
 repositories:
 - data/src/main/resources/repo
 - data/src/main/resources/databases
-- data/src/main/resources/GenericFDC
+- ../genome-browser-examples
 roots:
 - repo
 - databases
@@ -20,8 +20,8 @@ perspectives:
                 path: databases
                 databases: true
             - tab:
-                title: Generic FDC
-                path: GenericFDC
+                title: Examples
+                path: genome-browser-examples
         viewparts:
             - rule:
                 name: allow
