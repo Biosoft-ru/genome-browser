@@ -967,5 +967,40 @@ function DataCollection(completeName)
             if(failure)
                 failure();
         });
-    }
+    };
+    
+    this.getAttributesNoParent = function(callback)
+    {
+        if(callback)
+        {
+            this.loadAttributesNoParent(function() {callback(this.attributes);});
+        } else
+        {
+            this.loadAttributesNoParent();
+            return this.attributes;
+        }
+    };
+    
+    this.loadAttributesNoParent = function (callback)
+    {
+        var success = function(data) {
+            _this.attributes = parseProperties(data.values);
+            attributesLoaded = true;
+        };
+        //if (!attributesLoaded) 
+        //{
+            var _this = this;
+            // load data collection info
+            var result = queryService("access.service", 21,
+            {
+                dc: _this.completeName
+            }, callback ? function(data) {success(data);callback();} : undefined,
+            function(data) {
+                _this.attributes = {};
+                attributesLoaded = true;
+                if(callback) callback();
+            });
+            if(!callback && result.type == QUERY_TYPE_SUCCESS) success(result);
+        //} else if(callback) callback();
+    };
 }

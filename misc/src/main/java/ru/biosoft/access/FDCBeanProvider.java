@@ -13,6 +13,7 @@ import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.Transformer;
 import ru.biosoft.access.file.FileDataCollection;
 import ru.biosoft.access.file.FileDataElement;
+import ru.biosoft.access.file.GenericFileDataCollection;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.access.generic.TransformerRegistry.TransformerInfo;
 import ru.biosoft.util.BeanAsMapUtil;
@@ -25,13 +26,13 @@ public class FDCBeanProvider implements BeanProvider
     {
         DataElementPath dePath = DataElementPath.create( path );
         DataCollection<?> parent = dePath.optParentCollection();
-        if(parent == null || !(parent instanceof FileDataCollection))
+        if( parent == null || (!(parent instanceof FileDataCollection) && !(parent instanceof GenericFileDataCollection)) )
             return null;
-        FileDataCollection fdc = (FileDataCollection)parent;
         
         String transformerName = FileInfo.NO_TRANSFORMER;
         
-        Map<String, Object> fileInfo = fdc.getFileInfo(dePath.getName());
+        Map<String, Object> fileInfo = parent instanceof GenericFileDataCollection ? ((GenericFileDataCollection) parent).getFileInfo(dePath.getName())
+                : ((FileDataCollection) parent).getFileInfo(dePath.getName());
         String transformerClass = (String)fileInfo.get("transformer");
         if(transformerClass != null)
         {
@@ -61,9 +62,8 @@ public class FDCBeanProvider implements BeanProvider
         
         DataElementPath dePath = DataElementPath.create( path );
         DataCollection<?> parent = dePath.optParentCollection();
-        if(parent == null || !(parent instanceof FileDataCollection))
+        if( parent == null || (!(parent instanceof FileDataCollection) && !(parent instanceof GenericFileDataCollection)) )
             return;
-        FileDataCollection fdc = (FileDataCollection)parent;
         
         Map<String, Object> yaml = new LinkedHashMap<>();
         yaml.put( "name", dePath.getName() );
@@ -85,7 +85,10 @@ public class FDCBeanProvider implements BeanProvider
             yaml.put( "properties", fi.elementProperties.asMap());
         }
         
-        fdc.setFileInfo( yaml );
+        if( parent instanceof GenericFileDataCollection )
+            ((GenericFileDataCollection) parent).setFileInfo(yaml);
+        else
+            ((FileDataCollection) parent).setFileInfo(yaml);
     }
     
     
