@@ -20,7 +20,7 @@ import ru.biosoft.server.servlets.webservices.JSONResponse;
 import ru.biosoft.server.servlets.webservices.WebSession;
 //import ru.biosoft.util.JsonUtils;
 import ru.biosoft.util.ServerPreferences;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 //import ru.biosoft.tasks.TasksSqlTransformer;
 import ru.biosoft.tasks.TaskInfo;
 
@@ -91,6 +91,6 @@ public class PerspectivesProvider extends WebJSONProviderSupport
         Perspective perspective = PerspectiveRegistry.getPerspective(perspectiveName);
         response.sendJSON(new JSONObject().put("perspective", perspective.toJSON()).put("ignore", ignore).put("names", PerspectiveRegistry.perspectives().map(Perspective::getTitle)
                     .filter( availablePerspectives::contains )
-                /* .map( JSONValue::valueOf ) */.collect(TextUtil.toArray())));
+                /* .map( JSONValue::valueOf ) */.collect(TextUtil2.toArray())));
     }
 }

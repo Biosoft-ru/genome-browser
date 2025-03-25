@@ -9,12 +9,10 @@ import java.lang.reflect.Method;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -52,7 +50,7 @@ import ru.biosoft.util.bean.JSONBean;
 /**
  * Various utils for working with text date.
  */
-public class TextUtil
+public class TextUtil2
 {
     public static final String SERIALIZABLE_PROPERTY = "serializableProperty";
 
@@ -115,67 +113,6 @@ public class TextUtil
         return result;
     }
 
-    /**
-     * Returns string, that represents double value, with specified number of
-     * decimal digits.
-     *
-     * <p>
-     * If the value indeed is the integer, than the decimal digits are omitted.
-     *
-     * @param value double value
-     * @param decDig number of decimal digits
-     */
-    public static String valueOf(double value, int decDig)
-    {
-        StringBuilder decs = new StringBuilder("");
-        if( decDig > 0 )
-        {
-            decs.append('.');
-            for ( int i = 0; i < decDig; i++ )
-                decs.append('#');
-        }
-
-        return new DecimalFormat("##,###,###,###,###,###,###,###,###,###,###" + decs).format(value);
-    }
-
-    ////////////////////////////////////////
-
-    /**
-     * Returns the specified section from the specified string.
-     *
-     * Section is substring between <section> and </section>.
-     *
-     * @param section section name
-     * @param str the string containing this section
-     * @param offset position in the string from which first section will be
-     * found.
-     */
-    public static String getSection(String section, String str, int offset)
-    {
-        if( str != null )
-        {
-            String beg = '<' + section;
-            String end = "</" + section;
-
-            int start = str.indexOf(beg, offset);
-            if( start != -1 )
-            {
-                start += beg.length();
-                start = str.indexOf(">", start) + 1;
-                int stop = str.indexOf(end, start);
-                if( stop != -1 )
-                    return str.substring(start, stop).trim();
-                /*
-                 * else // DEBUG
-                 * 
-                 * System.out.println( "_getSection: section has not end\n" +
-                 * "Section : " + section + '\n' + "source  : \n" + str);
-                 */
-            }
-        }
-
-        return null;
-    }
 
     //TODO: copy, copied from ru.biosoft.server.JSONUtils
     /**
@@ -198,18 +135,6 @@ public class TextUtil
         return newColor;
     }
 
-    /**
-     * Returns the specified section from the specified string.
-     *
-     * Section is substring between <section> and </section>.
-     *
-     * @param section section name
-     * @param str the string containing this section
-     */
-    public static String getSection(String section, String str)
-    {
-        return getSection(section, str, 0);
-    }
 
     /**
      * Returns specified field from the specified entry.
@@ -491,7 +416,7 @@ public class TextUtil
 
     private static JSONObject toJSONObject(JSONBean child)
     {
-        return BeanUtil.properties(child).remove(TextUtil::skipProperty).mapToEntry(Property::getName, property -> {
+        return BeanUtil.properties(child).remove(TextUtil2::skipProperty).mapToEntry(Property::getName, property -> {
             Object value = property.getValue();
             if( value == null )
                 return JSONObject.NULL;
@@ -755,7 +680,7 @@ public class TextUtil
             JSONObject jsonDynamicProperty = jsonDPS.getJSONObject(i);
 
             Class<?> type = ClassLoading.loadClass(jsonDynamicProperty.getString("type"));
-            Object value = TextUtil.fromString(type, jsonDynamicProperty.getString("value"));
+            Object value = TextUtil2.fromString(type, jsonDynamicProperty.getString("value"));
 
             String name = jsonDynamicProperty.getString("name");
             PropertyDescriptor descriptor = BeanUtil.createDescriptor(name);
@@ -799,7 +724,7 @@ public class TextUtil
             JSONObject jsonDynamicProperty = new JSONObject()
                     .put("name", dp.getName())
                     .put("type", dp.getType().getName())
-                    .put("value", TextUtil.toString(dp.getValue()))
+                    .put("value", TextUtil2.toString(dp.getValue()))
                     .put("bound", descriptor.isBound())
                     .put("constrained", descriptor.isConstrained())
                     .put("displayName", descriptor.getDisplayName())
@@ -930,17 +855,6 @@ public class TextUtil
         return new String[] { str.substring(0, pos).trim(), str.substring(pos).trim() };
     }
 
-    public static String formatSize(long size)
-    {
-        String suffixes = "kMGTPE";
-        double normalizedSize = size;
-        int i;
-        for ( i = 0; normalizedSize >= 1024 && i < suffixes.length(); i++, normalizedSize /= 1024 )
-            ;
-        return i == 0 ? size == 1 ? "1 byte" : String.format(Locale.ENGLISH, "%,d bytes", size)
-                : String.format(Locale.ENGLISH, "%.1f%cb (%,d bytes)", normalizedSize, suffixes.charAt(i - 1), size);
-    }
-
     public static String calculateTemplate(String template, Object bean)
     {
         return calculateTemplate(template, bean, false);
@@ -994,13 +908,6 @@ public class TextUtil
         {
             return null;
         }
-    }
-
-    public static String ucFirst(String string)
-    {
-        if( string == null )
-            return null;
-        return Character.toTitleCase(string.charAt(0)) + string.substring(1);
     }
 
     /**
@@ -1091,7 +998,7 @@ public class TextUtil
         while ( matcher.find(start) )
         {
             html = html.substring(0, matcher.start()) + "<img" + matcher.group(1) + " src=\"../biouml/web/img?id=" + (matcher.group(2).contains("://") ? "" : baseId)
-                    + TextUtil.encodeURL(StringEscapeUtils.unescapeHtml4(matcher.group(2))) + "\"" + html.substring(matcher.end());
+                    + TextUtil2.encodeURL(StringEscapeUtils.unescapeHtml4(matcher.group(2))) + "\"" + html.substring(matcher.end());
             start = matcher.end();
             matcher = pattern.matcher(html);
         }

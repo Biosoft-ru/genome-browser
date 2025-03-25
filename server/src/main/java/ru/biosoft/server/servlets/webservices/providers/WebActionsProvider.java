@@ -84,7 +84,7 @@ import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.Cache;
 //import ru.biosoft.util.JsonUtils;
 import ru.biosoft.util.LazyValue;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 /**
  * Provides loading actions from plug-ins
@@ -144,7 +144,7 @@ public class WebActionsProvider extends WebProviderSupport
                         }
                         else
                         {
-                            String[] fields = TextUtil.split(name, ':');
+                            String[] fields = TextUtil2.split(name, ':');
                             String fileName = ACTIONS_PATH + type + "/" + fields[0];
                             try
                             {
@@ -523,7 +523,7 @@ public class WebActionsProvider extends WebProviderSupport
 
     private static List<DataElement> getSelectedItems(BiosoftWebRequest arguments) throws WebException
     {
-        DataCollection<?> selectionBase = arguments.getDataCollection( TextUtil.isEmpty( arguments.get( SELECTION_BASE ) )
+        DataCollection<?> selectionBase = arguments.getDataCollection( TextUtil2.isEmpty( arguments.get( SELECTION_BASE ) )
                 ? AccessProtocol.KEY_DE : SELECTION_BASE );
         String[] rows = arguments.optStrings("jsonrows");
         if( rows == null )

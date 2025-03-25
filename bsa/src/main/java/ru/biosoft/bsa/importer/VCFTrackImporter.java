@@ -25,7 +25,7 @@ import ru.biosoft.bsa.StrandType;
 import ru.biosoft.bsa.VCFSqlTrack;
 import ru.biosoft.bsa.WritableTrack;
 import ru.biosoft.jobcontrol.FunctionJobControl;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 /**
  * @author lan
@@ -76,7 +76,7 @@ public class VCFTrackImporter extends TrackImporter
 
     public static Site parseLine(String line, Map<String, String> infoTypeMap, List<String> sampleIdsList, Map<String, String> formatTypeMap)
     {
-        String[] fields = TextUtil.split(line, '\t');
+        String[] fields = TextUtil2.split(line, '\t');
         if(fields.length < 8) return null;
         String chr = normalizeChromosome(fields[0]);
         int start;
@@ -112,7 +112,7 @@ public class VCFTrackImporter extends TrackImporter
             return null;
         int length = refAllele.length();
         putParameter( parameters, "RefAllele", refAllele, true );
-        for(String info: TextUtil.split( fields[7], ';' ))
+        for(String info: TextUtil2.split( fields[7], ';' ))
         {
             int pos = info.indexOf("=");
             if(pos > 0)
@@ -137,11 +137,11 @@ public class VCFTrackImporter extends TrackImporter
         }
         if(fields.length > 9)
         {
-            String[] formatFields = TextUtil.split( fields[8], ':' );
+            String[] formatFields = TextUtil2.split( fields[8], ':' );
             for( int j = 0; j < fields.length - 9; j++ )
             {
 
-                String[] formatValues = TextUtil.split( fields[j + 9], ':' );
+                String[] formatValues = TextUtil2.split( fields[j + 9], ':' );
                 String sampleName = ( sampleIdsList.size() > j ) ? sampleIdsList.get( j ) : j + "";
                 for( int i = 0; i < Math.min( formatFields.length, formatValues.length ); i++ )
                 {
@@ -192,7 +192,7 @@ public class VCFTrackImporter extends TrackImporter
                             insideDescription = false;
                         continue;
                     }
-                    String[] fields = TextUtil.split( infoField, '=' );
+                    String[] fields = TextUtil2.split( infoField, '=' );
                     if( fields[0].equals( "ID" ) )
                         id = fields[1];
                     else if( fields[0].equals( "Type" ) )
@@ -239,7 +239,7 @@ public class VCFTrackImporter extends TrackImporter
                             insideDescription = false;
                         continue;
                     }
-                    String[] fields = TextUtil.split( filterField, '=' );
+                    String[] fields = TextUtil2.split( filterField, '=' );
                     if( fields[0].equals( "ID" ) )
                         id = fields[1];
                     else if( fields[0].equals( "Description" ) )
@@ -269,7 +269,7 @@ public class VCFTrackImporter extends TrackImporter
                 String length = null;
                 for( String contigField : line.substring( "##contig=<".length(), line.length() - 1 ).split( "," ) )
                 {
-                    String[] fields = TextUtil.split( contigField, '=' );
+                    String[] fields = TextUtil2.split( contigField, '=' );
                     if( fields[0].equals( "ID" ) )
                         id = fields[1];
                     else if( fields[0].equals( "length" ) )
@@ -295,7 +295,7 @@ public class VCFTrackImporter extends TrackImporter
                 String number = null;
                 for( String contigField : line.substring( "##FORMAT=<".length(), line.length() - 1 ).split( "," ) )
                 {
-                    String[] fields = TextUtil.split( contigField, '=' );
+                    String[] fields = TextUtil2.split( contigField, '=' );
                     if( fields[0].equals( "ID" ) )
                         id = fields[1];
                     else if( fields[0].equals( "Type" ) )
@@ -320,7 +320,7 @@ public class VCFTrackImporter extends TrackImporter
         //#CHROM POS ID REF ALT QUAL FILTER INFO
         else if( line.startsWith( "#CHROM" ) )
         {
-            String[] fields = TextUtil.split( line, '\t' );
+            String[] fields = TextUtil2.split( line, '\t' );
             if( fields.length > 8 )
             {
                 if( fields[8].equals( "FORMAT" ) )

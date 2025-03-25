@@ -8,7 +8,7 @@ import com.developmentontheedge.beans.Preferences;
 
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.util.ServerPreferences;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 //import ru.biosoft.util.JsonUtils;
 
 public class SiteModelUtils
@@ -33,7 +33,7 @@ public class SiteModelUtils
         try
         {
             String confFile = System.getProperty( "biouml.server.path" ) + "/appconfig/bsa/profile.json";
-            JSONObject json = TextUtil.fromFile(confFile);
+            JSONObject json = TextUtil2.fromFile(confFile);
             String pathStr = json.optString("defaultProfile", "");
             if( !pathStr.isEmpty() )
             {

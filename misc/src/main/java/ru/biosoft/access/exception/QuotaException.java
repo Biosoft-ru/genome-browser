@@ -16,7 +16,7 @@ public class QuotaException extends RepositoryException
     public QuotaException(DataElementPath path, long quota, long projectSize)
     {
         super(ED_QUOTA, path);
-        properties.put( KEY_QUOTA, TextUtil.formatSize( quota ) );
-        properties.put( KEY_PROJECT_SIZE, TextUtil.formatSize( projectSize ) );
+        properties.put(KEY_QUOTA, TextUtil.formatSize(quota));
+        properties.put(KEY_PROJECT_SIZE, TextUtil.formatSize(projectSize));
     }
 }

@@ -38,7 +38,7 @@ import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.importer.VCFTrackImporter;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
 import ru.biosoft.bsa.view.TrackViewBuilder;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 /**
  * class refactored, @author anna
@@ -158,7 +158,7 @@ public class VCFFileTrack extends AbstractDataCollection<DataElement> implements
 
     private Site parseLine(String line, Map<String, String> infoTypeMap, List<String> sampleIdsList, Map<String, String> formatTypeMap)
     {
-        String[] fields = TextUtil.split(line, '\t');
+        String[] fields = TextUtil2.split(line, '\t');
         if( fields.length < 8 )
             return null;
         String chr = normalizeChromosome(fields[0]);
@@ -196,7 +196,7 @@ public class VCFFileTrack extends AbstractDataCollection<DataElement> implements
             return null;
         int length = refAllele.length();
         putParameter(parameters, "RefAllele", refAllele, true);
-        for ( String info : TextUtil.split(fields[7], ';') )
+        for ( String info : TextUtil2.split(fields[7], ';') )
         {
             int pos = info.indexOf("=");
             if( pos > 0 )
@@ -222,11 +222,11 @@ public class VCFFileTrack extends AbstractDataCollection<DataElement> implements
         }
         if( fields.length > 9 )
         {
-            String[] formatFields = TextUtil.split(fields[8], ':');
+            String[] formatFields = TextUtil2.split(fields[8], ':');
             for ( int j = 0; j < fields.length - 9; j++ )
             {
 
-                String[] formatValues = TextUtil.split(fields[j + 9], ':');
+                String[] formatValues = TextUtil2.split(fields[j + 9], ':');
                 String sampleName = (sampleIdsList.size() > j) ? sampleIdsList.get(j) : j + "";
                 for ( int i = 0; i < Math.min(formatFields.length, formatValues.length); i++ )
                 {

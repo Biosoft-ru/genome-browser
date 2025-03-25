@@ -18,7 +18,7 @@ import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.exception.LoggedClassCastException;
 import ru.biosoft.exception.LoggedClassNotFoundException;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 public class ClassLoading
 {
@@ -334,7 +334,7 @@ public class ClassLoading
         pluginList.add("ru.biosoft.access");
         if( pluginNames != null )
         {
-            StreamEx.split(pluginNames, ';').map( String::trim ).filter( TextUtil::nonEmpty ).forEach( pluginList::add );
+            StreamEx.split(pluginNames, ';').map( String::trim ).filter( TextUtil2::nonEmpty ).forEach( pluginList::add );
         }
         return pluginList;
     }

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import ru.biosoft.access.HtmlDescribedElement;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.TempFiles;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 //import com.developmentontheedge.application.ApplicationUtils;
 
@@ -87,7 +87,7 @@ public class TemplateUtils
                 String src = matcher.group(2);
                 URL url = src.contains("://")?new URL(src):new URL(base, src);
                 URLConnection connection = url.openConnection();
-                String type = TextUtil.split( connection.getContentType(), '/' )[1];
+                String type = TextUtil2.split( connection.getContentType(), '/' )[1];
                 InputStream inputStream = connection.getInputStream();
                 String fileName = String.format("image%05d.%s", ++num, type);
                 File newFile = new File(subDirectory, fileName);

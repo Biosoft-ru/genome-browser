@@ -85,8 +85,8 @@ public class BeanUtil
             @Override
             public int compare(String prop1, String prop2)
             {
-                String[] prop1fields = TextUtil.split( prop1, '/' );
-                String[] prop2fields = TextUtil.split( prop2, '/' );
+                String[] prop1fields = TextUtil2.split( prop1, '/' );
+                String[] prop2fields = TextUtil2.split( prop2, '/' );
                 int pos = 0;
                 Property parent = model;
 
@@ -305,7 +305,7 @@ public class BeanUtil
             String valueStr = properties.getProperty(prefix + property.getName());
             try
             {
-                Object value = TextUtil.fromString(property.getValueClass(), valueStr);
+                Object value = TextUtil2.fromString(property.getValueClass(), valueStr);
                 if(value != null)
                 {
                     property.setValue(value);
@@ -326,7 +326,7 @@ public class BeanUtil
             Object value = property.getValue();
             if( value != null )
             {
-                properties.put(prefix + property.getName(), TextUtil.toString(value));
+                properties.put(prefix + property.getName(), TextUtil2.toString(value));
             } else
             {
                 properties.remove(prefix + property.getName());
