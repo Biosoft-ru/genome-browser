@@ -137,7 +137,8 @@ public class VCFFileTrack extends AbstractDataCollection<DataElement> implements
                 if( VCFTrackImporter.isComment(line, properties, infoTypeMap, sampleIdsList, formatTypeMap, vcfFile.getName()) )
                     continue;
                 String siteName = String.valueOf(i++);
-                Site site = VCFTrackImporter.parseLine(line, formatTypeMap, sampleIdsList, infoTypeMap);
+                Site site = VCFTrackImporter.parseLine(line, formatTypeMap, sampleIdsList, infoTypeMap,
+                        Boolean.valueOf(getInfo().getProperties().getProperty("normalizeChromosome", "false")));
                 if( site.getOriginalSequence() == null )
                 {
                     Sequence seq = chrCache.getSequence(site.getName());

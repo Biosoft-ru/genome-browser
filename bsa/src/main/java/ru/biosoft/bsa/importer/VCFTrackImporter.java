@@ -71,14 +71,14 @@ public class VCFTrackImporter extends TrackImporter
     @Override
     protected Site parseLine(String line)
     {
-        return parseLine(line, infoTypeMap, sampleIdsList, formatTypeMap);
+        return parseLine(line, infoTypeMap, sampleIdsList, formatTypeMap, true);
     }
 
-    public static Site parseLine(String line, Map<String, String> infoTypeMap, List<String> sampleIdsList, Map<String, String> formatTypeMap)
+    public static Site parseLine(String line, Map<String, String> infoTypeMap, List<String> sampleIdsList, Map<String, String> formatTypeMap, boolean normalizeChromosome)
     {
         String[] fields = TextUtil2.split(line, '\t');
         if(fields.length < 8) return null;
-        String chr = normalizeChromosome(fields[0]);
+        String chr = normalizeChromosome(fields[0], normalizeChromosome);
         int start;
         try
         {
