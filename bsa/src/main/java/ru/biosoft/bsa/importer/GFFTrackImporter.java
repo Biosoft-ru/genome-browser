@@ -2,17 +2,16 @@ package ru.biosoft.bsa.importer;
 
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.developmentontheedge.beans.DynamicProperty;
+import com.developmentontheedge.beans.DynamicPropertySet;
+import com.developmentontheedge.beans.DynamicPropertySetAsMap;
 
 import ru.biosoft.bsa.Basis;
 import ru.biosoft.bsa.Precision;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.StrandType;
-import com.developmentontheedge.beans.DynamicProperty;
-import com.developmentontheedge.beans.DynamicPropertySet;
-import com.developmentontheedge.beans.DynamicPropertySetAsMap;
 
 /**
  * @author lan
@@ -23,14 +22,15 @@ public class GFFTrackImporter extends TrackImporter
     @Override
     protected Site parseLine(String line)
     {
-        return parseGFFLine( line );
+        return parseGFFLine(line, true);
     }
-    public static Site parseGFFLine(String line)
+
+    public static Site parseGFFLine(String line, boolean normalizeChromosome)
     {
         String[] fields = line.split("\t");
         if( fields.length < 5 )
             return null;
-        String chrom = normalizeChromosome(fields[0]);
+        String chrom = normalizeChromosome(fields[0], normalizeChromosome);
         String strand = fields.length < 7 ? "." : fields[6];
         if( !strand.equals("+") && !strand.equals("-") && !strand.equals(".") )
             return null;
@@ -59,10 +59,14 @@ public class GFFTrackImporter extends TrackImporter
         properties.add(new DynamicProperty(getDescriptor("source"), String.class, fields[1]));
         if(!fields[7].equals("."))
             properties.add(new DynamicProperty(getDescriptor("frame"), String.class, fields[7]));
-        HashMap<String, String> descrProps = getPropsFromDescr(fields[8]);
-        for(String dp : descrProps.keySet())
+        //Workaround for incorrect GFF with last empty column (should be ".")
+        if( fields.length > 8 && !fields[8].equals(".") )
         {
-        	properties.add(new DynamicProperty(getDescriptor(dp), String.class, descrProps.get(dp)));
+            HashMap<String, String> descrProps = getPropsFromDescr(fields[8]);
+            for ( String dp : descrProps.keySet() )
+            {
+                properties.add(new DynamicProperty(getDescriptor(dp), String.class, descrProps.get(dp)));
+            }
         }
         return new SiteImpl(null, chrom, fields[2].equals("") ? null : fields[2], Basis.BASIS_USER, strand.equals("-") ? end : start,
                 end - start + 1, Precision.PRECISION_EXACTLY, strand.equals("+") ? StrandType.STRAND_PLUS : strand.equals("-")

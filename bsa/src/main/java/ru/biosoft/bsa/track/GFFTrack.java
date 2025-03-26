@@ -3,11 +3,11 @@ package ru.biosoft.bsa.track;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import ru.biosoft.access.DataCollectionUtils;
@@ -16,11 +16,10 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.access.core.VectorDataCollection;
-import ru.biosoft.bsa.LinearSequence;
-import ru.biosoft.bsa.Nucleotide15LetterAlphabet;
 import ru.biosoft.bsa.Sequence;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
+import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.WritableTrack;
 import ru.biosoft.bsa.importer.GFFTrackImporter;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
@@ -32,17 +31,34 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
     private File file;
     private boolean isInitialized = false;
     VectorDataCollection<Site> track;
+    private ChrCache chrCache;
+    private boolean normalizeChromosome;
 
-    public GFFTrack(DataCollection<?> origin, Properties properties)
+    public GFFTrack(DataCollection<?> origin, Properties properties) throws IOException
     {
         super( properties.getProperty( DataCollectionConfigConstants.NAME_PROPERTY, "null" ), origin );
-        file = DataCollectionUtils.getChildFile( origin, getName() );
+        String filePath = properties.getProperty(DataCollectionConfigConstants.FILE_PROPERTY);
+        if( filePath != null )
+        {
+            file = new File(filePath);
+        }
+        else
+            file = DataCollectionUtils.getChildFile(origin, getName());
+
+        if( !file.exists() )
+            throw new FileNotFoundException("File " + file.getAbsolutePath() + " not found in transformer");
+
+        DataElementPath seqBase = DataElementPath.create(properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY));
+        chrCache = new ChrCache(seqBase);
+
+        normalizeChromosome = Boolean.parseBoolean(properties.getProperty("normalizeChromosome", "false"));
     }
 
     public GFFTrack(DataCollection<?> origin, String name, File file)
     {
         super( name, origin );
         this.file = file;
+        chrCache = new ChrCache(null);
     }
 
     private void init()
@@ -71,7 +87,7 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
             {
                 if( isComment( line ) )
                     continue;
-                Site site = GFFTrackImporter.parseGFFLine(line);
+                Site site = GFFTrackImporter.parseGFFLine(line, normalizeChromosome);
                 if( site == null )
                 {
                     continue;
@@ -92,18 +108,11 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
         }
     }
 
-    private final Map<String, Sequence> sequenceCache = new HashMap<>();
+    //private final Map<String, Sequence> sequenceCache = new HashMap<>();
 
     private Sequence getSequence(String name)
     {
-        Sequence result = sequenceCache.get( name );
-        if( result != null )
-            return result;
-
-        result = new LinearSequence( name, new byte[0], Nucleotide15LetterAlphabet.getInstance() );
-        sequenceCache.put( name, result );
-
-        return result;
+        return chrCache.getSequence(name);
     }
 
     private boolean isComment(String line)

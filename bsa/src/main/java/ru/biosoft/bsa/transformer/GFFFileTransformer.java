@@ -1,16 +1,20 @@
 package ru.biosoft.bsa.transformer;
 
 import java.io.File;
+import java.util.Properties;
 
 //import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
+import ru.biosoft.access.core.DataCollectionConfigConstants;
+import ru.biosoft.access.core.PropertiesHolder;
 import ru.biosoft.bsa.track.GFFTrack;
 import ru.biosoft.util.ApplicationUtils;
 
-public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack>
+public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack> implements PropertiesHolder
 {
+    private Properties properties;
     @Override
     public Class<? extends GFFTrack> getOutputType()
     {
@@ -20,7 +24,10 @@ public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack>
     @Override
     public GFFTrack load(File file, String name, DataCollection<GFFTrack> origin) throws Exception
     {
-        return new GFFTrack( origin, name, file );
+        Properties trackProps = (Properties) properties.clone();
+        trackProps.setProperty(DataCollectionConfigConstants.NAME_PROPERTY, name);
+        trackProps.setProperty(DataCollectionConfigConstants.FILE_PROPERTY, file.getAbsolutePath());
+        return new GFFTrack(origin, trackProps);
     }
 
     @Override
@@ -29,5 +36,18 @@ public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack>
         if( element.getFile().equals( output ) )
             return;
         ApplicationUtils.linkOrCopyFile( output, element.getFile(), null );
+    }
+
+    @Override
+    public Properties getProperties()
+    {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(Properties props)
+    {
+        properties = props;
+
     }
 }
