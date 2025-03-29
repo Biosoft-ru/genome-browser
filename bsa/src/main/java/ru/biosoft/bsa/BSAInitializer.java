@@ -60,6 +60,8 @@ public class BSAInitializer extends Initializer
         TransformerRegistry.addTransformer("Genome browser view", "ru.biosoft.bsa.transformer.ProjectTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.project.Project");
         TransformerRegistry.addTransformer("Site model", "ru.biosoft.bsa.transformer.SiteModelTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.SiteModel");
         TransformerRegistry.addTransformer("Frequency matrix", "ru.biosoft.bsa.transformer.WeightMatrixTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.analysis.FrequencyMatrix");
+        TransformerRegistry.addTransformer("ChrNameMapping", "ru.biosoft.bsa.ChrNameMappingTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.ChrNameMapping");
     }
 
     @Override protected void initTemplates()
@@ -110,6 +112,8 @@ public class BSAInitializer extends Initializer
                 .register(new FileType("wigggle", new String[] { "wig" }, "ru.biosoft.bsa.transformer.WiggleFileTransformer", FileTypePriority.HIGH_PRIORITY, "Wiggle track file"));
         FileTypeRegistry
                 .register(new FileType("genbank", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY, "VCF track file"));
+        FileTypeRegistry
+                .register(new FileType("ChrNameMapping", new String[] { "txt" }, "ru.biosoft.bsa.ChrNameMappingTransformer", FileTypePriority.LOW_PRIORITY, "Chr name mapping"));
         //?? combined track
     }
 

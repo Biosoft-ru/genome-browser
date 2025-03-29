@@ -1,8 +1,5 @@
 package ru.biosoft.bsa;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,10 +10,10 @@ import javax.annotation.Nonnull;
 import com.developmentontheedge.beans.BeanInfoConstants;
 import com.developmentontheedge.beans.editors.GenericComboBoxEditor;
 
-import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementSupport;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.util.BeanUtil;
 //import ru.biosoft.workbench.editors.GenericComboBoxEditor;
 
@@ -24,6 +21,7 @@ public class ChrNameMapping extends DataElementSupport
 {
     public static final DataElementPath DEFAULT_PATH = DataElementPath.create("databases/Utils/ChrMapping");
     public static final String PROP_CHR_MAPPING = "ChrMapping";
+    public static final String PROP_CHR_MAPPING_PATH = "ChrMappingPath";
     public static final @Nonnull String NONE_MAPPING = "(none)";
     
     public ChrNameMapping(String name, DataCollection<?> origin)
@@ -31,8 +29,8 @@ public class ChrNameMapping extends DataElementSupport
         super( name, origin );
     }
 
-    private Map<String, String> srcToDst = new HashMap<>();
-    private Map<String, String> dstToSrc = new HashMap<>();
+    Map<String, String> srcToDst = new HashMap<>();
+    Map<String, String> dstToSrc = new HashMap<>();
     
     public String srcToDst(String src) { return srcToDst.get( src ); }
     public String dstToSrc(String dst) { return dstToSrc.get( dst ); }
@@ -43,7 +41,8 @@ public class ChrNameMapping extends DataElementSupport
             return null;
         if(!name.endsWith( ".txt" ))
             name += ".txt";
-        return  DEFAULT_PATH.getChildPath( name ).getDataElement( ChrNameMapping.class );
+        DataElementPath path = Environment.getValue(PROP_CHR_MAPPING_PATH) != null ? DataElementPath.create((String) Environment.getValue(PROP_CHR_MAPPING_PATH)) : DEFAULT_PATH;
+        return path.getChildPath(name).getDataElement(ChrNameMapping.class);
     }
     
     public static ChrNameMapping getMapping(Properties props)
@@ -54,38 +53,6 @@ public class ChrNameMapping extends DataElementSupport
         return null;
     }
     
-    public static class Transformer extends AbstractFileTransformer<ChrNameMapping>
-    {
-        @Override
-        public Class<? extends ChrNameMapping> getOutputType()
-        {
-            return ChrNameMapping.class;
-        }
-
-        @Override
-        public ChrNameMapping load(File file, String name, DataCollection<ChrNameMapping> origin) throws Exception
-        {
-            ChrNameMapping result = new ChrNameMapping( name, origin );
-            try (BufferedReader reader = new BufferedReader( new FileReader( file ) ))
-            {
-                String line;
-                while( ( line = reader.readLine() ) != null )
-                {
-                    String[] parts = line.split( "\t", 2 );
-                    result.srcToDst.put( parts[0], parts[1] );
-                }
-            }
-            result.srcToDst.forEach( (k, v) -> result.dstToSrc.put( v, k ) );
-            return result;
-        }
-
-        @Override
-        public void save(File output, ChrNameMapping element) throws Exception
-        {
-            throw new UnsupportedOperationException();
-        }
-    }
-
     public static class ChrMappingSelector extends GenericComboBoxEditor
     {
         @Override
