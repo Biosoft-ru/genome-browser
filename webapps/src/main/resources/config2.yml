@@ -38,3 +38,5 @@ perspectives:
                 id: combine_tracks
         importers:
             name: test
+environment:
+    ChrMappingPath: genome-browser-examples/ChrMapping
