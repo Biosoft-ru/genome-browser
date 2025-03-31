@@ -7,12 +7,14 @@ import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.core.PropertiesHolder;
 import ru.biosoft.access.generic.PriorityTransformer;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.track.WiggleFileTrack;
 
-public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTrack> implements PriorityTransformer
+public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTrack> implements PriorityTransformer, PropertiesHolder
 {
+    private Properties properties;
 
     @Override
     public Class<? extends WiggleFileTrack> getOutputType()
@@ -23,19 +25,20 @@ public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTra
     @Override
     public WiggleFileTrack load(File input, String name, DataCollection<WiggleFileTrack> origin) throws Exception
     {
-        Properties properties = new Properties();
-        properties.setProperty( DataCollectionConfigConstants.NAME_PROPERTY, name );
-        properties.setProperty( DataCollectionConfigConstants.FILE_PROPERTY, input.getAbsolutePath() );
         
+        Properties trackProps = properties != null ? (Properties) properties.clone() : new Properties();
+        trackProps.setProperty(DataCollectionConfigConstants.NAME_PROPERTY, name);
+        trackProps.setProperty(DataCollectionConfigConstants.FILE_PROPERTY, input.getAbsolutePath());
+
         String configDir = origin.getInfo().getProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY );
         if( configDir != null )
-            properties.setProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir);
+            trackProps.setProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir);
         
         String seqBase = origin.getInfo().getProperty( Track.SEQUENCES_COLLECTION_PROPERTY );
         if(seqBase != null)
-            properties.setProperty( Track.SEQUENCES_COLLECTION_PROPERTY, seqBase );
+            trackProps.setProperty(Track.SEQUENCES_COLLECTION_PROPERTY, seqBase);
         
-        return new WiggleFileTrack(origin, properties);
+        return new WiggleFileTrack(origin, trackProps);
     }
 
     @Override
@@ -56,5 +59,18 @@ public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTra
         if( name.toLowerCase().endsWith(".wig") )
             return 2;
         return 0;
+    }
+
+    @Override
+    public Properties getProperties()
+    {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(Properties props)
+    {
+        properties = props;
+
     }
 }

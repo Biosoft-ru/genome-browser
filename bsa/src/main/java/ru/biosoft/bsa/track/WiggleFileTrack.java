@@ -23,6 +23,7 @@ import ru.biosoft.bsa.Sequence;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.Track;
+import ru.biosoft.bsa.TrackOptions;
 import ru.biosoft.bsa.importer.WiggleTrackImporter;
 import ru.biosoft.bsa.importer.WiggleTrackImporter.WiggleState;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
@@ -31,7 +32,7 @@ import ru.biosoft.bsa.view.TrackViewBuilder;
 public class WiggleFileTrack extends AbstractDataCollection<DataElement> implements Track
 {
     private File file;
-    private ChrCache chrCache;
+    private TrackOptions trackOptions;
 
     public WiggleFileTrack(DataCollection<?> parent, Properties properties) throws IOException
     {
@@ -43,8 +44,7 @@ public class WiggleFileTrack extends AbstractDataCollection<DataElement> impleme
         file = new File(filePath);
         if( !file.exists() )
             throw new FileNotFoundException();
-        DataElementPath seqBase = DataElementPath.create(properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY));
-        chrCache = new ChrCache(seqBase);
+        trackOptions = new TrackOptions(this, properties);
     }
 
     private Object readerLock = new Object();
@@ -99,7 +99,7 @@ public class WiggleFileTrack extends AbstractDataCollection<DataElement> impleme
                 Site site = WiggleTrackImporter.parseLine(line, ws);
                 if( site != null && site.getOriginalSequence() == null )
                 {
-                    Sequence seq = chrCache.getSequence(site.getName());
+                    Sequence seq = trackOptions.getChromosomeSequence(trackOptions.internalToExternal(site.getName()));
                     site = new SiteImpl(site.getOrigin(), siteName, site.getType(), site.getBasis(), site.getStart(), site.getLength(), site.getPrecision(), site.getStrand(), seq,
                             site.getComment(), site.getProperties());
                 }
