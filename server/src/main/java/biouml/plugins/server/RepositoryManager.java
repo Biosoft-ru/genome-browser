@@ -20,7 +20,7 @@ public class RepositoryManager
     {
         if( !repositoryMap.containsKey(path) )
         {
-            DataCollection dc = null;
+            DataCollection<?> dc = null;
             try
             {
                 dc = CollectionFactory.createRepository(path);
@@ -28,13 +28,8 @@ public class RepositoryManager
             catch (Exception e)
             {
                 File file = new File(path, DataCollectionConfigConstants.DEFAULT_CONFIG_FILE);
-                if(!file.exists())//Try to create GenericFileDataCollection
+                if( !file.exists() )
                 {
-                    //                    Properties properties = new Properties();
-                    //                    properties.put(DataCollectionConfigConstants.CLASS_PROPERTY, GenericFileDataCollection.class.getName());
-                    //                    properties.put(DataCollectionConfigConstants.NAME_PROPERTY, DataElementPath.create(path).getName());
-                    //                    properties.put(DataCollectionConfigConstants.FILE_PATH_PROPERTY, path);
-                    //                    properties.put(DataCollectionConfigConstants.IS_ROOT, "true");
                     dc = GenericFileDataCollection.initGenericFileDataCollection(null, new File(path));
                 }
             }
