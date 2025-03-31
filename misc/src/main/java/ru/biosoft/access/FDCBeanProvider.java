@@ -7,7 +7,9 @@ import com.developmentontheedge.beans.BeanInfoEx;
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetSupport;
+import com.developmentontheedge.beans.annot.PropertyName;
 
+import one.util.streamex.EntryStream;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.Transformer;
@@ -17,6 +19,7 @@ import ru.biosoft.access.file.GenericFileDataCollection;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.access.generic.TransformerRegistry.TransformerInfo;
 import ru.biosoft.util.BeanAsMapUtil;
+
 
 public class FDCBeanProvider implements BeanProvider
 {
@@ -42,8 +45,13 @@ public class FDCBeanProvider implements BeanProvider
         }
         FileInfo fi = new FileInfo();
         fi.setTransformer( transformerName );
-        
-        Map<String, Object> properties = (Map<String, Object>)fileInfo.get( "properties" );
+        Map<String, Object> properties = null;
+        if( parent instanceof GenericFileDataCollection )
+        {
+            properties = ((GenericFileDataCollection) parent).getChildProperties(dePath.getName(), transformerClass);
+        }
+        else if( fileInfo != null )
+            properties = (Map<String, Object>) fileInfo.get("properties");
         if(properties != null)
         {
             DynamicPropertySet dps = fi.getElementProperties();
@@ -82,13 +90,19 @@ public class FDCBeanProvider implements BeanProvider
         
         if(fi.elementProperties != null && !fi.elementProperties.isEmpty())
         {
-            yaml.put( "properties", fi.elementProperties.asMap());
+            Map<String, Object> props = EntryStream.of(fi.elementProperties.asMap()).filter(e -> {
+                return e.getValue() != null && !(e.getValue().toString().isEmpty());
+            }).toMap();
+            if( !props.isEmpty() )
+                yaml.put("properties", props);
         }
         
         if( parent instanceof GenericFileDataCollection )
             ((GenericFileDataCollection) parent).setFileInfo(yaml);
         else
             ((FileDataCollection) parent).setFileInfo(yaml);
+        FileInfo fiNew = (FileInfo) getBean(path);
+        fi.setElementProperties(fiNew.getElementProperties());
     }
     
     
@@ -98,6 +112,8 @@ public class FDCBeanProvider implements BeanProvider
         private String transformer = NO_TRANSFORMER;
         private Object transformerOptions;
         private DynamicPropertySet elementProperties = new DynamicPropertySetSupport();
+
+        @PropertyName("File type")
         public String getTransformer()
         {
             return transformer;
@@ -116,6 +132,8 @@ public class FDCBeanProvider implements BeanProvider
         {
             this.transformerOptions = transformerOptions;
         }
+
+        @PropertyName("Element options")
         public DynamicPropertySet getElementProperties()
         {
             return elementProperties;

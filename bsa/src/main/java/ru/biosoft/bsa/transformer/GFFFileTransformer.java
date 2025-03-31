@@ -9,6 +9,8 @@ import ru.biosoft.access.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.PropertiesHolder;
+import ru.biosoft.bsa.ChrNameMapping;
+import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.track.GFFTrack;
 import ru.biosoft.util.ApplicationUtils;
 
@@ -48,6 +50,14 @@ public class GFFFileTransformer extends AbstractFileTransformer<GFFTrack> implem
     public void setProperties(Properties props)
     {
         properties = props;
+    }
 
+    @Override
+    public Properties createProperties()
+    {
+        Properties newProps = new Properties();
+        newProps.setProperty(Track.SEQUENCES_COLLECTION_PROPERTY, "");
+        newProps.setProperty(ChrNameMapping.PROP_CHR_MAPPING, "");
+        return newProps;
     }
 }

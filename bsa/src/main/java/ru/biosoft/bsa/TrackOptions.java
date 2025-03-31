@@ -34,7 +34,6 @@ public class TrackOptions
     {
         this.chrMapping = chrNameMapping;
         chrCache.clear();
-        //chromSizes = null;
     }
 
     public String internalToExternal(String chr)
@@ -77,7 +76,7 @@ public class TrackOptions
         if( chrMapping == null || !chrMapping.getName().equals(chrNameMappingStr) )
         {
             setChrNameMapping(ChrNameMapping.getMapping(chrNameMappingStr));
-            //TODO: update parent collection with new value
+            //TODO ?: update parent collection with new value
             //            if( chrMapping != null )
             //                TrackUtils.addTrackProperty(this, ChrNameMapping.PROP_CHR_MAPPING, chrNameMappingStr);
             //            else
@@ -96,13 +95,14 @@ public class TrackOptions
     {
         if( genomeSelector != this.genomeSelector )
         {
-            GenomeSelectorTrackParentUpdater listener = new GenomeSelectorTrackParentUpdater(track, genomeSelector, () -> {
-                chrCache.clear();
-                DataElementPath seqBase = TrackUtils.getTrackSequencesPath(track);
-                chrCache.setSeqBase(seqBase);
-                return;
-            });
-            genomeSelector.addPropertyChangeListener(listener);
+            //TODO ?: use listener
+            //            GenomeSelectorTrackParentUpdater listener = new GenomeSelectorTrackParentUpdater(track, genomeSelector, () -> {
+            //                chrCache.clear();
+            //                DataElementPath seqBase = TrackUtils.getTrackSequencesPath(track);
+            //                chrCache.setSeqBase(seqBase);
+            //                return;
+            //            });
+            //            genomeSelector.addPropertyChangeListener(listener);
         }
         this.genomeSelector = genomeSelector;
     }

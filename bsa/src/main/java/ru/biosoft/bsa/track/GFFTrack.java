@@ -16,10 +16,11 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.access.core.VectorDataCollection;
+import ru.biosoft.bsa.Interval;
 import ru.biosoft.bsa.Sequence;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
-import ru.biosoft.bsa.Track;
+import ru.biosoft.bsa.TrackOptions;
 import ru.biosoft.bsa.WritableTrack;
 import ru.biosoft.bsa.importer.GFFTrackImporter;
 import ru.biosoft.bsa.view.DefaultTrackViewBuilder;
@@ -31,8 +32,7 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
     private File file;
     private boolean isInitialized = false;
     VectorDataCollection<Site> track;
-    private ChrCache chrCache;
-    private boolean normalizeChromosome;
+    private TrackOptions trackOptions;
 
     public GFFTrack(DataCollection<?> origin, Properties properties) throws IOException
     {
@@ -48,17 +48,7 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
         if( !file.exists() )
             throw new FileNotFoundException("File " + file.getAbsolutePath() + " not found in transformer");
 
-        DataElementPath seqBase = DataElementPath.create(properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY));
-        chrCache = new ChrCache(seqBase);
-
-        normalizeChromosome = Boolean.parseBoolean(properties.getProperty("normalizeChromosome", "false"));
-    }
-
-    public GFFTrack(DataCollection<?> origin, String name, File file)
-    {
-        super( name, origin );
-        this.file = file;
-        chrCache = new ChrCache(null);
+        trackOptions = new TrackOptions(this, properties);
     }
 
     private void init()
@@ -87,15 +77,16 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
             {
                 if( isComment( line ) )
                     continue;
-                Site site = GFFTrackImporter.parseGFFLine(line, normalizeChromosome);
+                Site site = GFFTrackImporter.parseGFFLine(line, false);
                 if( site == null )
                 {
                     continue;
                 }
                 if( site.getOriginalSequence() == null )
                 {
+                    Sequence seq = trackOptions.getChromosomeSequence(trackOptions.internalToExternal(site.getName()));
                     site = new SiteImpl( site.getOrigin(), i + "", site.getType(), site.getBasis(), site.getStart(), site.getLength(),
-                            site.getPrecision(), site.getStrand(), getSequence( site.getName() ), site.getComment(), site.getProperties() );
+                            site.getPrecision(), site.getStrand(), seq, site.getComment(), site.getProperties());
                 }
                 track.put( site );
                 i++;
@@ -106,13 +97,6 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
         {
             //TODO:
         }
-    }
-
-    //private final Map<String, Sequence> sequenceCache = new HashMap<>();
-
-    private Sequence getSequence(String name)
-    {
-        return chrCache.getSequence(name);
     }
 
     private boolean isComment(String line)
@@ -131,7 +115,8 @@ public class GFFTrack extends DataElementSupport implements WritableTrack
         init();
         VectorDataCollection<Site> result = new VectorDataCollection<>( "sites" );
         String sequenceName = DataElementPath.create( sequence ).getName();
-        track.stream().filter( s -> s.getSequence().getName().equals( sequenceName ) && s.getFrom() >= from && s.getTo() <= to )
+        Interval fromTo = new Interval(from, to);
+        track.stream().filter(s -> s.getSequence().getName().equals(sequenceName) && s.getInterval().intersects(fromTo))
                 .forEach( s -> result.put( s ) );
         return result;
     }

@@ -9,6 +9,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.PropertiesHolder;
 import ru.biosoft.access.generic.PriorityTransformer;
+import ru.biosoft.bsa.ChrNameMapping;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.track.WiggleFileTrack;
 
@@ -30,14 +31,6 @@ public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTra
         trackProps.setProperty(DataCollectionConfigConstants.NAME_PROPERTY, name);
         trackProps.setProperty(DataCollectionConfigConstants.FILE_PROPERTY, input.getAbsolutePath());
 
-        String configDir = origin.getInfo().getProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY );
-        if( configDir != null )
-            trackProps.setProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir);
-        
-        String seqBase = origin.getInfo().getProperty( Track.SEQUENCES_COLLECTION_PROPERTY );
-        if(seqBase != null)
-            trackProps.setProperty(Track.SEQUENCES_COLLECTION_PROPERTY, seqBase);
-        
         return new WiggleFileTrack(origin, trackProps);
     }
 
@@ -72,5 +65,14 @@ public class WiggleFileTransformer extends AbstractFileTransformer<WiggleFileTra
     {
         properties = props;
 
+    }
+
+    @Override
+    public Properties createProperties()
+    {
+        Properties newProps = new Properties();
+        newProps.setProperty(Track.SEQUENCES_COLLECTION_PROPERTY, "");
+        newProps.setProperty(ChrNameMapping.PROP_CHR_MAPPING, "");
+        return newProps;
     }
 }
