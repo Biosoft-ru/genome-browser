@@ -44,7 +44,7 @@ public class GFFTrack extends FileTrack
                 }
                 if( site.getOriginalSequence() == null )
                 {
-                    Sequence seq = getTrackOptions().getChromosomeSequence(getTrackOptions().internalToExternal(site.getName()));
+                    Sequence seq = getSequence(site.getName());
                     site = new SiteImpl( site.getOrigin(), i + "", site.getType(), site.getBasis(), site.getStart(), site.getLength(),
                             site.getPrecision(), site.getStrand(), seq, site.getComment(), site.getProperties());
                 }

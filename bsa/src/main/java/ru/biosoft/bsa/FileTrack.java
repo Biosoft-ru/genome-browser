@@ -124,4 +124,9 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
         return getAllSites().get(name);
     }
 
+    protected Sequence getSequence(String name)
+    {
+        return trackOptions.getChromosomeSequence(trackOptions.internalToExternal(name));
+    }
+
 }

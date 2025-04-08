@@ -62,7 +62,7 @@ public class BedTrack extends FileTrack implements WritableTrack
             if(siteName == null)
                 siteName = String.valueOf(nextId++); 
 
-            writer.append( site.getSequence().getName() )
+            writer.append(getTrackOptions().externalToInternalName(site.getSequence().getName()))
             .append( '\t' )
             .append( String.valueOf(site.getFrom() - chr.getStart()) )//zero based inclusive
             .append('\t')
@@ -122,7 +122,7 @@ public class BedTrack extends FileTrack implements WritableTrack
                 }
                 if( site.getOriginalSequence() == null )
                 {
-                    Sequence seq = getTrackOptions().getChromosomeSequence(getTrackOptions().internalToExternal(site.getName()));
+                    Sequence seq = getSequence(site.getName());
                     site = new SiteImpl(site.getOrigin(), i + "", site.getType(), site.getBasis(), site.getStart(), site.getLength(), site.getPrecision(), site.getStrand(), seq,
                             site.getComment(), site.getProperties());
                 }

@@ -43,7 +43,7 @@ public class WiggleFileTrack extends FileTrack
                 Site site = WiggleTrackImporter.parseLine(line, ws);
                 if( site != null && site.getOriginalSequence() == null )
                 {
-                    Sequence seq = getTrackOptions().getChromosomeSequence(getTrackOptions().internalToExternal(site.getName()));
+                    Sequence seq = getSequence(site.getName());
                     site = new SiteImpl(site.getOrigin(), siteName, site.getType(), site.getBasis(), site.getStart(), site.getLength(), site.getPrecision(), site.getStrand(), seq,
                             site.getComment(), site.getProperties());
                 }
