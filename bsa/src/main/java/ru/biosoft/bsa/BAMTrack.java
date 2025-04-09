@@ -19,6 +19,7 @@ import net.sf.samtools.AbstractBAMFileIndex;
 import net.sf.samtools.BAMIndexMetaData;
 import net.sf.samtools.BAMIndexer;
 import net.sf.samtools.Cigar;
+import net.sf.samtools.SAMFileHeader.SortOrder;
 import net.sf.samtools.SAMFileReader;
 import net.sf.samtools.SAMFileReader.ValidationStringency;
 import net.sf.samtools.SAMRecord;
@@ -54,12 +55,15 @@ import ru.biosoft.jobcontrol.JobControl;
 
 public class BAMTrack extends AbstractDataCollection<DataElement> implements Track, CloneableDataElement
 {
+
+
     static
     {
         SAMFileReader.setDefaultValidationStringency(ValidationStringency.SILENT);
     }
 
     public static final String BAM_INDEX_FILE_PROPERTY = "bamIndex";
+    public static final String SAMBAM_FILE_TYPE_PROPERTY = "typeSamBam";
 
     public static final String CIGAR_PROPERTY = "Cigar";
     public static final String READ_SEQUENCE = "Read sequence";
@@ -105,6 +109,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
 
     private int alignedCount = -1;
     private int unalignedCount = -1;
+    private String type = "bam";
 
     private GenomeSelector genomeSelector;
 
@@ -126,6 +131,20 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
         getInfo().addUsedFile(getIndexFile());
 
         setGenomeSelector(new GenomeSelector(this));
+        detectType(properties);
+    }
+
+    private void detectType(Properties properties)
+    {
+        if( properties.containsKey(SAMBAM_FILE_TYPE_PROPERTY) )
+        {
+            type = properties.getProperty(SAMBAM_FILE_TYPE_PROPERTY);
+        }
+        else if( getBAMFile().getName().endsWith(".sam") )
+        {
+            type = "sam";
+        }
+
     }
 
     public File getBAMFile()
@@ -146,6 +165,14 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
     public File getIndexFile()
     {
         return indexFile;
+    }
+
+    private SAMFileReader getReader()
+    {
+        if( type.equals( "sam" ) )
+            return new SAMFileReader( bamFile );
+        else
+            return new SAMFileReader( bamFile, getIndexFile() );
     }
 
     @Override
@@ -237,7 +264,8 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
 
         protected SAMRecordIterator samRecordIterator(SAMFileReader reader)
         {
-            return chromosomeName == null ? reader.iterator() : reader.queryOverlapping(chromosomeName, from, to);
+            return chromosomeName == null ? reader.iterator()
+                    : reader.hasIndex() ? reader.queryOverlapping( chromosomeName, from, to ) : new SAMSequenceIterator( reader, chromosomeName, from, to );
         }
 
         @Override
@@ -247,7 +275,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
             {
                 if(chromosomeName == null)
                     return getSize();
-                try (SAMFileReader reader = new SAMFileReader( bamFile, getIndexFile() ))
+                try ( SAMFileReader reader = getReader() )
                 {
                     int limitedSize = 0;
                     SAMRecordIterator it = samRecordIterator( reader );
@@ -278,7 +306,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
                 }
                 else
                 {
-                    try (SAMFileReader reader = new SAMFileReader( bamFile, getIndexFile() ))
+                    try ( SAMFileReader reader = getReader() )
                     {
                         size = 0;
                         SAMRecordIterator it = samRecordIterator( reader );
@@ -316,7 +344,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
         @Override
         public @Nonnull Iterator<Site> iterator()
         {
-            final SAMFileReader reader = new SAMFileReader(bamFile, getIndexFile());
+            final SAMFileReader reader = getReader();
 
             BAMIterator iterator = new BAMIterator(this, reader);
             iterators.add(iterator);
@@ -331,8 +359,9 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
 
         protected Site siteFromSAMRecord(SAMRecord record)
         {
-            return new BAMSite(record);
+            return record == null ? null : new BAMSite( record );
         }
+
 
         public class BAMSite implements AlignmentSite
         {
@@ -352,6 +381,8 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
                 {
                     synchronized( this )
                     {
+                        if( record == null )
+                            return "null site";
                         name = record.getReadName().replace( '/', '_' ).replace( ';', '_' );
                         if( isPaired() )
                             name += isFirstOfPair() ? "_1" : "_2";
@@ -423,7 +454,7 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
             @Override
             public Sequence getSequence()
             {
-                return new SequenceRegion(getOriginalSequence(), getStart(), getLength(), 1, record.getReadNegativeStrandFlag(), false);
+                return new SequenceRegion( getOriginalSequence(), getStart(), getLength(), 1, record.getReadNegativeStrandFlag(), false );
             }
 
             @Override
@@ -513,6 +544,67 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
             {
                 return record.getMappingQuality();
             }
+        }
+
+        public class SAMSequenceIterator implements SAMRecordIterator
+        {
+            private String chromosomeName;
+            private int from;
+            private int to;
+            private SAMRecord next;
+            private SAMRecordIterator innerIterator;
+
+            public SAMSequenceIterator(SAMFileReader reader, String chromosomeName, int from, int to)
+            {
+                this.chromosomeName = chromosomeName;
+                this.from = from;
+                this.to = to;
+                innerIterator = reader.iterator();
+                next = getProperNext();
+            }
+
+            @Override
+            public void close()
+            {
+                innerIterator.close();
+            }
+
+            @Override
+            public boolean hasNext()
+            {
+                return next != null;
+            }
+
+            @Override
+            public SAMRecord next()
+            {
+                SAMRecord record = next;
+                next = getProperNext();
+                return record;
+            }
+
+            @Override
+            public SAMRecordIterator assertSorted(SortOrder arg0)
+            {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
+            private SAMRecord getProperNext()
+            {
+                SAMRecord record = null;
+                while ( true )
+                {
+                    if( !innerIterator.hasNext() )
+                        break;
+                    record = innerIterator.next();
+                    BAMSite site = new BAMSite( record );
+                    if( site.getSequence().getName().equals( chromosomeName ) && site.getTo() >= from && site.getFrom() <= to )
+                        return record;
+                }
+                return null;
+            }
+
         }
     }
 
@@ -649,7 +741,9 @@ public class BAMTrack extends AbstractDataCollection<DataElement> implements Tra
         alignedCount = 0;
         unalignedCount = 0;
 
-        try (SAMFileReader reader = new SAMFileReader( bamFile, getIndexFile() ))
+        if( type.equals( "sam" ) )
+            return;
+        try ( SAMFileReader reader = getReader() )
         {
             AbstractBAMFileIndex index = (AbstractBAMFileIndex)reader.getIndex();
             int nRef = index.getNumberOfReferences();

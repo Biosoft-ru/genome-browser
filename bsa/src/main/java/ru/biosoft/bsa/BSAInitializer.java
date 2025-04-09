@@ -106,6 +106,8 @@ public class BSAInitializer extends Initializer
                 .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
                         "Generic Feature Format (gff) track file"));
         FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
+        FileTypeRegistry
+                .register( new FileType( "sam", new String[] { "sam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.MEDIUM_PRIORITY, "SAM track file" ) );
         FileTypeRegistry.register(new FileType("vcf", new String[] { "vcf" }, "ru.biosoft.bsa.transformer.VCFFileTransformer", FileTypePriority.HIGH_PRIORITY,
                 "Variant Call Format (vcf) track file"));
         FileTypeRegistry
