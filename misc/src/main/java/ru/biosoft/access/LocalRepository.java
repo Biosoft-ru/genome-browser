@@ -261,7 +261,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
                                 }
                             }
                         }
-                        else
+                        else if( file.isDirectory() )
                         {
                             //Directory without inner config file is treated as GenericFileDataCollection
                             elementsNoConfigs.put(file.getName(), file);
@@ -669,6 +669,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
         if( nameList == null )
         {
             nameList = new ArrayList<>( elementsConfigs.keySet() );
+            nameList.addAll( elementsNoConfigs.keySet() );
         }
         if( getInfo().getQuerySystem() != null )
         {

@@ -55,8 +55,6 @@ import ru.biosoft.jobcontrol.JobControl;
 
 public class BAMTrack extends AbstractDataCollection<DataElement> implements Track, CloneableDataElement
 {
-
-
     static
     {
         SAMFileReader.setDefaultValidationStringency(ValidationStringency.SILENT);

@@ -41,8 +41,22 @@ public class ChrNameMapping extends DataElementSupport
             return null;
         if(!name.endsWith( ".txt" ))
             name += ".txt";
-        DataElementPath path = Environment.getValue(PROP_CHR_MAPPING_PATH) != null ? DataElementPath.create((String) Environment.getValue(PROP_CHR_MAPPING_PATH)) : DEFAULT_PATH;
-        return path.getChildPath(name).getDataElement(ChrNameMapping.class);
+
+        DataElementPath namePath = DataElementPath.create( name );
+        if( !namePath.exists() )
+        {
+            DataElementPath parentPath = Environment.getValue( PROP_CHR_MAPPING_PATH ) != null ? DataElementPath.create( (String) Environment.getValue( PROP_CHR_MAPPING_PATH ) )
+                    : DEFAULT_PATH;
+            namePath = parentPath.getChildPath( name );
+        }
+        try
+        {
+            return namePath.getDataElement( ChrNameMapping.class );
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
     
     public static ChrNameMapping getMapping(Properties props)

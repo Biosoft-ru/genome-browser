@@ -115,7 +115,7 @@ public class BedTrack extends FileTrack implements WritableTrack
             {
                 if( isComment(line) )
                     continue;
-                Site site = BEDTrackImporter.parseBEDLine(line);
+                Site site = BEDTrackImporter.parseBEDLine( line, false );
                 if( site == null )
                 {
                     continue;
