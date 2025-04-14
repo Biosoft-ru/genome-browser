@@ -18,8 +18,14 @@ import com.developmentontheedge.beans.DynamicPropertySetAsMap;
  */
 public class BEDTrackImporter extends TrackImporter
 {
+
     @Override
     protected Site parseLine(String line)
+    {
+        return parseBEDLine( line );
+    }
+
+    public static Site parseBEDLine(String line)
     {
         String[] fields = line.split("\\s");
         if( fields.length < 3 )
