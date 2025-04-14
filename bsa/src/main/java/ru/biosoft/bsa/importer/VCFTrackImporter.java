@@ -90,9 +90,20 @@ public class VCFTrackImporter extends TrackImporter
         }
         Properties parameters = new Properties();
         putParameter(parameters, "name", fields[2]);
+
+        /**
+         * ALT - alternate base(s): Comma separated list of alternate non-reference alleles. These alleles do not have to
+         * be called in any of the samples. Options are base Strings made up of the bases A,C,G,T,N,*, (case insensitive)
+         * or an angle-bracketed ID String (“<ID>”) or a breakend replacement string as described in the section on
+         * breakends. The ‘*’ allele is reserved to indicate that the allele is missing due to a upstream deletion. If there
+         * are no alternative alleles, then the missing value should be used. Tools processing VCF files are not required
+         * to preserve case in the allele String, except for IDs, which are case sensitive. (String; no whitespace, commas,
+         * or angle-brackets are permitted in the ID String itself)
+         */
         String altAllele = fields[4];
-        if(!NUCLEOTIDE_PATTERN.matcher(altAllele).matches())
-            return null;
+        //Disable check of AltAllele
+        //        if(!NUCLEOTIDE_PATTERN.matcher(altAllele).matches())
+        //            return null;
         putParameter( parameters, "AltAllele", altAllele, true );
         if(!fields[5].equals("."))
         {
@@ -107,6 +118,18 @@ public class VCFTrackImporter extends TrackImporter
         }
         putParameter(parameters, "Quality", fields[5]);
         putParameter( parameters, "Filter", fields[6].replace( ",", ";" ) );
+
+        /**
+         * REF - reference base(s): Each base must be one of A,C,G,T,N (case insensitive). Multiple bases are permitted.
+         * The value in the POS field refers to the position of the first base in the String. For simple insertions and
+         * deletions in which either the REF or one of the ALT alleles would otherwise be null/empty, the REF and ALT
+         * Strings must include the base before the event (which must be reflected in the POS field), unless the event
+         * occurs at position 1 on the contig in which case it must include the base after the event; this padding base is
+         * not required (although it is permitted) for e.g. complex substitutions or other events where all alleles have at
+         * least one base represented in their Strings. If any of the ALT alleles is a symbolic allele (an angle-bracketed
+         * ID String “<ID>”) then the padding base is required and POS denotes the coordinate of the base preceding
+         * the polymorphism. Tools processing VCF files are not required to preserve case in the allele Strings. (String, Required).
+         */
         String refAllele = fields[3];
         if(!NUCLEOTIDE_PATTERN.matcher(refAllele).matches())
             return null;
