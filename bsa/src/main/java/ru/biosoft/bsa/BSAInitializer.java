@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
-import ru.biosoft.access.core.FileTypePriority;
+import ru.biosoft.access.file.FileTypePriority;
 import ru.biosoft.access.file.FileType;
 import ru.biosoft.access.file.FileTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
