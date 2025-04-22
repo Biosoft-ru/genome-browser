@@ -54,6 +54,12 @@ public class BSAInitializer extends Initializer
         TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
         TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
         //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
+
+        TransformerRegistry.addTransformer( "BigBedFile", "ru.biosoft.bsa.transformer.BigBedFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.big.BigBedTrack" );
+        TransformerRegistry.addTransformer( "BigWigFile", "ru.biosoft.bsa.transformer.BigWigFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.big.BigWigTrack" );
+
         TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
         TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
         
@@ -74,6 +80,15 @@ public class BSAInitializer extends Initializer
 
         TemplateFilter BAMfilter = new TemplateFilter("ru.biosoft.bsa.BAMTrack", true, Collections.EMPTY_LIST, null);
         TemplateRegistry.registerTemplate("BAM track", "ru.biosoft.bsa.BAMTrack", "ru/biosoft/bsa/resources/bamtrack.vm", "BAM track information", false, 0, BAMfilter);
+
+        TemplateFilter BigTrackFilter = new TemplateFilter( "ru.biosoft.bsa.track.big.BigBedTrack", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "BigBed track", "ru.biosoft.bsa.track.big.BigBedTrack", "ru/biosoft/bsa/track/big/resources/bigbed_track.vm", "BigBed track information",
+                false, 0,
+                BigTrackFilter );
+
+        TemplateFilter BigWigTrackFilter = new TemplateFilter( "ru.biosoft.bsa.track.big.BigWigTrack", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "BigWig track", "ru.biosoft.bsa.track.big.BigWigTrack", "ru/biosoft/bsa/track/big/resources/bigwig_track.vm", "BigWig track information",
+                false, 0, BigWigTrackFilter );
     }
 
     @Override protected void initProviders()
@@ -116,6 +131,11 @@ public class BSAInitializer extends Initializer
                 .register(new FileType("genbank", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY, "VCF track file"));
         FileTypeRegistry
                 .register(new FileType("ChrNameMapping", new String[] { "txt" }, "ru.biosoft.bsa.ChrNameMappingTransformer", FileTypePriority.LOW_PRIORITY, "Chr name mapping"));
+
+        FileTypeRegistry.register(
+                new FileType( "BigBed", new String[] { "bb", "BigBed" }, "ru.biosoft.bsa.transformer.BigBedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigBed file" ) );
+        FileTypeRegistry.register(
+                new FileType( "BigWig", new String[] { "bw", "BigWig" }, "ru.biosoft.bsa.transformer.BigWigFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigWig file" ) );
         //?? combined track
     }
 
