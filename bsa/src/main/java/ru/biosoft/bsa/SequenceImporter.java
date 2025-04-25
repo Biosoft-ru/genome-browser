@@ -31,6 +31,7 @@ import ru.biosoft.access.generic.GenericDataCollection;
 //import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.bsa.transformer.EmblTransformer;
 import ru.biosoft.bsa.transformer.FastaSequenceCollection;
+import ru.biosoft.bsa.transformer.FastaSimpleSequenceCollection;
 import ru.biosoft.bsa.transformer.FastaTransformer;
 import ru.biosoft.bsa.transformer.FastqTransformer;
 import ru.biosoft.bsa.transformer.GenbankTransformer;
@@ -143,7 +144,7 @@ public class SequenceImporter implements DataElementImporter
         
         if(format.equals( FASTA_FORMAT )) {
         	properties2.setProperty( FastaSequenceCollection.DO_GET_SEQUENCEID_ONLY, String.valueOf(importerProperties.getSequenceIdOnly) );
-            return new FastaSequenceCollection(origin, properties2);
+            return new FastaSimpleSequenceCollection( origin, properties2 );
         }
         else
             return new GenbankSequenceCollection(origin, properties2 );

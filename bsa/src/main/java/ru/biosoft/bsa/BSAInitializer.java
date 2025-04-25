@@ -49,7 +49,8 @@ public class BSAInitializer extends Initializer
     {
         TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
         TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
-        TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
+        TransformerRegistry.addTransformer( "FastaFile", "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.transformer.FastaSimpleSequenceCollection" );
         TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BAMTrack");
         TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
         TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
@@ -114,7 +115,7 @@ public class BSAInitializer extends Initializer
     {
         //String[] extensions, String transformerClassName, FileTypePriority priority, String description
         FileTypeRegistry
-                .register(new FileType("fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                .register( new FileType( "fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", FileTypePriority.HIGH_PRIORITY,
                         "FASTA file"));
         FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
         FileTypeRegistry
