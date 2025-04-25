@@ -135,12 +135,15 @@ function SequenceDocument(completeName, paramHash, customId)
         {
             var ensemblPath = createPath(components[0], components[1]);
             var tracksPath = createPath(ensemblPath, "Tracks");
-            var genesPath = createPath(tracksPath, "Genes");
-            var variationPath = createPath(tracksPath, "Variations");
-            if(isPathExists(genesPath))
-              this.defaultIndexedTracks.push(genesPath);
-            if(isPathExists(variationPath))
-              this.defaultIndexedTracks.push(variationPath);
+            if(isPathExists(tracksPath))
+            {
+                var genesPath = createPath(tracksPath, "Genes");
+                var variationPath = createPath(tracksPath, "Variations");
+                if(isPathExists(genesPath))
+                  this.defaultIndexedTracks.push(genesPath);
+                if(isPathExists(variationPath))
+                  this.defaultIndexedTracks.push(variationPath);
+            }
         }
     }
     
