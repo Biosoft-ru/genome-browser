@@ -321,6 +321,11 @@ function DataCollection(completeName)
         }
     };
     
+    this.isSizeComputed = function()
+    {
+        return _this.size != -1;
+    };
+    
     /*
      * Get link target (if this collection is a link)
      */
@@ -333,7 +338,20 @@ function DataCollection(completeName)
                 if(!instanceOf(this.getClass(), "ru.biosoft.access.core.DataCollection"))
                     this.linkTarget = null;
                 else
-                    this.getElementInfoAt(0);
+                {
+                     var data = queryService("access.service", 40, {dc: this.completeName}); 
+                    if(data.type == QUERY_TYPE_SUCCESS)
+                    {
+                        if(data.values)
+                        {
+                            _this.linkTarget = data.values;
+                            getDataCollection(_this.linkTarget).backLinks[_this.completeName] = 1;
+                        } 
+                        else 
+                            _this.linkTarget = null;
+                    }
+                }
+                //this.getElementInfoAt(0);
             }
             return this.linkTarget;
         }

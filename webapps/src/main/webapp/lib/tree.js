@@ -115,9 +115,26 @@ function createTreeObject(root, treeContainerId)
           
           'plugins' : ['contextmenu', 'changed'],
           'contextmenu' : {
-              'items' : function(node) {
-                  return getContextMenu(node);
-              }
+              'items' : function(node, buildContextMenu) {
+                let path = getTreeNodePath(node);
+                if(path)
+                {
+                    let dc = getDataCollection(path);
+                    console.log("dc in tree " + dc);
+                    if(dc && dc.isDataCollectionClass() && !dc.isSizeComputed())
+                    {
+                        showWaitDialog(resources.commonLoading);
+                        dc.getSize(function(){
+                                removeWaitDialog();
+                                buildContextMenu(getContextMenu(node));
+                            });
+                    }
+                    else
+                        buildContextMenu(getContextMenu(node));
+                }
+                else
+                    buildContextMenu(getContextMenu(node));
+             }
           }       
     });
 
@@ -135,15 +152,33 @@ function createTreeObject(root, treeContainerId)
             if(!_treeInProcess)
             {
                 storeLastOpenPath(path);
-                path = getTargetPath(path); 
-                if(data && data.selected && data.selected.length) {
-                    if(data.selected.length == 1)
+                if(data && data.selected )
+                {
+                    var afterLoad = function(selected, dcpath)
+                    {          
+                        dcpath = getTargetPath(dcpath);      
+                        if(selected.length == 1)
+                        {
+                            showElementInfo(dcpath);
+                            loadElementDescription(dcpath);
+                        }
+                        else
+                            updateContextToolbar(null, null, selected.map(function(el){return el.substring(4)}));
+                    };
+                    
+                    let dc = getDataCollection(path);
+                    if(dc && dc.isDataCollectionClass() && !dc.isSizeComputed())
                     {
-                        showElementInfo(path);
-                        loadElementDescription(path);
+                        showWaitDialog(resources.commonLoading);
+                        dc.getSize(function(){
+                            removeWaitDialog();
+                            afterLoad(data.selected, path);
+                        });
                     }
                     else
-                        updateContextToolbar(null, null, data.selected.map(function(el){return el.substring(4)}));
+                    {
+                        afterLoad(data.selected, path);
+                    }
                 }
             }
         }
@@ -428,7 +463,7 @@ function createTreeItemDroppable(element, type, f)
 		greedy: "true",
 		accept: function(draggable)
 		{
-			var path = getTargetPath(getTreeNodePath(draggable.parent().get(0)));
+			var path = getTreeNodePath(draggable.parent().get(0));
 			if(!path) path = draggable.attr("data-path");
 			if(!path) return false;
 			if(type && !instanceOf(getElementClass(path), type)) return false;
