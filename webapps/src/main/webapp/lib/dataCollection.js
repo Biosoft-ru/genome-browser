@@ -251,6 +251,24 @@ function DataCollection(completeName)
         return thisClass;
     };
     
+    /*
+     *  Get data collection class, if collection is top-level, get from server, otherwise ask parent collection
+     */
+    this.getClassNoParent = function()
+    {
+        var parent = getDataCollection(getElementPath(this.completeName));
+        if(parent != null)
+            return this.getClass();
+        else
+        {
+            var attributes = this.getAttributesNoParent();
+            if(attributes['server-class'] != undefined)
+                return attributes['server-class'];
+            else
+                return "ru.biosoft.access.core.DataCollection";
+        }
+    };
+    
     this.getChildClass = function(name)
     {
         if(!instanceOf(this.getClass(),"ru.biosoft.access.core.DataCollection"))
@@ -1006,20 +1024,18 @@ function DataCollection(completeName)
             _this.attributes = parseProperties(data.values);
             attributesLoaded = true;
         };
-        //if (!attributesLoaded) 
-        //{
-            var _this = this;
-            // load data collection info
-            var result = queryService("access.service", 21,
-            {
-                dc: _this.completeName
-            }, callback ? function(data) {success(data);callback();} : undefined,
-            function(data) {
-                _this.attributes = {};
-                attributesLoaded = true;
-                if(callback) callback();
-            });
-            if(!callback && result.type == QUERY_TYPE_SUCCESS) success(result);
-        //} else if(callback) callback();
+        var _this = this;
+        // load data collection info
+        var result = queryService("access.service", 21,
+        {
+            dc: _this.completeName
+        }, callback ? function(data) {success(data);callback();} : undefined,
+        function(data) {
+            _this.attributes = {};
+            attributesLoaded = true;
+            if(callback) callback();
+        });
+        if(!callback && result.type == QUERY_TYPE_SUCCESS) success(result);
     };
+
 }

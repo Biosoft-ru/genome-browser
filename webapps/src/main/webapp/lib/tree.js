@@ -120,8 +120,8 @@ function createTreeObject(root, treeContainerId)
                 if(path)
                 {
                     let dc = getDataCollection(path);
-                    console.log("dc in tree " + dc);
-                    if(dc && dc.isDataCollectionClass() && !dc.isSizeComputed())
+                    let parent = getDataCollection(getElementPath(path));
+                    if(parent != null && dc && dc.isDataCollectionClass() && !dc.isSizeComputed() && instanceOf(parent.getClassNoParent(),'ru.biosoft.access.file.GenericFileDataCollection'))
                     {
                         showWaitDialog(resources.commonLoading);
                         dc.getSize(function(){
@@ -167,7 +167,8 @@ function createTreeObject(root, treeContainerId)
                     };
                     
                     let dc = getDataCollection(path);
-                    if(dc && dc.isDataCollectionClass() && !dc.isSizeComputed())
+                    let parent = getDataCollection(getElementPath(path));
+                    if(parent != null && dc && dc.isDataCollectionClass() && !dc.isSizeComputed() && instanceOf(parent.getClassNoParent(),'ru.biosoft.access.file.GenericFileDataCollection'))
                     {
                         showWaitDialog(resources.commonLoading);
                         dc.getSize(function(){
