@@ -3,8 +3,13 @@ package ru.biosoft.bsa;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.AbstractDataCollection;
@@ -62,16 +67,44 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
         }
     }
 
+    private synchronized void remapIfNeeded(String sequence)
+    {
+        if( trackOptions.isAutoMapping() )
+        {
+            Set<String> chrNames = sites.stream().map( s -> s.getSequence().getName() ).limit( 20 ).collect( Collectors.toSet() );
+            Set<String> wantedNames = new HashSet<>();
+            DataElementPath sequensePath = DataElementPath.create( sequence );
+            wantedNames.addAll( sequensePath.getParentCollection().getNameList() );
+            ChrNameMapping mapping = ChrNameMapping.autoDetectChrMappingBySequence( chrNames, wantedNames );
+            if( mapping != null )
+            {
+                trackOptions.setChrNameMapping( mapping );
+                VectorDataCollection newSites = new VectorDataCollection<>(getName(), Site.class, null);
+                sites.stream().map( site ->  {
+                    String oldName = site.getSequence().getName();
+                    Sequence seq = getSequence( oldName );
+                    if(seq != null)
+                        return new SiteImpl( site.getOrigin(), site.getName(), site.getType(), site.getBasis(), site.getStart(), site.getLength(), site.getPrecision(),
+                                site.getStrand(), seq, site.getComment(), site.getProperties() );
+                    else
+                        return null;
+                } ).filter( Objects::nonNull ).forEach( s -> newSites.put( s ) );
+                sites = newSites;
+            }
+        }
+    }
+
     protected abstract void readFromFile(File file, DataCollection<Site> sites);
 
     @Override
     public DataCollection<Site> getSites(String sequence, int from, int to)
     {
         init();
+        remapIfNeeded( sequence );
         VectorDataCollection<Site> result = new VectorDataCollection<>("sites");
         String sequenceName = DataElementPath.create(sequence).getName();
         Interval fromTo = new Interval(from, to);
-        sites.stream().filter(s -> s.getSequence().getName().equals(sequenceName) && s.getInterval().intersects(fromTo)).forEach(s -> result.put(s));
+        sites.stream().filter( s -> s.getSequence().getName().equals( sequenceName ) && s.getInterval().intersects( fromTo ) ).forEach( s -> result.put( s ) );
         return result;
     }
 
@@ -79,6 +112,7 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
     public int countSites(String sequence, int from, int to) throws Exception
     {
         init();
+        remapIfNeeded( sequence );
         return getSites(sequence, from, to).getSize();
     }
 
@@ -86,6 +120,7 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
     public Site getSite(String sequence, String siteName, int from, int to) throws Exception
     {
         init();
+        remapIfNeeded( sequence );
         return sites.get(siteName);
     }
 
@@ -128,5 +163,12 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
     {
         return trackOptions.getChromosomeSequence(trackOptions.internalToExternal(name));
     }
+    
+    protected Set<String> getChromosomeNames(File file)
+    {
+        return Collections.emptySet();
+    }
+
+
 
 }

@@ -1,9 +1,11 @@
 package ru.biosoft.bsa;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -11,6 +13,7 @@ import com.developmentontheedge.beans.BeanInfoConstants;
 import com.developmentontheedge.beans.editors.GenericComboBoxEditor;
 
 import ru.biosoft.access.core.DataCollection;
+import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.access.core.Environment;
@@ -82,6 +85,62 @@ public class ChrNameMapping extends DataElementSupport
             }
             return new String[] {NONE_MAPPING};
         }
+    }
+
+    public static ChrNameMapping autoDetectChrMapping(DataCollection<Site> sites)
+    {
+        DataElementPath parentPath = Environment.getValue( PROP_CHR_MAPPING_PATH ) != null ? DataElementPath.create( (String) Environment.getValue( PROP_CHR_MAPPING_PATH ) )
+                : DEFAULT_PATH;
+        if( parentPath.exists() )
+        {
+            try
+            {
+                DataCollection<DataElement> mappings = parentPath.getDataCollection();
+                ChrNameMapping bestMapping = null;
+                long maxMatched = 0;
+                for ( DataElement de : mappings )
+                {
+                    if( de instanceof ChrNameMapping )
+                    {
+                        ChrNameMapping mapping = (ChrNameMapping) de;
+                        long matched = sites.stream().map( site -> {
+                            return ((ChrNameMapping) mapping).srcToDst.containsKey( site.getSequence().getName() ) ? 1 : 0;
+                        } ).count();
+                        if( matched > maxMatched )
+                        {
+                            bestMapping = mapping;
+                            maxMatched = matched;
+                        }
+                    }
+                }
+                return bestMapping;
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        return null;
+    }
+
+    public static ChrNameMapping autoDetectChrMappingBySequence(Set<String> intChrNames, Set<String> extChrNames)
+    {
+        DataElementPath parentPath = Environment.getValue( PROP_CHR_MAPPING_PATH ) != null ? DataElementPath.create( (String) Environment.getValue( PROP_CHR_MAPPING_PATH ) )
+                : DEFAULT_PATH;
+        if( parentPath.exists() )
+        {
+            try
+            {
+                DataCollection<DataElement> mappings = parentPath.getDataCollection();
+                return (ChrNameMapping) mappings.stream().filter( ChrNameMapping.class::isInstance )
+                        .filter( mapping -> ((ChrNameMapping) mapping).srcToDst.keySet().containsAll( intChrNames )
+                                && ((ChrNameMapping) mapping).dstToSrc.keySet().containsAll( extChrNames ) )
+                        .findFirst().orElse( null );
+            }
+            catch (Exception e)
+            {
+            }
+        }
+        return null;
     }
 }
 

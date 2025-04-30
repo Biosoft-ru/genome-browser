@@ -20,11 +20,14 @@ public class TrackOptions
     private GenomeSelector genomeSelector;
     private ChrNameMapping chrMapping;
     protected ChrCache chrCache;
+    private boolean autoChrMapping = false;
 
     public TrackOptions(Track track, Properties properties)
     {
         this.track = track;
         chrMapping = ChrNameMapping.getMapping(properties);
+        if( properties.getProperty( ChrNameMapping.PROP_CHR_MAPPING ) == null )
+            autoChrMapping = true;
         DataElementPath seqBase = DataElementPath.create(properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY));
         chrCache = new ChrCache(seqBase);
         setGenomeSelector(new GenomeSelector(this.track));
@@ -33,6 +36,7 @@ public class TrackOptions
     public void setChrNameMapping(ChrNameMapping chrNameMapping)
     {
         this.chrMapping = chrNameMapping;
+        autoChrMapping = false;
         chrCache.clear();
     }
 
@@ -59,6 +63,11 @@ public class TrackOptions
     public Sequence getChromosomeSequence(String chrName)
     {
         return chrCache.getSequence(chrName);
+    }
+
+    public boolean isAutoMapping()
+    {
+        return autoChrMapping;
     }
 
     //Properties for BeanInfo editor
