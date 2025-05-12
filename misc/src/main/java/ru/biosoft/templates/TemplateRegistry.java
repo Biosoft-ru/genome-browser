@@ -187,7 +187,12 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
 
     @Override protected void postInit()
     {
-        contextItems.addElement("utils", "ru.biosoft.templates.Formatter");
+        addContextItem( "utils", "ru.biosoft.templates.Formatter" );
+    }
+
+    public static void addContextItem(String name, String className)
+    {
+        contextItems.addElement( name, className );
     }
 }
 
