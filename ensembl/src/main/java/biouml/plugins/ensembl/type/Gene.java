@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -158,7 +160,7 @@ public class Gene extends biouml.standard.type.Gene implements WithSite, SqlConn
 
     private List<DatabaseReference> fetchReferences(String name)
     {
-        List<DatabaseReference> externalRefs = new ArrayList<>();
+        Set<DatabaseReference> externalRefs = new HashSet<>();
         ResultSet rs = null;
         Connection conn = null;
         PreparedStatement ps = null;
@@ -194,7 +196,7 @@ public class Gene extends biouml.standard.type.Gene implements WithSite, SqlConn
         {
             SqlUtil.close( ps, rs );
         }
-        return externalRefs;
+        return new ArrayList<>( externalRefs );
     }
 
     private List<DatabaseReference> buildExternalRefs(ResultSet rs) throws SQLException
