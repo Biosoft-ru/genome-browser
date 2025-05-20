@@ -10,6 +10,7 @@ import one.util.streamex.StreamEx;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.access.core.Transformer;
 import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.util.Clazz;

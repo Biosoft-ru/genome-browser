@@ -3,11 +3,11 @@ package ru.biosoft.bsa.transformer;
 import java.io.File;
 import java.util.Properties;
 
-import ru.biosoft.access.AbstractFileTransformer;
+import ru.biosoft.access.file.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.PropertiesHolder;
-import ru.biosoft.access.generic.PriorityTransformer;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.util.ApplicationUtils;
 
 public class FastaSimpleFileTransformer extends AbstractFileTransformer<FastaSimpleSequenceCollection> implements PriorityTransformer, PropertiesHolder

@@ -15,6 +15,7 @@ import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.access.core.Transformer;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.util.ExProperties;

@@ -2,10 +2,10 @@ package ru.biosoft.bsa.transformer;
 
 import java.io.File;
 
-import ru.biosoft.access.AbstractFileTransformer;
+import ru.biosoft.access.file.AbstractFileTransformer;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
-import ru.biosoft.access.generic.PriorityTransformer;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.bsa.GenbankSequenceCollection;
 import ru.biosoft.bsa.SequenceImporter;
 
