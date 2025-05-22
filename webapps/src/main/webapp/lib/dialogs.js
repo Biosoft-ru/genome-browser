@@ -475,6 +475,7 @@ function createFindElementDialog(parentPath)
         dialogButtons[ resources.dlgButtonOpen ] = function()
         {
             var path = parentDC.completeName + "/" + searchStr.val();
+            openBranch(path, true);
             openDocument(path, true);
             $(this).remove();
         };
