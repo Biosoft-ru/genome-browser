@@ -684,7 +684,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
     public boolean contains(String name)
     {
         init();
-        return elementsConfigs.containsKey( name );
+        return elementsConfigs.containsKey( name ) || elementsNoConfigs.containsKey( name );
     }
 
     ////////////////////////////////////////
