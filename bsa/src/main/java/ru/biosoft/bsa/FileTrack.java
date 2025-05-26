@@ -91,6 +91,9 @@ public abstract class FileTrack extends AbstractDataCollection<DataElement> impl
                 } ).filter( Objects::nonNull ).forEach( s -> newSites.put( s ) );
                 sites = newSites;
             }
+            else
+                trackOptions.setAutoMapping( false );
+
         }
     }
 

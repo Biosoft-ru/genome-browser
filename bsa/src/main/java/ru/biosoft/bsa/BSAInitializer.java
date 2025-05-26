@@ -137,7 +137,8 @@ public class BSAInitializer extends Initializer
                 new FileType( "BigBed", new String[] { "bb", "BigBed" }, "ru.biosoft.bsa.transformer.BigBedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigBed file" ) );
         FileTypeRegistry.register(
                 new FileType( "BigWig", new String[] { "bw", "BigWig" }, "ru.biosoft.bsa.transformer.BigWigFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigWig file" ) );
-        //?? combined track
+        FileTypeRegistry.register( new FileType( "CombinedTrack", new String[] { "comb" }, "ru.biosoft.bsa.transformer.CombinedTrackTransformer",
+                FileTypePriority.HIGH_PRIORITY, "Combined track file" ) );
     }
 
     @Override

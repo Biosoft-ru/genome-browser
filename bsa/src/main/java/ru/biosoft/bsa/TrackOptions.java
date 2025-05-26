@@ -70,6 +70,11 @@ public class TrackOptions
         return autoChrMapping;
     }
 
+    public void setAutoMapping(boolean needMapping)
+    {
+        autoChrMapping = needMapping;
+    }
+
     //Properties for BeanInfo editor
     @PropertyName("Chromosome name mapping")
     @PropertyDescription("Chromosome name mapping")
