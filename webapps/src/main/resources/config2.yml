@@ -33,9 +33,6 @@ perspectives:
             - rule: 
                 name: deny
                 id: Apply antimony
-            - rule:
-                name: deny
-                id: combine_tracks
         importers:
             name: test
 environment:
