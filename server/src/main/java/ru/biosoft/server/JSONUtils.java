@@ -28,6 +28,7 @@ import ru.biosoft.workbench.editors.GenericComboBoxItem;
 import ru.biosoft.workbench.editors.GenericMultiSelectEditor;
 import ru.biosoft.workbench.editors.GenericMultiSelectItem;
 
+import com.developmentontheedge.beans.editors.ColorEditor;
 import com.developmentontheedge.beans.editors.CustomEditorSupport;
 import com.developmentontheedge.beans.editors.PropertyEditorEx;
 import com.developmentontheedge.beans.editors.StringTagEditorSupport;
@@ -330,6 +331,16 @@ public class JSONUtils
         {
             return jsonObject.optBoolean("value");
         }
+        else if( type.equals( Color.class ) )
+        {
+            JSONArray jsonArray = jsonObject.optJSONArray( "value" );
+            if( jsonArray != null )
+            {
+                String obj = jsonArray.getString( 0 );
+                Color newColor = parseColor( obj );
+                return newColor;
+            }
+        }
         return null;
     }
 
@@ -533,6 +544,15 @@ public class JSONUtils
                 {
                     p.put(DICTIONARY_ATTR, createDictionary(tags, false));
                 }
+            }
+            else if( ColorEditor.class.isAssignableFrom( editorClass ) )
+            {
+                Object value = property.getValue();
+                p.put( TYPE_ATTR, "color-selector" );
+                JSONArray valueEl = new JSONArray();
+                valueEl.put( encodeColor( (Color) value ) );
+                p.put( VALUE_ATTR, valueEl );
+                return p;
             }
             else if( CustomEditorSupport.class.isAssignableFrom(editorClass) )
             {
