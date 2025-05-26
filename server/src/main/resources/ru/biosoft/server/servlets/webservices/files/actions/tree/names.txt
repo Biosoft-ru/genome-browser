@@ -1,13 +1,12 @@
-openExternalURL.json
 openGenomeBrowser.json
 openSequence.json
 openTable.json
 openFile.json
+openText.json
 expand.json
 newElement.json
 newFolder.json
 import.json:Import
-export.json
 saveas.json
 copyFolder.json
 removeElement.json
@@ -20,3 +19,4 @@ gitClone.json:Experimental
 gitPull.json:Experimental
 gitCommit.json:Experimental
 gitPush.json:Experimental
+findElement.json

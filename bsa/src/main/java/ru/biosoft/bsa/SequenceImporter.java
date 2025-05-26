@@ -31,6 +31,7 @@ import ru.biosoft.access.generic.GenericDataCollection;
 //import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.bsa.transformer.EmblTransformer;
 import ru.biosoft.bsa.transformer.FastaSequenceCollection;
+import ru.biosoft.bsa.transformer.FastaSimpleSequenceCollection;
 import ru.biosoft.bsa.transformer.FastaTransformer;
 import ru.biosoft.bsa.transformer.FastqTransformer;
 import ru.biosoft.bsa.transformer.GenbankTransformer;
@@ -122,7 +123,8 @@ public class SequenceImporter implements DataElementImporter
         String sequenceTransformerClass = FORMAT_TO_TRANSFORMER.get( format );
         properties.putAll( SequenceImporter.getFormatReaderProperties( format ) );
         String configDir = origin.getInfo().getProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY );
-        properties.setProperty( FileEntryCollection2.INDEX_DIR, configDir );
+        if( configDir != null )
+            properties.setProperty(FileEntryCollection2.INDEX_DIR, configDir);
         properties.setProperty( FileEntryCollection2.ORIGINAL_ORDER_PROPERTY, "true" );
         properties.setProperty( FileEntryCollection2.INDEX_TYPE_PROPERTY, JDBM2Index.class.getName() );
         if(format.equals( FASTA_FORMAT ))
@@ -137,11 +139,12 @@ public class SequenceImporter implements DataElementImporter
         properties2.setProperty( DataCollectionConfigConstants.NAME_PROPERTY, name );
         properties2.setProperty( DataCollectionConfigConstants.TRANSFORMER_CLASS, sequenceTransformerClass );
         properties2.put( DataCollectionConfigConstants.PRIMARY_COLLECTION, fileEntryCollection );
-        properties2.setProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir );
+        if( configDir != null )
+            properties2.setProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, configDir);
         
         if(format.equals( FASTA_FORMAT )) {
         	properties2.setProperty( FastaSequenceCollection.DO_GET_SEQUENCEID_ONLY, String.valueOf(importerProperties.getSequenceIdOnly) );
-            return new FastaSequenceCollection(origin, properties2);
+            return new FastaSimpleSequenceCollection( origin, properties2 );
         }
         else
             return new GenbankSequenceCollection(origin, properties2 );

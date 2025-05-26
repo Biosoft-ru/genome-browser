@@ -31,11 +31,12 @@ public class AccessInitializer extends Initializer
     @Override protected void initTransformers()
     {
         //ACCESS
-        //TransformerRegistry.addTransformer("Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.ImageDataElement");
-        //TransformerRegistry.addTransformer("HTML file", "ru.biosoft.access.support.FileHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.HtmlDataElement");
-        TransformerRegistry.addTransformer("Plain text", "ru.biosoft.access.support.FileTextTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.TextDataElement");
-        //TransformerRegistry.addTransformer("ZIP-archive with HTML pages", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.html.ZipHtmlDataCollection");
-        //TransformerRegistry.addTransformer("Video", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.access.VideoDataElement");
+        //TransformerRegistry.addTransformer("Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.ImageDataElement");
+        //TransformerRegistry.addTransformer("HTML file", "ru.biosoft.access.support.FileHtmlTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.HtmlDataElement");
+        TransformerRegistry.addTransformer( "Plain text", "ru.biosoft.access.file.FileTextTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.access.core.TextDataElement");
+        //TransformerRegistry.addTransformer("ZIP-archive with HTML pages", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.html.ZipHtmlDataCollection");
+        //TransformerRegistry.addTransformer("Video", "ru.biosoft.access.support.FileZipHtmlTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.VideoDataElement");
     }
 
     protected void initBeanProviders()

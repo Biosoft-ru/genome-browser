@@ -1,6 +1,7 @@
 package ru.biosoft.access;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,6 +9,7 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.Transformer;
+import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.access.generic.TransformerRegistry.TransformerInfo;
 import ru.biosoft.access.security.BiosoftClassLoading;
@@ -21,7 +23,8 @@ public class AccessCoreInit
         Environment.setIconManager(new BiosoftIconManager());
         
         
-        ru.biosoft.access.file.Environment.INSTANCE = new ru.biosoft.access.file.Environment() {
+        ru.biosoft.access.file.v1.Environment.INSTANCE = new ru.biosoft.access.file.v1.Environment()
+        {
 
             @Override
             public DataElement createFileDataElement(String name, DataCollection<?> parent, File file)
@@ -67,6 +70,15 @@ public class AccessCoreInit
             public File getFile(DataElement fde)
             {
                 return ((FileDataElement)fde).getFile();
+            }
+
+            @Override
+            public List<Class<? extends Transformer>> getTransformerForClass(Class<? extends DataElement> inputClass, Class<? extends DataElement> outputClass, boolean strict)
+            {
+                if( strict )
+                    return TransformerRegistry.getTransformerClass( inputClass, outputClass );
+                else
+                    return TransformerRegistry.getTransformerProbableClass( inputClass, outputClass );
             }
             
         };

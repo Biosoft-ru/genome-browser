@@ -4,20 +4,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Properties;
 
-//import com.developmentontheedge.application.ApplicationUtils;
-
-import ru.biosoft.access.AbstractFileTransformer;
+import ru.biosoft.access.file.AbstractFileTransformer;
 import ru.biosoft.access.file.FileBasedCollection;
-import ru.biosoft.access.FileDataElement;
+import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
-//import ru.biosoft.access.generic.PriorityTransformer;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.bsa.BAMTrack;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.TempFiles;
 
-public class BAMFileTransformer extends AbstractFileTransformer<BAMTrack> implements ru.biosoft.access.generic.PriorityTransformer
+public class BAMFileTransformer extends AbstractFileTransformer<BAMTrack> implements PriorityTransformer
 {
 
     @Override

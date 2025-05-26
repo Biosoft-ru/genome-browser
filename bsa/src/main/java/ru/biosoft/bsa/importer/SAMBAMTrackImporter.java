@@ -26,7 +26,7 @@ import ru.biosoft.jobcontrol.SubFunctionJobControl;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.util.TempFiles;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 
 public class SAMBAMTrackImporter implements DataElementImporter
@@ -66,7 +66,7 @@ public class SAMBAMTrackImporter implements DataElementImporter
             trackProperties.put(DataCollectionConfigConstants.FILE_PROPERTY, name);
             if(properties.getSequenceCollectionPath() != null)
                 trackProperties.put(Track.SEQUENCES_COLLECTION_PROPERTY, properties.getSequenceCollectionPath().toString());
-            if( !TextUtil.isEmpty(properties.getGenomeId()) )
+            if( !TextUtil2.isEmpty(properties.getGenomeId()) )
                 trackProperties.put(Track.GENOME_ID_PROPERTY, properties.getGenomeId());
 
             BAMTrack track;

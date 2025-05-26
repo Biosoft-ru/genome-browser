@@ -430,3 +430,74 @@ function createBeanEditorDialogWithSelector(title, getBeanPath, callback, autoUp
     reloadBean(getBeanPath(selectedValue));
 };
 
+function createFindElementDialog(parentPath)
+{
+    var parentDC = getDataCollection(parentPath);
+    parentDC.getNameList(function(nameList){
+        var dialogDiv = $('<div title="'+resources.dlgSearchPrjTitle+'"></div>');
+        var searchStr = $('<input type="text" placeholder="Start typing element name here..."/>').width(270);
+        dialogDiv.append(searchStr);
+        
+        var elementList = $('<ul class="elementList"></ul>')
+            .css({"padding": "2px", 
+                    "maxHeight": "500px",
+                    "margin": "auto"});
+            
+        for(var i = 0; i < nameList.length; i++)
+        {
+            var item = $("<li>").attr("data-name", nameList[i].name).height(18)
+                .css("background-image", getNodeIcon(parentDC, nameList[i].name)).css("position", "relative");
+            var title = nameList[i].title == undefined?nameList[i].name:nameList[i].title;
+            var textDiv = $("<div/>");
+            item.append(textDiv);
+            fitElement(textDiv, title, true, 250);
+            item.click( function(){
+                elementList.find("li").removeClass("selected");
+                searchStr.val($(this).attr("data-name"));
+                $(this).addClass("selected");
+            });
+            elementList.append(item);
+        }
+        var listDiv = $('<div class="ui-widget-content"/>').width(270).append(elementList);
+        dialogDiv.append($("<div/>").html("Available Projects:").css("padding-top", "10px").append(listDiv));
+        searchStr.keyup(function(){
+            var filter = searchStr.val().toUpperCase();
+            // Loop through all list items, and hide those who don't match the search query
+            elementList.find("li").each(function(){
+                if ($(this).attr("data-name").toUpperCase().indexOf(filter) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+        var dialogButtons = {};
+        dialogButtons[ resources.dlgButtonOpen ] = function()
+        {
+            var path = parentDC.completeName + "/" + searchStr.val();
+            openBranch(path, true);
+            openDocument(path, true);
+            $(this).remove();
+        };
+        dialogButtons[ resources.dlgButtonCancel ] = function()
+        {
+            $(this).remove();
+        };
+        dialogDiv.dialog(
+        {
+            autoOpen: true,
+            modal: true,
+            resizable: false,
+            width: 300,
+            buttons: dialogButtons,
+            close: function(ev, ui)
+            {
+                $(this).remove();
+            }
+        });
+        searchStr.focus();
+        sortButtons(dialogDiv);
+    });
+        
+}
+

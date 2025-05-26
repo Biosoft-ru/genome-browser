@@ -37,7 +37,7 @@ import ru.biosoft.bsa.WritableTrack;
 import ru.biosoft.jobcontrol.FunctionJobControl;
 import ru.biosoft.jobcontrol.JobControl;
 import ru.biosoft.util.ApplicationUtils;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 import ru.biosoft.util.bean.StaticDescriptor;
 
 public abstract class TrackImporter implements DataElementImporter
@@ -61,10 +61,17 @@ public abstract class TrackImporter implements DataElementImporter
 
     protected static String normalizeChromosome(String name)
     {
-        //        String smallName = name.toLowerCase();
-        //        if( smallName.startsWith( "chr" ) )
-        //            name = name.substring("chr".length());
-        //        return name.equals("M") ? "MT" : name;
+        return normalizeChromosome(name, false);
+    }
+    protected static String normalizeChromosome(String name, boolean normalizeChromosome)
+    {
+        if( normalizeChromosome )
+        {
+            String smallName = name.toLowerCase();
+            if( smallName.startsWith("chr") )
+                name = name.substring("chr".length());
+            return name.equals("M") ? "MT" : name;
+        }
         return name;
     }
 
@@ -175,7 +182,7 @@ public abstract class TrackImporter implements DataElementImporter
             properties.put(Track.SEQUENCES_COLLECTION_PROPERTY, getProperties().getSequenceCollectionPath().toString());
             seqBase = getProperties().getSequenceCollection();
         }
-        if( !TextUtil.isEmpty(getProperties().getGenomeId()) )
+        if( !TextUtil2.isEmpty(getProperties().getGenomeId()) )
             properties.put(Track.GENOME_ID_PROPERTY, getProperties().getGenomeId());
         properties.putAll(getProperties().getTrackProperties());
         WritableTrack track = TrackUtils.createTrack( parent, properties, getTrackClass() );

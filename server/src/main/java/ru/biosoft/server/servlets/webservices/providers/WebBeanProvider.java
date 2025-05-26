@@ -30,7 +30,7 @@ import ru.biosoft.server.servlets.webservices.WebException;
 import ru.biosoft.server.servlets.webservices.WebServicesServlet;
 import ru.biosoft.util.FieldMap;
 import ru.biosoft.util.FileItem;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 import ru.biosoft.workbench.editors.FileSelector;
 
 /**
@@ -78,7 +78,7 @@ public class WebBeanProvider extends WebJSONProviderSupport
     {
         if( bean == null )
         {
-            throw new WebException(TextUtil.isFullPath(completeName)?"EX_QUERY_NO_ELEMENT":"EX_INTERNAL_BEAN_NOT_FOUND", completeName);
+            throw new WebException(TextUtil2.isFullPath(completeName)?"EX_QUERY_NO_ELEMENT":"EX_INTERNAL_BEAN_NOT_FOUND", completeName);
         }
         JSONArray jsonProperties;
         JSONObject beanAttributes;

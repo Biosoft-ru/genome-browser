@@ -45,6 +45,7 @@ import ru.biosoft.jobcontrol.FunctionJobControl;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.access.core.PluginEntry;
+import ru.biosoft.access.file.GenericFileDataCollection;
 import ru.biosoft.util.entry.RegularFileEntry;
 
 /**
@@ -69,6 +70,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
     private final Map<String, LoggedException> initErrors = new HashMap<>();
 
     protected Map<String, PluginEntry> elementsConfigs = new TreeMap<>();
+    protected Map<String, PluginEntry> elementsNoConfigs = new TreeMap<>();
     protected List<String> nameList;
 
     /** Repository root subdirectory. */
@@ -258,6 +260,11 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
                                 {
                                 }
                             }
+                        }
+                        else if( file.isDirectory() )
+                        {
+                            //Directory without inner config file is treated as GenericFileDataCollection
+                            elementsNoConfigs.put(file.getName(), file);
                         }
                     }
                 }
@@ -571,6 +578,20 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
                 //Should element be removed from elementsConfigs if it could not be initialized properly (for example, if config file is incorrect)?
             }
         }
+        else
+        {
+            if( elementsNoConfigs.containsKey(name) )
+            {
+                try
+                {
+                    result = GenericFileDataCollection.initGenericFileDataCollection(this, elementsNoConfigs.get(name).getFile());
+                }
+                catch (Exception e)
+                {
+                    log.log(Level.SEVERE, "Can not init GenericFileDataCollection " + name + " from folder", e);
+                }
+            }
+        }
         if( result == null && remapping != null && remapping.containsKey( name ) )
         {
             String realName = remapping.get( name );
@@ -648,6 +669,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
         if( nameList == null )
         {
             nameList = new ArrayList<>( elementsConfigs.keySet() );
+            nameList.addAll( elementsNoConfigs.keySet() );
         }
         if( getInfo().getQuerySystem() != null )
         {
@@ -662,7 +684,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
     public boolean contains(String name)
     {
         init();
-        return elementsConfigs.containsKey( name );
+        return elementsConfigs.containsKey( name ) || elementsNoConfigs.containsKey( name );
     }
 
     ////////////////////////////////////////

@@ -106,14 +106,14 @@ public class ServerInitializer extends Initializer
     protected void initCommonClasses()
     {
         AccessService.addCommonClass("ru.biosoft.access.core.DataCollection");
-        AccessService.addCommonClass("ru.biosoft.access.FileDataElement");
+        AccessService.addCommonClass("ru.biosoft.access.file.FileDataElement");
         AccessService.addCommonClass("ru.biosoft.access.FileCollection");
         AccessService.addCommonClass("ru.biosoft.access.core.TransformedDataCollection");
         AccessService.addCommonClass("ru.biosoft.access.LocalRepository");
         AccessService.addCommonClass("ru.biosoft.access.security.NetworkRepository");
         AccessService.addCommonClass("ru.biosoft.access.SqlDataCollection");
         AccessService.addCommonClass("ru.biosoft.access.security.NetworkDataCollection");
-        AccessService.addCommonClass("ru.biosoft.access.TextDataElement");
+        AccessService.addCommonClass("ru.biosoft.access.core.TextDataElement");
 
         /*
          * class="ru.biosoft.access.HtmlDataElement"/> <class

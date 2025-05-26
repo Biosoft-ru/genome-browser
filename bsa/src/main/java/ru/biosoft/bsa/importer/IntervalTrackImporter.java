@@ -10,7 +10,7 @@ import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.SiteType;
 import ru.biosoft.bsa.StrandType;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 import com.developmentontheedge.beans.annot.PropertyDescription;
 import com.developmentontheedge.beans.annot.PropertyName;
 
@@ -146,7 +146,7 @@ public class IntervalTrackImporter extends TrackImporter
                 nFields /= 10;
                 zeroCount++;
             }
-            String nZeroes = TextUtil.times('0', zeroCount);
+            String nZeroes = TextUtil2.times('0', zeroCount);
 
             String[] names = fieldNames.isEmpty() ? new String[0] : fieldNames.split( ",", -1 );
 
@@ -276,10 +276,10 @@ public class IntervalTrackImporter extends TrackImporter
 
     public static Object detectType(String value)
     {
-        if( TextUtil.isIntegerNumber( value ) )
+        if( TextUtil2.isIntegerNumber( value ) )
         {
             return Integer.valueOf( value );
-        } else if( TextUtil.isFloatingPointNumber( value ) )
+        } else if( TextUtil2.isFloatingPointNumber( value ) )
         {
             return Double.valueOf( value );
         }

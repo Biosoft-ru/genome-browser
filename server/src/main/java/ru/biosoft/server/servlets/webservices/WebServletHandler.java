@@ -13,7 +13,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 public class WebServletHandler
 {
@@ -116,7 +116,7 @@ public class WebServletHandler
             for ( String uriParameter : uriParameters.keySet() )
             {
 
-                arguments.put(TextUtil.decodeURL(uriParameter), uriParameters.get(uriParameter));
+                arguments.put(TextUtil2.decodeURL(uriParameter), uriParameters.get(uriParameter));
             }
             if( extraArguments != null )
             {

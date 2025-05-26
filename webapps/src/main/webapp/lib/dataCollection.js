@@ -251,6 +251,24 @@ function DataCollection(completeName)
         return thisClass;
     };
     
+    /*
+     *  Get data collection class, if collection is top-level, get from server, otherwise ask parent collection
+     */
+    this.getClassNoParent = function()
+    {
+        var parent = getDataCollection(getElementPath(this.completeName));
+        if(parent != null)
+            return this.getClass();
+        else
+        {
+            var attributes = this.getAttributesNoParent();
+            if(attributes['server-class'] != undefined)
+                return attributes['server-class'];
+            else
+                return "ru.biosoft.access.core.DataCollection";
+        }
+    };
+    
     this.getChildClass = function(name)
     {
         if(!instanceOf(this.getClass(),"ru.biosoft.access.core.DataCollection"))
@@ -321,6 +339,11 @@ function DataCollection(completeName)
         }
     };
     
+    this.isSizeComputed = function()
+    {
+        return _this.size != -1;
+    };
+    
     /*
      * Get link target (if this collection is a link)
      */
@@ -333,7 +356,20 @@ function DataCollection(completeName)
                 if(!instanceOf(this.getClass(), "ru.biosoft.access.core.DataCollection"))
                     this.linkTarget = null;
                 else
-                    this.getElementInfoAt(0);
+                {
+                     var data = queryService("access.service", 40, {dc: this.completeName}); 
+                    if(data.type == QUERY_TYPE_SUCCESS)
+                    {
+                        if(data.values)
+                        {
+                            _this.linkTarget = data.values;
+                            getDataCollection(_this.linkTarget).backLinks[_this.completeName] = 1;
+                        } 
+                        else 
+                            _this.linkTarget = null;
+                    }
+                }
+                //this.getElementInfoAt(0);
             }
             return this.linkTarget;
         }
@@ -817,6 +853,7 @@ function DataCollection(completeName)
         this.info = null;
         this.templateList = null;
         this.beanDPS = null;
+        thisClass = undefined;
         if(this.getLinkTarget())
             getDataCollection(this.getLinkTarget()).invalidateCollection();
     };
@@ -967,5 +1004,38 @@ function DataCollection(completeName)
             if(failure)
                 failure();
         });
-    }
+    };
+    
+    this.getAttributesNoParent = function(callback)
+    {
+        if(callback)
+        {
+            this.loadAttributesNoParent(function() {callback(this.attributes);});
+        } else
+        {
+            this.loadAttributesNoParent();
+            return this.attributes;
+        }
+    };
+    
+    this.loadAttributesNoParent = function (callback)
+    {
+        var success = function(data) {
+            _this.attributes = parseProperties(data.values);
+            attributesLoaded = true;
+        };
+        var _this = this;
+        // load data collection info
+        var result = queryService("access.service", 21,
+        {
+            dc: _this.completeName
+        }, callback ? function(data) {success(data);callback();} : undefined,
+        function(data) {
+            _this.attributes = {};
+            attributesLoaded = true;
+            if(callback) callback();
+        });
+        if(!callback && result.type == QUERY_TYPE_SUCCESS) success(result);
+    };
+
 }

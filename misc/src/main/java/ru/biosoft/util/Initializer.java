@@ -32,6 +32,7 @@ public abstract class Initializer
                         initBeanProviders();
                         initTableResolvers();
                         initPerspectives();
+                        initFileTypes();
 
                     }
                     finally
@@ -94,6 +95,11 @@ public abstract class Initializer
     protected void initBeanProviders()
     {
         //BeanRegistry.registerBeanProvider("PREFIX", "BEAN PROVIDER CLASS");
+    }
+
+    protected void initFileTypes()
+    {
+        // FileTypeRegistry.register(String name, String[] extensions, String transformerClassName, FileTypePriority priority, String description);
     }
 
     protected void initPerspectives()

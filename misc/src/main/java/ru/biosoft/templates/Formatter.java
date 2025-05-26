@@ -11,6 +11,7 @@ import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.biohub.ReferenceType;
 import ru.biosoft.access.biohub.ReferenceTypeRegistry;
 import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 import ru.biosoft.util.j2html.TagCreator;
 
 import com.developmentontheedge.beans.model.ComponentFactory;
@@ -57,7 +58,7 @@ public class Formatter
         if(property == null) return null;
         Object value = property.getValue();
         if(value == null) return null;
-        String result = TextUtil.toString(value);
+        String result = TextUtil2.toString(value);
         Object referenceTypeObj = property.getDescriptor().getValue("referenceType");
         ReferenceType type = null;
         if(referenceTypeObj != null)

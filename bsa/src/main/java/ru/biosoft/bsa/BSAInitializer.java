@@ -4,6 +4,9 @@ import java.util.Collections;
 
 import biouml.plugins.server.access.AccessService;
 import ru.biosoft.access.BeanRegistry;
+import ru.biosoft.access.file.FileTypePriority;
+import ru.biosoft.access.file.FileType;
+import ru.biosoft.access.file.FileTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.bsa.server.BSAService;
 import ru.biosoft.bsa.server.TrackFinderProvider;
@@ -44,19 +47,28 @@ public class BSAInitializer extends Initializer
 
     @Override protected void initTransformers()
     {
-        TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
-        TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
-        TransformerRegistry.addTransformer("FastaFile", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.transformer.FastaSequenceCollection");
-        TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BAMTrack");
-        TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
-        TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
-        //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
-        TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
-        TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
+        TransformerRegistry.addTransformer("BedFile", "ru.biosoft.bsa.transformer.BedFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.BedTrack");
+        TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
+        TransformerRegistry.addTransformer( "FastaFile", "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.transformer.FastaSimpleSequenceCollection" );
+        TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BAMTrack");
+        TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
+        TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
+        //TransformerRegistry.addTransformer("BCFFile", "ru.biosoft.bsa.transformer.BCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BCFFileTrack");
+
+        TransformerRegistry.addTransformer( "BigBedFile", "ru.biosoft.bsa.transformer.BigBedFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.big.BigBedTrack" );
+        TransformerRegistry.addTransformer( "BigWigFile", "ru.biosoft.bsa.transformer.BigWigFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.big.BigWigTrack" );
+
+        TransformerRegistry.addTransformer("GenebankFile", "ru.biosoft.bsa.transformer.GenbankFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.GenbankSequenceCollection");
+        TransformerRegistry.addTransformer("Combined track", "ru.biosoft.bsa.transformer.CombinedTrackTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.combined.CombinedTrack");
         
         TransformerRegistry.addTransformer("Genome browser view", "ru.biosoft.bsa.transformer.ProjectTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.project.Project");
         TransformerRegistry.addTransformer("Site model", "ru.biosoft.bsa.transformer.SiteModelTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.SiteModel");
         TransformerRegistry.addTransformer("Frequency matrix", "ru.biosoft.bsa.transformer.WeightMatrixTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.analysis.FrequencyMatrix");
+        TransformerRegistry.addTransformer("ChrNameMapping", "ru.biosoft.bsa.ChrNameMappingTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.ChrNameMapping");
     }
 
     @Override protected void initTemplates()
@@ -69,6 +81,15 @@ public class BSAInitializer extends Initializer
 
         TemplateFilter BAMfilter = new TemplateFilter("ru.biosoft.bsa.BAMTrack", true, Collections.EMPTY_LIST, null);
         TemplateRegistry.registerTemplate("BAM track", "ru.biosoft.bsa.BAMTrack", "ru/biosoft/bsa/resources/bamtrack.vm", "BAM track information", false, 0, BAMfilter);
+
+        TemplateFilter BigTrackFilter = new TemplateFilter( "ru.biosoft.bsa.track.big.BigBedTrack", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "BigBed track", "ru.biosoft.bsa.track.big.BigBedTrack", "ru/biosoft/bsa/track/big/resources/bigbed_track.vm", "BigBed track information",
+                false, 0,
+                BigTrackFilter );
+
+        TemplateFilter BigWigTrackFilter = new TemplateFilter( "ru.biosoft.bsa.track.big.BigWigTrack", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "BigWig track", "ru.biosoft.bsa.track.big.BigWigTrack", "ru/biosoft/bsa/track/big/resources/bigwig_track.vm", "BigWig track information",
+                false, 0, BigWigTrackFilter );
     }
 
     @Override protected void initProviders()
@@ -89,6 +110,38 @@ public class BSAInitializer extends Initializer
         WebTablesProvider.addTableResolver("track", "ru.biosoft.bsa.server.TrackTableResolver");
     }
 
+    @Override
+    protected void initFileTypes()
+    {
+        //String[] extensions, String transformerClassName, FileTypePriority priority, String description
+        FileTypeRegistry
+                .register( new FileType( "fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "FASTA file"));
+        FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
+        FileTypeRegistry
+                .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "Generic Feature Format (gff) track file"));
+        FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
+        FileTypeRegistry
+                .register( new FileType( "sam", new String[] { "sam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.MEDIUM_PRIORITY, "SAM track file" ) );
+        FileTypeRegistry.register(new FileType("vcf", new String[] { "vcf" }, "ru.biosoft.bsa.transformer.VCFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                "Variant Call Format (vcf) track file"));
+        FileTypeRegistry
+                .register(new FileType("wigggle", new String[] { "wig" }, "ru.biosoft.bsa.transformer.WiggleFileTransformer", FileTypePriority.HIGH_PRIORITY, "Wiggle track file"));
+        FileTypeRegistry
+                .register(new FileType("genbank", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY, "VCF track file"));
+        FileTypeRegistry
+                .register(new FileType("ChrNameMapping", new String[] { "txt" }, "ru.biosoft.bsa.ChrNameMappingTransformer", FileTypePriority.LOW_PRIORITY, "Chr name mapping"));
+
+        FileTypeRegistry.register(
+                new FileType( "BigBed", new String[] { "bb", "BigBed" }, "ru.biosoft.bsa.transformer.BigBedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigBed file" ) );
+        FileTypeRegistry.register(
+                new FileType( "BigWig", new String[] { "bw", "BigWig" }, "ru.biosoft.bsa.transformer.BigWigFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigWig file" ) );
+        FileTypeRegistry.register( new FileType( "CombinedTrack", new String[] { "comb" }, "ru.biosoft.bsa.transformer.CombinedTrackTransformer",
+                FileTypePriority.HIGH_PRIORITY, "Combined track file" ) );
+    }
+
+    @Override
     protected void initCommonClasses()
     {
         AccessService.addCommonClass("ru.biosoft.bsa.SqlTrack");

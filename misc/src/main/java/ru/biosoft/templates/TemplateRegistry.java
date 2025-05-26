@@ -15,7 +15,7 @@ import org.apache.velocity.app.Velocity;
 import ru.biosoft.access.ClassLoading;
 import ru.biosoft.util.ExtensionRegistrySupport;
 import ru.biosoft.util.ObjectExtensionRegistry;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 
 /**
@@ -124,7 +124,7 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
         {
             BiosoftVelocityException ex = new BiosoftVelocityException(t, templateName, de);
             ex.log();
-            String[] message = TextUtil.split(ex.getMessage(), '\n');
+            String[] message = TextUtil2.split(ex.getMessage(), '\n');
             StringBuffer result = new StringBuffer();
             result.append("<div class='log_error'>").append(message[0]).append("</div>");
             for(int i=1; i<message.length; i++)
@@ -187,7 +187,12 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
 
     @Override protected void postInit()
     {
-        contextItems.addElement("utils", "ru.biosoft.templates.Formatter");
+        addContextItem( "utils", "ru.biosoft.templates.Formatter" );
+    }
+
+    public static void addContextItem(String name, String className)
+    {
+        contextItems.addElement( name, className );
     }
 }
 

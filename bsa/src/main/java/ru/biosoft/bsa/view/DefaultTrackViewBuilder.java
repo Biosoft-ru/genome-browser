@@ -24,6 +24,7 @@ import ru.biosoft.graphics.TextView;
 import ru.biosoft.graphics.View;
 import ru.biosoft.graphics.font.ColorFont;
 import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.DynamicPropertySet;
@@ -36,7 +37,7 @@ public class DefaultTrackViewBuilder extends TrackViewBuilder
         if(exons != null)
         {
             List<Interval> result = new ArrayList<>();
-            for(String exon: TextUtil.split(exons, ';'))
+            for(String exon: TextUtil2.split(exons, ';'))
             {
                 try
                 {
@@ -52,8 +53,8 @@ public class DefaultTrackViewBuilder extends TrackViewBuilder
         String blockStarts = site.getProperties().getValueAsString("blockStarts");
         if(blockSizes != null && blockStarts != null)
         {
-            String[] starts = TextUtil.split(blockStarts, ',');
-            String[] sizes = TextUtil.split(blockSizes, ',');
+            String[] starts = TextUtil2.split(blockStarts, ',');
+            String[] sizes = TextUtil2.split(blockSizes, ',');
             int count = Math.min(starts.length, sizes.length);
             List<Interval> result = new ArrayList<>();
             for(int i=0; i<count; i++)

@@ -13,6 +13,7 @@ public class GFFTrackBeanInfo extends BeanInfoEx
     @Override protected void initProperties() throws Exception
     {
         property("name").readOnly().add();
+        property("trackOptions");
     }
 
 }

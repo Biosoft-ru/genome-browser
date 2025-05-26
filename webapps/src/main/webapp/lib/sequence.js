@@ -135,12 +135,15 @@ function SequenceDocument(completeName, paramHash, customId)
         {
             var ensemblPath = createPath(components[0], components[1]);
             var tracksPath = createPath(ensemblPath, "Tracks");
-            var genesPath = createPath(tracksPath, "Genes");
-            var variationPath = createPath(tracksPath, "Variations");
-            if(isPathExists(genesPath))
-              this.defaultIndexedTracks.push(genesPath);
-            if(isPathExists(variationPath))
-              this.defaultIndexedTracks.push(variationPath);
+            if(isPathExists(tracksPath))
+            {
+                var genesPath = createPath(tracksPath, "Genes");
+                var variationPath = createPath(tracksPath, "Variations");
+                if(isPathExists(genesPath))
+                  this.defaultIndexedTracks.push(genesPath);
+                if(isPathExists(variationPath))
+                  this.defaultIndexedTracks.push(variationPath);
+            }
         }
     }
     
@@ -1232,9 +1235,12 @@ function SequenceDocument(completeName, paramHash, customId)
     
     this.removeTrack = function(trackId)
     {
-        this.panes[trackId].viewPane.remove();
-        this.panes[trackId].labelDiv.remove();
-        delete this.panes[trackId];
+        if(this.panes[trackId] != undefined)
+        {
+            this.panes[trackId].viewPane.remove();
+            this.panes[trackId].labelDiv.remove();
+            delete this.panes[trackId];
+        }
         delete this.enabledTracks[trackId];
         this.onTracksResize();
         this.updateViewParts(true);
@@ -1351,6 +1357,16 @@ function SequenceDocument(completeName, paramHash, customId)
             });
             if(tr)
                 this.reloadTrack(tr.id);
+        }
+        else
+        {
+            //remove from view if item is not a track but exists in track list
+            var tr = _.find(this.enabledTracks, function(track)
+            {
+                return track.de == item.completeName; 
+            });
+            if(tr)
+                this.removeTrack(tr.id);
         }
     }
 }

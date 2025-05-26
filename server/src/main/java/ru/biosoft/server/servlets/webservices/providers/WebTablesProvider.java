@@ -124,7 +124,7 @@ import ru.biosoft.util.ClassExtensionRegistry;
 import ru.biosoft.util.ColorUtils;
 import ru.biosoft.util.ControlCodeGenerator;
 import ru.biosoft.util.ObjectExtensionRegistry;
-import ru.biosoft.util.TextUtil;
+import ru.biosoft.util.TextUtil2;
 import ru.biosoft.util.Util;
 import ru.biosoft.util.j2html.tags.ContainerTag;
 import ru.biosoft.util.j2html.tags.DomContent;
@@ -226,7 +226,7 @@ public class WebTablesProvider extends WebProviderSupport
                 }
                 applyFilter();
                 initModel( true );
-                String sEcho = TextUtil.nullToEmpty( arguments.get( "sEcho" ) );
+                String sEcho = TextUtil2.nullToEmpty( arguments.get( "sEcho" ) );
 
                 JSONArray aaData = new JSONArray();
 
@@ -404,7 +404,7 @@ public class WebTablesProvider extends WebProviderSupport
 
         public void sendCellData() throws WebException, IOException
         {
-            String[] cellId = TextUtil.split( arguments.getString( "cellId" ), ':' );
+            String[] cellId = TextUtil2.split( arguments.getString( "cellId" ), ':' );
             if( cellId.length < 2 )
                 throw new WebException( "EX_QUERY_PARAM_INVALID", "cellId" );
             int row;
@@ -437,7 +437,7 @@ public class WebTablesProvider extends WebProviderSupport
             if(type != null)
                 result = p().withRawHtml( getCodeForReferenceTyped( value, row + ":" + column, type, displayTitle, Integer.MAX_VALUE ) );
             else
-                result = p().withText( TextUtil.insertBreaks( String.valueOf( value ) ) );
+                result = p().withText( TextUtil2.insertBreaks( String.valueOf( value ) ) );
             response.sendString( result.toString() );
         }
 
@@ -899,7 +899,7 @@ public class WebTablesProvider extends WebProviderSupport
                 {
                     return urlTemplate.replace( "$id$", id );
                 }
-                return MAP_PATH + "?de=" + TextUtil.encodeURL( parent.getChildPath( id ).toString() );
+                return MAP_PATH + "?de=" + TextUtil2.encodeURL( parent.getChildPath( id ).toString() );
             }
         }
     }
@@ -1068,9 +1068,9 @@ public class WebTablesProvider extends WebProviderSupport
                 }
                 else
                 {
-                    valueStr = TextUtil.nullToEmpty( TextUtil.toString( value ) );
+                    valueStr = TextUtil2.nullToEmpty( TextUtil2.toString( value ) );
                     valueStr = getSubstringWithTags( valueStr );
-                    valueStr = TextUtil.insertBreaks( valueStr );
+                    valueStr = TextUtil2.insertBreaks( valueStr );
                     valueStr = valueStr.replace( "\n", "<br>" );
                     if( value instanceof Float || value instanceof Double )
                     {
@@ -1084,7 +1084,7 @@ public class WebTablesProvider extends WebProviderSupport
                 }
                 return p().withClass( "cellControl" ).withId( id ).withRawHtml( valueStr );
             }
-            String valueStr = TextUtil.nullToEmpty( value.toString() );
+            String valueStr = TextUtil2.nullToEmpty( value.toString() );
             return input().withType( "text" ).withClass( "cellControl" ).withId( id ).withValue( valueStr );
         }
     }
@@ -1189,7 +1189,7 @@ public class WebTablesProvider extends WebProviderSupport
             try
             {
                 columnEntry.put( "name", column.getName() );
-                columnEntry.put("jsName", TextUtil.getValidName(column.getName()));
+                columnEntry.put("jsName", TextUtil2.getValidName(column.getName()));
                 if( column instanceof TableColumn )
                 {
                     TableColumn tableColumn = (TableColumn)column;

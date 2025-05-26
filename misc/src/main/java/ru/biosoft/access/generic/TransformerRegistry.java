@@ -6,21 +6,16 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-//import org.eclipse.core.runtime.IConfigurationElement;
-
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.FileDataElement;
-
-//import org.eclipse.core.runtime.IConfigurationElement;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.core.PriorityTransformer;
 import ru.biosoft.access.core.Transformer;
+import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.util.Clazz;
-//import ru.biosoft.util.ExtensionRegistrySupport;
 import ru.biosoft.util.ExtensionRegistrySupport;
 
-//Class modified to eliminate ExtensionRegistry usage
 /**
  * Registry which stores information on different transformers Useful to handle
  * elements within GenericDataCollection
@@ -99,6 +94,14 @@ public class TransformerRegistry extends ExtensionRegistrySupport<TransformerReg
     }
     
     @SuppressWarnings ( "rawtypes" )
+    public static @Nonnull List<Class<? extends Transformer>> getTransformerProbableClass(Class<? extends DataElement> inputClass, Class<? extends DataElement> outputClass)
+    {
+        return instance.stream()
+                .filter( info -> info.inputClass.equals( inputClass ) && (info.outputClass.isAssignableFrom( outputClass ) || (outputClass.isAssignableFrom( info.outputClass ))) )
+                .map( TransformerInfo::getTransformerClass ).collect( Collectors.toList() );
+    }
+
+    @SuppressWarnings("rawtypes")
     public static Transformer getBestTransformer(DataElement output, Class<? extends DataElement> inputType) throws Exception
     {
         return StreamEx.of(TransformerRegistry.getTransformerClass(inputType, output.getClass()))

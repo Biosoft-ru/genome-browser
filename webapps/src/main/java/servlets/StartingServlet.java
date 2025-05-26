@@ -29,6 +29,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.biosoft.access.AccessCoreInit;
 import ru.biosoft.access.AccessInitializer;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.bsa.BSAInitializer;
 import ru.biosoft.graphics.View;
 import ru.biosoft.graphics.View.ModelResolver;
@@ -49,6 +50,11 @@ public class StartingServlet extends HttpServlet
     {
         super.init(config);
         AccessCoreInit.init();
+
+        AccessInitializer.initialize();
+        ServerInitializer.initialize();
+        BSAInitializer.initialize();
+        TemplatesInitializer.initialize();
 
         configPath = config.getInitParameter("configPath");
         if( configPath == null )
@@ -72,10 +78,14 @@ public class StartingServlet extends HttpServlet
             ServerPreferences.loadPreferences((String) yaml.get("preferences"));
         }
 
-        AccessInitializer.initialize();
-        ServerInitializer.initialize();
-        BSAInitializer.initialize();
-        TemplatesInitializer.initialize();
+        if( yaml.get("environment") != null )
+        {
+            Map<String, Object> environment = (Map<String, Object>) yaml.get("environment");
+            for ( String propName : environment.keySet() )
+            {
+                Environment.setValue(propName, environment.get(propName));
+            }
+        }
 
         ModelResolver viewModelResolver = new DataElementModelResolver();
         View.setModelResolver(viewModelResolver);
