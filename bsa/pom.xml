@@ -62,9 +62,9 @@
   </dependency>
   
   <dependency>
-    <groupId>ru.biosoft.bigbed</groupId>
-    <artifactId>ru.biosoft.bigbed</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>ru.biosoft</groupId>
+    <artifactId>bigbed</artifactId>
+    <version>1.0.0</version>
   </dependency>
         
   <dependency>
