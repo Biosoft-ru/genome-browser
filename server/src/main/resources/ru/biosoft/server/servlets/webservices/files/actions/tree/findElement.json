@@ -9,7 +9,7 @@
     {
       if(!completePath) 
          return -1;
-      var name = getElementName(parentPath);
+      var name = getElementName(completePath);
       var parentPath = getElementPath(completePath);
       var parentType = undefined;
       if(!parentPath)
