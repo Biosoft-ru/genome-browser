@@ -58,6 +58,7 @@ public class FastaSimpleSequenceCollection extends AbstractDataCollection<Annota
 		Properties properties = new Properties();
 		properties.put(DataCollectionConfigConstants.NAME_PROPERTY, name);
 		properties.put(DataCollectionConfigConstants.FILE_PROPERTY, file.getAbsolutePath());
+        properties.setProperty( FastaSequenceCollection.DO_GET_SEQUENCEID_ONLY, "true" );
 		return properties;
 	}
 	
