@@ -51,6 +51,8 @@ public class BSAInitializer extends Initializer
         TransformerRegistry.addTransformer("GFFFile", "ru.biosoft.bsa.transformer.GFFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.GFFTrack");
         TransformerRegistry.addTransformer( "FastaFile", "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", "ru.biosoft.access.file.FileDataElement",
                 "ru.biosoft.bsa.transformer.FastaSimpleSequenceCollection" );
+        TransformerRegistry.addTransformer( "FastaFileWithIndex", "ru.biosoft.bsa.transformer.FastaFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.transformer.FastaSequenceCollection" );
         TransformerRegistry.addTransformer("BAMFile", "ru.biosoft.bsa.transformer.BAMFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.BAMTrack");
         TransformerRegistry.addTransformer("VCFFile", "ru.biosoft.bsa.transformer.VCFFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.VCFFileTrack");
         TransformerRegistry.addTransformer("WiggleFile", "ru.biosoft.bsa.transformer.WiggleFileTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.bsa.track.WiggleFileTrack");
@@ -117,6 +119,8 @@ public class BSAInitializer extends Initializer
         FileTypeRegistry
                 .register( new FileType( "fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", FileTypePriority.HIGH_PRIORITY,
                         "FASTA file"));
+        FileTypeRegistry.register( new FileType( "Fasta with index file", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaFileTransformer",
+                FileTypePriority.MEDIUM_PRIORITY, "FASTA file with index" ) );
         FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
         FileTypeRegistry
                 .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
