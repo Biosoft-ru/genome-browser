@@ -144,7 +144,9 @@ public class SequenceImporter implements DataElementImporter
         
         if(format.equals( FASTA_FORMAT )) {
         	properties2.setProperty( FastaSequenceCollection.DO_GET_SEQUENCEID_ONLY, String.valueOf(importerProperties.getSequenceIdOnly) );
-            return new FastaSimpleSequenceCollection( origin, properties2 );
+            if( configDir == null )
+                properties2.setProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, input.getParent() );
+            return new FastaSequenceCollection( origin, properties2 );
         }
         else
             return new GenbankSequenceCollection(origin, properties2 );
