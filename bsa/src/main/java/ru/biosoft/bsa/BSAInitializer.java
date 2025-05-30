@@ -117,33 +117,42 @@ public class BSAInitializer extends Initializer
     {
         //String[] extensions, String transformerClassName, FileTypePriority priority, String description
         FileTypeRegistry
-                .register( new FileType( "fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                .register( new FileType( "Fasta", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaSimpleFileTransformer", FileTypePriority.HIGH_PRIORITY,
                         "FASTA file"));
         FileTypeRegistry.register( new FileType( "Fasta with index file", new String[] { "fa", "fasta", "fna" }, "ru.biosoft.bsa.transformer.FastaFileTransformer",
                 FileTypePriority.MEDIUM_PRIORITY, "FASTA file with index" ) );
-        FileTypeRegistry.register(new FileType("bed", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file"));
         FileTypeRegistry
-                .register(new FileType("gff", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                .register( new FileType( "BED track", new String[] { "bed" }, "ru.biosoft.bsa.transformer.BedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BED track file" ) );
+        FileTypeRegistry
+                .register( new FileType( "GFF track", new String[] { "gff", "gtf" }, "ru.biosoft.bsa.transformer.GFFFileTransformer", FileTypePriority.HIGH_PRIORITY,
                         "Generic Feature Format (gff) track file"));
-        FileTypeRegistry.register(new FileType("bam", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file"));
         FileTypeRegistry
-                .register( new FileType( "sam", new String[] { "sam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.MEDIUM_PRIORITY, "SAM track file" ) );
-        FileTypeRegistry.register(new FileType("vcf", new String[] { "vcf" }, "ru.biosoft.bsa.transformer.VCFFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                .register( new FileType( "BAM track", new String[] { "bam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.HIGH_PRIORITY, "BAM track file" ) );
+        FileTypeRegistry
+                .register(
+                        new FileType( "SAM track", new String[] { "sam" }, "ru.biosoft.bsa.transformer.BAMFileTransformer", FileTypePriority.MEDIUM_PRIORITY, "SAM track file" ) );
+        FileTypeRegistry.register( new FileType( "VCF track", new String[] { "vcf" }, "ru.biosoft.bsa.transformer.VCFFileTransformer", FileTypePriority.HIGH_PRIORITY,
                 "Variant Call Format (vcf) track file"));
         FileTypeRegistry
-                .register(new FileType("wigggle", new String[] { "wig" }, "ru.biosoft.bsa.transformer.WiggleFileTransformer", FileTypePriority.HIGH_PRIORITY, "Wiggle track file"));
+                .register( new FileType( "Wiggle track", new String[] { "wig" }, "ru.biosoft.bsa.transformer.WiggleFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "Wiggle track file" ) );
         FileTypeRegistry
-                .register(new FileType("genbank", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY, "VCF track file"));
+                .register( new FileType( "GenBank track", new String[] { "gb" }, "ru.biosoft.bsa.transformer.GenbankFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "GenBank track file" ) );
         FileTypeRegistry
-                .register(new FileType("ChrNameMapping", new String[] { "txt" }, "ru.biosoft.bsa.ChrNameMappingTransformer", FileTypePriority.LOW_PRIORITY, "Chr name mapping"));
+                .register( new FileType( "ChrNameMappingFile", new String[] { "txt" }, "ru.biosoft.bsa.ChrNameMappingTransformer", FileTypePriority.LOW_PRIORITY,
+                        "Chr name mapping" ) );
 
         FileTypeRegistry.register(
-                new FileType( "BigBed", new String[] { "bb", "BigBed" }, "ru.biosoft.bsa.transformer.BigBedFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigBed file" ) );
+                new FileType( "BigBed track", new String[] { "bb", "BigBed" }, "ru.biosoft.bsa.transformer.BigBedFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "BigBed file" ) );
         FileTypeRegistry.register(
-                new FileType( "BigWig", new String[] { "bw", "BigWig" }, "ru.biosoft.bsa.transformer.BigWigFileTransformer", FileTypePriority.HIGH_PRIORITY, "BigWig file" ) );
+                new FileType( "BigWig track", new String[] { "bw", "BigWig" }, "ru.biosoft.bsa.transformer.BigWigFileTransformer", FileTypePriority.HIGH_PRIORITY,
+                        "BigWig file" ) );
         FileTypeRegistry.register( new FileType( "CombinedTrack", new String[] { "comb" }, "ru.biosoft.bsa.transformer.CombinedTrackTransformer",
                 FileTypePriority.HIGH_PRIORITY, "Combined track file" ) );
     }
+
 
     @Override
     protected void initCommonClasses()
