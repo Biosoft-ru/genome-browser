@@ -8,11 +8,14 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.PriorityTransformer;
+import ru.biosoft.access.core.PropertiesHolder;
+import ru.biosoft.bsa.ChrNameMapping;
 import ru.biosoft.bsa.Track;
 import ru.biosoft.bsa.track.VCFFileTrack;
 
-public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> implements PriorityTransformer
+public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> implements PriorityTransformer, PropertiesHolder
 {
+    private Properties properties;
 
     @Override
     public Class<? extends VCFFileTrack> getOutputType()
@@ -23,7 +26,7 @@ public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> im
     @Override
     public VCFFileTrack load(File input, String name, DataCollection<VCFFileTrack> origin) throws Exception
     {
-        Properties properties = new Properties();
+        Properties properties = (Properties) this.properties.clone();
         properties.setProperty( DataCollectionConfigConstants.NAME_PROPERTY, name );
         properties.setProperty( DataCollectionConfigConstants.FILE_PROPERTY, input.getAbsolutePath() );
         
@@ -56,5 +59,26 @@ public class VCFFileTransformer extends AbstractFileTransformer<VCFFileTrack> im
         if(name.toLowerCase().endsWith( ".vcf" ))
             return 2;
         return 0;
+    }
+
+    @Override
+    public Properties getProperties()
+    {
+        return properties;
+    }
+
+    @Override
+    public void setProperties(Properties props)
+    {
+        properties = props;
+    }
+
+    @Override
+    public Properties createProperties()
+    {
+        Properties newProps = new Properties();
+        newProps.setProperty( Track.SEQUENCES_COLLECTION_PROPERTY, "" );
+        newProps.setProperty( ChrNameMapping.PROP_CHR_MAPPING, "" );
+        return newProps;
     }
 }
