@@ -98,7 +98,7 @@ public class IntervalTrackImporter extends TrackImporter
             return null;
         }
 
-        return new SiteImpl(null, chrom, SiteType.TYPE_UNSURE, Basis.BASIS_USER, start, length, Precision.PRECISION_EXACTLY, strand, null,
+        return new SiteImpl( null, chrom, SiteType.TYPE_NOT_SPECIFIED, Basis.BASIS_USER, start, length, Precision.PRECISION_EXACTLY, strand, null,
                 properties);
     }
 

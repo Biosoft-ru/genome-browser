@@ -111,7 +111,7 @@ public class BEDTrackImporter extends TrackImporter
         if( fields.length > 11 )
             properties.add(new DynamicProperty(getDescriptor("blockStarts"), String.class, fields[11]));
 
-        return new SiteImpl(null, chrom, SiteType.TYPE_UNSURE, Basis.BASIS_USER, start, length, Precision.PRECISION_EXACTLY, strand, null,
+        return new SiteImpl( null, chrom, SiteType.TYPE_NOT_SPECIFIED, Basis.BASIS_USER, start, length, Precision.PRECISION_EXACTLY, strand, null,
                 properties);
     }
     
