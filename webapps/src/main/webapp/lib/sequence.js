@@ -800,10 +800,10 @@ function SequenceDocument(completeName, paramHash, customId)
           indexedTracks.push(track.de)
       });
       var remainingTracks = indexedTracks.length;
-      if(remainingTracks == 0)
-         _this.searchSelector.css('display', 'none');
-      else
-         _this.searchSelector.css('display', 'inline');
+      //if(remainingTracks == 0)
+      //   _this.searchSelector.css('display', 'none');
+      //else
+      //   _this.searchSelector.css('display', 'inline');
       var indexNamesByTrack = {};
       _.each(indexedTracks, function(track) {
             queryService("bsa.service", 57, 
@@ -828,8 +828,9 @@ function SequenceDocument(completeName, paramHash, customId)
     this.fillSearchSelector = function(trackOrder, indexNamesByTrack) {
         if(!_this.searchSelector)
             return;
-        var options = _this.searchSelector.children(".seq_search_index");
+        var options = _this.searchSelector.children(".seq_search_index").first();
         options.empty();
+        var numOpts =  0;
         for(var i = 0; i < trackOrder.length; i++)
         {
             var track = trackOrder[i];
@@ -840,9 +841,10 @@ function SequenceDocument(completeName, paramHash, customId)
                     var name = names[j];
                     var option = $('<option value="'+ name + ":" + track +'">'+name+'</option>');
                     options.append(option);
+                    numOpts ++;
                 }
         }
-        if(options.length == 0)
+        if(numOpts == 0)
           _this.searchSelector.css('display', 'none');
         else
           _this.searchSelector.css('display', 'inline')
