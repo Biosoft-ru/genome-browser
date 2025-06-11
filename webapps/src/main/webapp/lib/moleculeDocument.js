@@ -32,7 +32,7 @@ function MoleculeDocument(completeName)
         var prevFunction;
         var bubbleIframeMouseMove = function( iframe ){
             
-            if( prevFunction )
+            if( prevFunction  && iframe.contentWindow)
                 iframe.contentWindow.removeEventListener('mousemove', prevFunction);
             prevFunction = function( event ) {
                 var boundingClientRect = iframe.getBoundingClientRect();

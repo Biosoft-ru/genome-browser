@@ -154,7 +154,7 @@ function loadApplication(startupInfo)
     delete defaultHash.perspective;
     if (_.isEmpty(defaultHash)) 
     {
-        //TODO: openDefaultPath( function(path) { openBranchOrDefault(path, false); });
+        openDefaultPath( function(path) { openBranchOrDefault(path, false); });
     }
     else
     {

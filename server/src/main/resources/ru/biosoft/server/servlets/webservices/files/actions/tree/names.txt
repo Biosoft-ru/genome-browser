@@ -14,6 +14,7 @@ removeProject.json
 setCurrentProject.json
 openAlignmentViewer.json:Experimental
 openMolecule.json
+editProperties.json
 changeType.json
 gitClone.json:Experimental
 gitPull.json:Experimental

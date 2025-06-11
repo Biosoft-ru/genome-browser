@@ -881,6 +881,8 @@ function SequenceDocument(completeName, paramHash, customId)
 
     this.showSiteInfo = function(track, site, chr, from, to)
     {
+        if(!(track instanceof Track))
+            track = _this.getTrackByPath(track);
         var requestParams = {
             sequence: chr,
             site: site,
@@ -1161,7 +1163,11 @@ function SequenceDocument(completeName, paramHash, customId)
             "remove_from_view": {label: resources.menuRemoveFromView, icon: "icons/remove.gif", action: function(itemKey, options, originalEvent) 
                 {
                     var trackId = options.$trigger.attr("id").substring(6);
-                    _this.removeTrack(trackId);
+                    var doc = getActiveDocument();
+                    if(doc instanceof SequenceDocument)
+                    {
+                        doc.removeTrack(trackId);
+                    }
                 }}
         });
         pane.onClick = function() {};

@@ -29,6 +29,7 @@ var appInfo = {
         serverPath: "../genomebrowser/",
         disablePerspectiveSelector : true,
         disableProjectSelector : true,
+        userProjectsPath: "Examples",
         skipLogin: true,
         build: "1"
         

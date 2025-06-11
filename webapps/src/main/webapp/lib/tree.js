@@ -749,18 +749,17 @@ function openDefaultPath( callback )
         callback (result);
     else
     {
-        var projectPath = getDefaultProjectDataPath();
-        if( projectPath )
-            callback(projectPath);
-        else
-        {
-            var defaultPath = appInfo.userProjectsPath;
-            getDataCollection(defaultPath).getElementInfoAt(0, function(info)
-        	{
-        		var path = info ? createPath(defaultPath, info.name) + "/Data" : defaultPath;
-                callback(path);
-        	});
-        }
+        queryBioUML("web/parameter", {"parameter_name": "defaultPath"}, 
+            function(data){
+                defaultPath = data.defaultPath;
+                getDataCollection(defaultPath).getElementInfoAt(0, function(info)
+                        {
+                            var path = info ? createPath(defaultPath, info.name) + "/Data" : defaultPath;
+                            callback(path);
+                        });
+            }, function (data){
+                // do nothing
+            });
     }
 }
 
