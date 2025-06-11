@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -138,6 +141,7 @@ public class EmblTrackTransformer extends AbstractTransformer<Entry, Track>
 
         TrackImpl track = new TrackImpl(entry.getName(), getTransformedCollection());
 
+        Map<String, AtomicInteger> prefix2id = new HashMap<>();
         for( int i = 0; i < resultSites.size(); i++ )
         {
             LocationParser.Site strSite = resultSites.get(i);
@@ -150,21 +154,18 @@ public class EmblTrackTransformer extends AbstractTransformer<Entry, Track>
             else if( strSite.fEndsAfter )
                 precision = Precision.PRECISION_CUT_RIGHT;
 
-            int id = 1;
             String newName = strSite.type;
-            StringBuffer strBuf = new StringBuffer(48);
-            while( track.contains(newName) )
+            String baseName = newName + "_";
+            String siteName;
+            if( prefix2id.containsKey( newName ) )
             {
-                int pos = strSite.name.lastIndexOf('_');
-                strBuf.delete(0, strBuf.length());
-                if( pos != -1 )
-                    strBuf.append(newName.substring(0, pos));
-                else
-                    strBuf.append(newName);
-                strBuf.append('_').append(id++);
-                newName = strBuf.toString();
+                siteName = baseName + prefix2id.get( newName ).incrementAndGet();
             }
-
+            else
+            {
+                siteName = newName;
+                prefix2id.put( newName, new AtomicInteger( 0 ) );
+            }
             /**@todo: This is a fixing for the following buck, the position of
              *  imported features where not given correctly.
              *  To fix this at this position in the code is not the optimal solution.
@@ -175,7 +176,7 @@ public class EmblTrackTransformer extends AbstractTransformer<Entry, Track>
             {
                 strSite.start = strSite.length + strSite.start - 1;
             }
-            ru.biosoft.bsa.Site site = new ru.biosoft.bsa.SiteImpl(null, newName, strSite.type, ru.biosoft.bsa.Site.BASIS_ANNOTATED,
+            ru.biosoft.bsa.Site site = new ru.biosoft.bsa.SiteImpl( null, siteName, strSite.type, ru.biosoft.bsa.Site.BASIS_ANNOTATED,
                     strSite.start, strSite.length, precision, strSite.strand, sequence, strSite.siteProperties);
 
             track.addSite(site);
