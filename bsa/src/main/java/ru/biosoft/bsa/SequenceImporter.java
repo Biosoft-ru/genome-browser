@@ -149,7 +149,11 @@ public class SequenceImporter implements DataElementImporter
             return new FastaSequenceCollection( origin, properties2 );
         }
         else
+        {
+            if( configDir == null )
+                properties2.setProperty( DataCollectionConfigConstants.CONFIG_PATH_PROPERTY, input.getParent() );
             return new GenbankSequenceCollection(origin, properties2 );
+        }
     }
 
     public static DataElement createElement(DataCollection<?> origin, String name, File input, String format) throws Exception
