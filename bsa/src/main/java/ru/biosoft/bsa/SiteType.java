@@ -81,4 +81,5 @@ public interface SiteType
     public static final String TYPE_VARIATION              = "variation";
     public static final String TYPE_INSERTION              = "insertion";
     public static final String TYPE_DELETION               = "deletion";
+    public static final String TYPE_NOT_SPECIFIED          = "not specified";
 }
