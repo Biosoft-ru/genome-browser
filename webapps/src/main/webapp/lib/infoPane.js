@@ -107,7 +107,7 @@ $(function() {
                 actionHandler(nodePath);
             });
         })(editAction.doAction);
-        block2.append(action2);
+        //block2.append(action2);
         
         var viewAction = new Action();
         viewAction.id = "info_view";
@@ -137,7 +137,7 @@ $(function() {
                 actionHandler(nodePath);
             });
         })(viewAction.doAction);
-        block2.append(action);
+        //block2.append(action);
         
         var templateBox = $('<select id="templateComboBox" class="ui-state-default" style="font-size: 10pt;float:right;"></select>');
         templateBox.width(150);
