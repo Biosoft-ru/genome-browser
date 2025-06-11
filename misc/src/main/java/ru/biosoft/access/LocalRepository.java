@@ -46,6 +46,7 @@ import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.ExProperties;
 import ru.biosoft.access.core.PluginEntry;
 import ru.biosoft.access.file.GenericFileDataCollection;
+import ru.biosoft.access.security.NetworkDataCollection;
 import ru.biosoft.util.entry.RegularFileEntry;
 
 /**
@@ -371,8 +372,7 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
             //if parent DC is protected and child is not protected we should protect it
             Properties protectedProperties = new Properties();
             protectedProperties.setProperty(DataCollectionConfigConstants.NAME_PROPERTY, properties.getProperty(DataCollectionConfigConstants.NAME_PROPERTY));
-            //TODO: commented, NetworkDataCollection, important - class not put in config
-            //protectedProperties.setProperty(DataCollectionConfigConstants.CLASS_PROPERTY, NetworkDataCollection.class.getName());
+            protectedProperties.setProperty( DataCollectionConfigConstants.CLASS_PROPERTY, NetworkDataCollection.class.getName() );
             protectedProperties.setProperty(DataCollectionConfigConstants.NEXT_CONFIG, propertiesFile.getName());
             if( path != null )
             {
