@@ -28,6 +28,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 
 import ru.biosoft.access.core.CloneableDataElement;
+import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.ImageDataElement;
@@ -128,6 +129,7 @@ public class ImageProvider extends WebProviderSupport
                 {
                     if( pathStr.contains("://") && !pathStr.startsWith("http") && !pathStr.startsWith("ftp") )
                     {
+
                         try
                         {
                             URL url = new URL(pathStr);
@@ -135,6 +137,19 @@ public class ImageProvider extends WebProviderSupport
                         }
                         catch( Exception e )
                         {
+                            //TODO: Workaround, was done by ImageConnection servlet in BioUML
+                            if( pathStr.startsWith( "image:///" ) )
+                            {
+                                try
+                                {
+                                    ImageElement de = ((ImageElement) CollectionFactory.getDataElement( pathStr.substring( 9 ) ));
+                                    image = de.getImage( null );
+                                }
+                                catch (Exception e1)
+                                {
+                                    e1.printStackTrace();
+                                }
+                            }
                         }
                     }
                     if( image == null )

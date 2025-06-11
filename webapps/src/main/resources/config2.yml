@@ -1,5 +1,4 @@
 repositories:
-- data/src/main/resources/repo
 - data/src/main/resources/databases
 - ../genome-browser-examples
 roots:
@@ -12,9 +11,6 @@ perspectives:
         priority: 0
         projectSelector: true
         repository:
-            - tab:
-                title: Repo Title
-                path: repo
             - tab:
                 title: Databases
                 path: databases
@@ -37,3 +33,5 @@ perspectives:
             name: test
 environment:
     ChrMappingPath: genome-browser-examples/ChrMapping
+    ServerPath: "../genomebrowser/"
+defaultPath: genome-browser-examples

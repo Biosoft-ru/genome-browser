@@ -92,6 +92,9 @@ public class BSAInitializer extends Initializer
         TemplateFilter BigWigTrackFilter = new TemplateFilter( "ru.biosoft.bsa.track.big.BigWigTrack", true, Collections.EMPTY_LIST, null );
         TemplateRegistry.registerTemplate( "BigWig track", "ru.biosoft.bsa.track.big.BigWigTrack", "ru/biosoft/bsa/track/big/resources/bigwig_track.vm", "BigWig track information",
                 false, 0, BigWigTrackFilter );
+
+        TemplateFilter matrixFilter = new TemplateFilter( "ru.biosoft.bsa.analysis.FrequencyMatrix", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "Matrix", "ru.biosoft.bsa.analysis.FrequencyMatrix", "ru/biosoft/bsa/resources/matrix.vm", "Weight matrix", false, 0, matrixFilter );
     }
 
     @Override protected void initProviders()

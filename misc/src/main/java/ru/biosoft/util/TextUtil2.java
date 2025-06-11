@@ -42,6 +42,7 @@ import com.developmentontheedge.beans.model.ComponentModel;
 import com.developmentontheedge.beans.model.Property;
 
 import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.support.SerializableAsText;
 import ru.biosoft.exception.InternalException;
 import ru.biosoft.exception.LoggedClassNotFoundException;
@@ -995,9 +996,12 @@ public class TextUtil2
         Pattern pattern = Pattern.compile("<img([^>]*) src=\"([^\"]+)\"");
         Matcher matcher = pattern.matcher(html);
         int start = 0;
+        Object serverPath = Environment.getValue( "ServerPath" );
+        String serverPathStr = serverPath != null ? (String) serverPath : "../biouml/";
         while ( matcher.find(start) )
         {
-            html = html.substring(0, matcher.start()) + "<img" + matcher.group(1) + " src=\"../biouml/web/img?id=" + (matcher.group(2).contains("://") ? "" : baseId)
+            html = html.substring( 0, matcher.start() ) + "<img" + matcher.group( 1 ) + " src=\"" + serverPathStr + "web/img?id="
+                    + (matcher.group( 2 ).contains( "://" ) ? "" : baseId)
                     + TextUtil2.encodeURL(StringEscapeUtils.unescapeHtml4(matcher.group(2))) + "\"" + html.substring(matcher.end());
             start = matcher.end();
             matcher = pattern.matcher(html);
