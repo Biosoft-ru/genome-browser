@@ -95,6 +95,9 @@ public class BSAInitializer extends Initializer
 
         TemplateFilter matrixFilter = new TemplateFilter( "ru.biosoft.bsa.analysis.FrequencyMatrix", true, Collections.EMPTY_LIST, null );
         TemplateRegistry.registerTemplate( "Matrix", "ru.biosoft.bsa.analysis.FrequencyMatrix", "ru/biosoft/bsa/resources/matrix.vm", "Weight matrix", false, 0, matrixFilter );
+
+        TemplateFilter fileTrackFilter = new TemplateFilter( "ru.biosoft.bsa.FileTrack", true, Collections.EMPTY_LIST, null );
+        TemplateRegistry.registerTemplate( "File track", "ru.biosoft.bsa.FileTrack", "ru/biosoft/bsa/resources/filetrack.vm", "File track information", false, 0, fileTrackFilter );
     }
 
     @Override protected void initProviders()

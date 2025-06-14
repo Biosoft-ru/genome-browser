@@ -1,0 +1,22 @@
+#macro( strField1 $name $label )
+	#if($name && !$name.toString().equals("") && !($name.toString()== "(none)"))
+		<b>$label</b>: $name <br>
+	#end
+#end
+
+#macro (trackOptions $track )
+    #set($trackoptions= $track.getTrackOptions())
+    #if (($trackoptions!="")&&($trackoptions!=$null))
+        #strField1($trackoptions.getSequenceCollection(), "Sequence collection")
+        #strField1($trackoptions.getChrMapping(), "Chromosome name mapping")
+    #end
+#end
+
+<html>
+	<body>
+		<h1>Track $de.getName()</h1>
+		#trackOptions($de)
+		#strField1($de.getAllSites().getSize(), "Site count")
+		#getDataCollectionProperties($de)
+	</body>
+</html>

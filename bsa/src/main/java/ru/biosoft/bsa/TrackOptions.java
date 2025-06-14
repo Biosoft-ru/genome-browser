@@ -19,6 +19,7 @@ public class TrackOptions
     private Track track;
     private GenomeSelector genomeSelector;
     private ChrNameMapping chrMapping;
+    private DataElementPath sequenceBase;
     protected ChrCache chrCache;
     private boolean autoChrMapping = false;
 
@@ -28,8 +29,8 @@ public class TrackOptions
         chrMapping = ChrNameMapping.getMapping(properties);
         if( properties.getProperty( ChrNameMapping.PROP_CHR_MAPPING ) == null )
             autoChrMapping = true;
-        DataElementPath seqBase = DataElementPath.create(properties.getProperty(Track.SEQUENCES_COLLECTION_PROPERTY));
-        chrCache = new ChrCache(seqBase);
+        sequenceBase = DataElementPath.create( properties.getProperty( Track.SEQUENCES_COLLECTION_PROPERTY ) );
+        chrCache = new ChrCache( sequenceBase );
         setGenomeSelector(new GenomeSelector(this.track));
     }
 
@@ -96,6 +97,11 @@ public class TrackOptions
             //            else
             //                TrackUtils.addTrackProperty(this, ChrNameMapping.PROP_CHR_MAPPING, null);
         }
+    }
+
+    public String getSequenceCollection()
+    {
+        return sequenceBase == null ? null : sequenceBase.toString();
     }
 
     @PropertyName("Genome (sequences collection)")
