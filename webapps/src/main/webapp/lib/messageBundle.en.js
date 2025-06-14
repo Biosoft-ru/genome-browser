@@ -599,6 +599,7 @@ var resourcesEN = {
     gbNextSite: "Scroll to the next site",
     gbPreviousSite: "Scroll to the previous site",
     gbSaveProjectDialogTitle: "Save view",
+    gbNoSequenceCollectionFound: "No sequences collection is set for the track. Please, open sequence and drug and drop track or set up sequence via track properties.",
     
     /* Table document (prefix: tbl) */
     tblButtonEdit: "Edit",

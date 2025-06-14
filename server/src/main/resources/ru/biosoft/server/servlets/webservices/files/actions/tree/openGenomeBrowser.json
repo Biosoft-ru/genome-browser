@@ -32,21 +32,7 @@
 		            }
 		            else
 		            {
-		                 createBeanEditorDialog('Configure genome for track', path, function(data) {
-		                    dc.invalidateCollection();
-		                    dc.getHtml(function(info)
-		                    {
-		                        $('#info_area').html(info);
-		                    });
-		                    dc.getBeanFields('genomeSelector/sequenceCollectionPath', function(beanDPS)
-							{
-								var genomeSelector = beanDPS.getValue('genomeSelector');
-								sequenceCollection = genomeSelector.getValue('sequenceCollectionPath');
-								if(sequenceCollection)
-		                        	fun(sequenceCollection);
-	                        })
-		                  }
-		                 , true);
+		                 logger.message(resources.gbNoSequenceCollectionFound);
 		            }
         		})
         	}
@@ -59,17 +45,7 @@
 	            }
 	            else
 	            {
-	                 createBeanEditorDialog('Configure genome for track', path, function(data) {
-	                    dc.invalidateCollection();
-	                    dc.getHtml(function(info)
-	                    {
-	                        $('#info_area').html(info);
-	                    });
-	                    sequenceCollection = dc.getAttributes()['SequencesCollection'];
-	                    if(sequenceCollection)
-	                        fun(sequenceCollection);
-	                  }
-	                 , true);
+	                 logger.message(resources.gbNoSequenceCollectionFound);
 	            }
             }
         }

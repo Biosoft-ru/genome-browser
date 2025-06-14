@@ -3,7 +3,7 @@
  */
 {
     id: "change_type_fdc",
-    label: "Change type",
+    label: "Change options",
     icon: "icons/edit.gif",
     visible: "function(completePath)
     {

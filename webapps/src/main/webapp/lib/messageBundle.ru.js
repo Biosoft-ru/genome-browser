@@ -711,6 +711,7 @@ var resourcesRU = {
     gbNextSite: "Перейти к следующему сайту",
     gbPreviousSite: "Перейти к предыдущему сайту",
     gbSaveProjectDialogTitle: "Сохранить вид",
+    gbNoSequenceCollectionFound: "Для данного трека не указан референсный геном. Пожалуйста, откройте геном браузер с подходящим геномом и перетащите на него трек, или установите геном в настройках трека.",
 
     /* Table document (prefix: tbl) */
     tblButtonEdit: "Редактировать",
