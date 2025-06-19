@@ -3,7 +3,7 @@
  */
 {
     id: "open_sequence",
-    label: "Open sequence",
+    label: resources.actTreeOpenSequence,
     icon: "icons/open.gif",
     visible: "function(completePath)
     {

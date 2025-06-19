@@ -633,6 +633,30 @@ var resourcesEN = {
          ["Contains sub-string (case-insensitive)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) >= 0})", "C:Column", "S:Sub-string"],
          ["Starts with sub-string (case-insensitive)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) == 0})", "C:Column", "S:Sub-string"]
          ],
+         
+    actTreeOpenTrack : "Open track",
+    actTreeChangeType: "Change options",
+    actTreeCopyFolder: "Copy folder",
+    actTreeExport : "Export",
+    actTreeEditCombinedTrack: "Edit combined track",
+    actTreeExpand: "Expand/collapse",
+    actTreeFind: "Find",
+    actTreeGitClone: "Git clone",
+    actTreeGitCommit: "Git commit",
+    actTreeGitPull: "Git pull",
+    actTreeGitPush: "Git push",
+    actTreeImport: "Import",
+    actTreeDownload: "Download file",
+    actTreeNewElement: "New element",
+    actTreeNewFolder: "New folder",
+    actTreeOpenMolecule: "Open molecule",
+    actTreeOpenSequence: "Open sequence",
+    actTreeOpenTable: "Open table",
+    actTreeOpenText: "Open text document",
+    actTreeRemove: "Remove",
+    actTreeRemovePrj: "Remove project",
+    actTreeSaveAs: "Save a copy",
+    actTreeSetCurrentPrj: "Set as current project",
     
     end: ""
 };

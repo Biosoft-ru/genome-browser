@@ -3,7 +3,7 @@
  */
 {
     id: "open_molecule",
-    label: "Open molecule",
+    label: resources.actTreeOpenMolecule,
 	icon: "icons/molecule.png",
     visible: "function(completePath)
     {

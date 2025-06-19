@@ -3,7 +3,7 @@
  */
 {
     id: "new_folder",
-    label: "New folder",
+    label: resources.actTreeNewFolder,
     icon: "icons/new_folder.gif",
     visible: "function(completePath)
     {

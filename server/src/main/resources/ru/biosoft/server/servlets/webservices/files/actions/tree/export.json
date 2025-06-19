@@ -3,7 +3,7 @@
  */
 {
     id: "export_element",
-    label: "Export",
+    label: resources.actTreeExport,
     icon: "icons/export.gif",
     multi: true,
     visible: "function(completePath)

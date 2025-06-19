@@ -3,7 +3,7 @@
  */
 {
     id: "import_element",
-    label: "Import",
+    label: resources.actTreeImport,
     icon: "icons/import.gif",
     visible: "function(completePath)
     {

@@ -3,7 +3,7 @@
  */
 {
     id: "save_folder_as",
-    label: "Copy folder",
+    label: resources.actTreeCopyFolder,
     icon: "icons/saveas.gif",
     visible: "function(completePath)
     {

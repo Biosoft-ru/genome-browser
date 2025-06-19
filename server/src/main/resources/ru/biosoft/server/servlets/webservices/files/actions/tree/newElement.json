@@ -3,7 +3,7 @@
  */
 {
     id: "new_element",
-    label: "New element",
+    label: resources.actTreeNewElement,
     icon: "icons/folder.png",
     visible: "function(completePath)
     {

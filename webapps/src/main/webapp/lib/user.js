@@ -22,6 +22,34 @@ function User()
             return;
         } 
         this.dialogDiv = $('<div title="'+resources.dlgLoginTitle+'"></div>');
+        if(appInfo.enableLocales && appInfo.enableLocales.length > 1)
+        {
+            var langStyle = '';
+            var langButton = '';
+            if( hasBioumlLocale( 'ru' ) )
+            {
+                langStyle = ' style="display: flex; justify-content: space-between;"';
+                var bioumlLocale = Cookies.getItem( 'bioumlLocale' ) ||
+                           navigator.language || navigator.userLanguage;                
+
+                if( bioumlLocale == 'ru' )
+                {
+                    langButton = '<span id="bioumlLanguageSelector" class="fg-button ui-state-default fg-button-icon-solo ui-corner-all" title="Switch to English language">'+
+                '<img class="fg-button-icon-span" src="icons/lang_en.png"></img></span>';
+                }
+                else
+                {
+                    langButton = '<span id="bioumlLanguageSelector" class="fg-button ui-state-default fg-button-icon-solo ui-corner-all" title="Переключиться на русский язык">'+
+                '<img class="fg-button-icon-span" src="icons/lang_ru.png"></img></span>';
+                }
+                var parentDiv = $("<div class=\"fg-buttonset \">");
+                var btn2 = $("<span class=\"fg-button ui-state-default fg-button-icon-solo ui-corner-all\" title=\"Stop selected tasks\"><img class=\"fg-button-icon-span\" src=\"icons/stopTask.gif\"></span>");
+                //this.dialogDiv.append(langButton);
+                parentDiv.append(langButton);
+                this.dialogDiv.append(parentDiv);
+            }
+        }
+                
         this.loginLabel = $('<p/>').text(resources.dlgLoginPrompt);
         if(!message) message = checkBrowserSupport();
         if(message)
@@ -39,6 +67,8 @@ function User()
         	var forgotPassword = $('<p><a target="_blank" href="' + appInfo.biostoreForgotPasswordLink + '">' + resources.dlgLoginForgotPassword + '</a></p>');
         	this.dialogDiv.append( forgotPassword );
         }
+        
+        
         if(appInfo.loginFormExtraMessage)
         {
             var extraMessage = $('<p></p>');
@@ -100,6 +130,25 @@ function User()
                 _this.submitLoginForm(appInfo.disableAnonymous || $('#login_username').val()!="");
             }
         });
+        
+        var langSel = $('#bioumlLanguageSelector');
+        if( langSel )
+        { 
+            langSel.click(function()
+            {
+                var bioumlLocale = Cookies.getItem( 'bioumlLocale' ) ||
+                           navigator.language || navigator.userLanguage;
+                if( bioumlLocale == 'ru' )
+                {
+                    setBioumlLocale( 'en' );
+                } 
+                else
+                {
+                    setBioumlLocale( 'ru' );
+                } 
+            });
+        }  
+                
     };
     
     this.login = function(user, pass, nonAnonymous)

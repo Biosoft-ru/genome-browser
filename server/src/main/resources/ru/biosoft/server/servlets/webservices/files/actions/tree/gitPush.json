@@ -1,6 +1,6 @@
 {
     id: "git_push",
-    label: "Git push",
+    label: resources.actTreeGitPush,
     icon: "icons/Git.png",
     visible: "function(completePath)
     {

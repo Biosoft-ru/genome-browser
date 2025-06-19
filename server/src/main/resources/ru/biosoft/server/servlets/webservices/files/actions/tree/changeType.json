@@ -3,7 +3,7 @@
  */
 {
     id: "change_type_fdc",
-    label: "Change options",
+    label: resources.actTreeChangeType,
     icon: "icons/edit.gif",
     visible: "function(completePath)
     {

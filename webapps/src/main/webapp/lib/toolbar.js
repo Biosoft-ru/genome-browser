@@ -449,6 +449,8 @@ function Action()
         {
             this.id = action.id;
             this.label = action.label;
+            if(action.label.startsWith("resources"))
+                this.label = eval(action.label);
             this.icon = action.icon;
             this.multi = action.multi;
             this.useOriginalPath = action.useOriginalPath;
@@ -515,8 +517,11 @@ function DynamicAction()
     {
         if (action.id) 
         {
+            
             this.id = action.id;
             this.label = action.label;
+            if(action.label.startsWith("resources"))
+                this.label = eval(action.label);
             this.icon = action.icon;
             this.acceptReadOnly = action.acceptReadOnly;
             this.numSelected = action.numSelected || this.selConstants.SELECTED_UNDEFINED;

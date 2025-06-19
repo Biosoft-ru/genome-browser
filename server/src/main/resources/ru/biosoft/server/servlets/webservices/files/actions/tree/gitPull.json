@@ -1,6 +1,6 @@
 {
     id: "git_pull",
-    label: "Git pull",
+    label: resources.actTreeGitPull,
     icon: "icons/Git.png",
     visible: "function(completePath)
     {

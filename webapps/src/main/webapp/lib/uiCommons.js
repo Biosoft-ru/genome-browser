@@ -628,24 +628,34 @@ function addDialogKeys(dialogDiv, inputField, okName, cancelName)
 // Necessary in jQueryUI 1.7.x as buttons are specified in hash, thus unsorted
 function sortButtons(dialogDiv)
 {
-	var buttonsOrder = ["Ok", "Import", "(default)", "Save", "View", "Add", "Remove", "Yes", "No", "Close", "Cancel"];
-	var buttonsPane = dialogDiv.parent().find(".ui-dialog-buttonpane");
-	var buttons = buttonsPane.children().sort(function(a,b)
-	{
-		var posA = -1, posB = -1, posDefault;
-		var textA = $(a).text();
-		var textB = $(b).text();
-		for(var i=0; i<buttonsOrder.length; i++)
-		{
-			if(buttonsOrder[i] == textA) posA = i;
-			if(buttonsOrder[i] == textB) posB = i;
-			if(buttonsOrder[i] == "(default)") posDefault = i;
-		}
-		if(posA == -1) posA = posDefault;
-		if(posB == -1) posB = posDefault;
-		return posA > posB ? -1 : posA < posB ? 1 : textA > textB ? -1 : textA < textB ? 1 : 0;
-	});
-	buttonsPane.append(buttons);
+    var bioumlLocale = Cookies.getItem( "bioumlLocale" ) || navigator.language || navigator.userLanguage;
+    var isRU = bioumlLocale == 'ru' && hasBioumlLocale( 'ru' );
+
+    var buttonsOrder = ["Ok", "Import", "(default)", "Save", "View", "Add", "Remove", "Yes", "No", "Close", "Cancel"];
+    var buttonsOrderRU = ["Ok", "Импорт", "(default)", "Сохранить", "Просмотр", "Добавить", "Удалить", "Да", "Нет", "Закрыть", "Отмена"];
+
+    if( isRU )
+    {
+        buttonsOrder = buttonsOrderRU; 
+    } 
+
+    var buttonsPane = dialogDiv.parent().find(".ui-dialog-buttonpane");
+    var buttons = buttonsPane.children().sort(function(a,b)
+    {
+        var posA = -1, posB = -1, posDefault;
+        var textA = $(a).text();
+        var textB = $(b).text();
+        for(var i=0; i<buttonsOrder.length; i++)
+        {
+            if(buttonsOrder[i] == textA) posA = i;
+            if(buttonsOrder[i] == textB) posB = i;
+            if(buttonsOrder[i] == "(default)") posDefault = i;
+        }
+        if(posA == -1) posA = posDefault;
+        if(posB == -1) posB = posDefault;
+        return posA > posB ? -1 : posA < posB ? 1 : textA > textB ? -1 : textA < textB ? 1 : 0;
+    });
+    buttonsPane.append(buttons);
 }
 
 //TODO: move this to better place

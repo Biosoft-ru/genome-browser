@@ -538,8 +538,11 @@ function addTreeItemContextMenu(element, className, customActions)
                         isActionAvailable(action.id) &&
                         action.isVisible(action.useOriginalPath?path:getTargetPath(path)) === true)
                 {
+                    var lbl = action.label;
+                    if(action.label.startsWith("resources"))
+                        lbl = eval(action.label);
                     curitems[action.id] = { 
-                            name: action.label,
+                            name: lbl,
                             icon: function(opt, $itemElement, itemKey, item){
                                 $itemElement.css("background-image", "url('"+action.icon+"')");
                                 return 'context-menu-icon-updated';
@@ -561,8 +564,11 @@ function addTreeItemContextMenu(element, className, customActions)
             {
                 if(custAct[key])
                 {
+                    var lbl = custAct[key].label;
+                    if(custAct[key].label.startsWith("resources"))
+                        lbl = eval(custAct[key].label);
                     curitems[key] = { 
-                        name: custAct[key].label,
+                        name: lbl,
                         icon: function(opt, $itemElement, itemKey, item){
                             $itemElement.css("background-image", "url('"+custAct[key].icon+"')");
                             return 'context-menu-icon-updated';

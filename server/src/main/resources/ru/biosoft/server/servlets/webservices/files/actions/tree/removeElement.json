@@ -3,7 +3,7 @@
  */
 {
     id: "remove_element",
-    label: "Remove",
+    label: resources.actTreeRemove,
     icon: "icons/remove_de.gif",
     multi: true,
     visible: "function(completePath)

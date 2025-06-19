@@ -1,6 +1,6 @@
 {
     id: "git_commit",
-    label: "Git commit",
+    label: resources.actTreeGitCommit,
     icon: "icons/Git.png",
     visible: "function(completePath)
     {

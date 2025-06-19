@@ -3,7 +3,7 @@
  */
 {
     id: "expand",
-    label: "Expand/collapse",
+    label: resources.actTreeExpand,
     icon: "icons/expand.gif",
     useOriginalPath: true,
     multi: true,

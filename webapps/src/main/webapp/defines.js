@@ -31,6 +31,7 @@ var appInfo = {
         disableProjectSelector : true,
         userProjectsPath: "Examples",
         skipLogin: true,
-        build: "1"
+        build: "1",
+        enableLocales: ["en","ru"]
         
 };

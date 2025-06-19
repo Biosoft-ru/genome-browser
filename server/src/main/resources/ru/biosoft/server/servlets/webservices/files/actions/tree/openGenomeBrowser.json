@@ -3,7 +3,7 @@
  */
 {
     id: "open_genome_browser",
-    label: "Open track",
+    label: resources.actTreeOpenTrack,
     icon: "icons/open.gif",
     visible: "function(completePath)
     {

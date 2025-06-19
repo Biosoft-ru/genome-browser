@@ -3,7 +3,7 @@
  */
 {
     id: "edit_properties",
-    label: "Edit combined track",
+    label: resources.actTreeEditCombinedTrack,
     icon: "icons/edit.gif",
     visible: "function(completePath)
     {

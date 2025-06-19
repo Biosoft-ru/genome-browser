@@ -3,7 +3,7 @@
  */
 {
     id: "remove_project",
-    label: "Remove project",
+    label: resources.actTreeRemovePrj,
     icon: "icons/remove_de.gif",
     visible: "function(completePath)
     {

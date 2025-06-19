@@ -3,7 +3,7 @@
  */
 {
     id: "open_table",
-    label: "Open table",
+    label: resources.actTreeOpenTable,
     icon: "icons/open.gif",
     multi: true,
     visible: "function(completePath)

@@ -1,7 +1,7 @@
 function initJSTreeActions()
 {
-    treeActions.push(new GenomeBrowserAction());
-    treeActions.push(new OpenSequenceAction());
+    //treeActions.push(new GenomeBrowserAction());
+    //treeActions.push(new OpenSequenceAction());
 }
 
 /*

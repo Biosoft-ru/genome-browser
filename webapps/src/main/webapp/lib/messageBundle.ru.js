@@ -711,7 +711,7 @@ var resourcesRU = {
     gbNextSite: "Перейти к следующему сайту",
     gbPreviousSite: "Перейти к предыдущему сайту",
     gbSaveProjectDialogTitle: "Сохранить вид",
-    gbNoSequenceCollectionFound: "Для данного трека не указан референсный геном. Пожалуйста, откройте геном браузер с подходящим геномом и перетащите на него трек, или установите геном в настройках трека.",
+    gbNoSequenceCollectionFound: "Для данного трека не указан референсный геном. Пожалуйста, откройте геномный браузер с подходящим геномом и перетащите на него трек, или установите геном в настройках трека.",
 
     /* Table document (prefix: tbl) */
     tblButtonEdit: "Редактировать",
@@ -745,6 +745,29 @@ var resourcesRU = {
              ["Содержит подстроку (без учета регистра)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) >= 0})", "C:Column", "S:Sub-string"],
              ["Начинается с подстроки (без учета регистра)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) == 0})", "C:Column", "S:Sub-string"]
             ],
+    actTreeOpenTrack : "Открыть трек",
+    actTreeChangeType: "Изменить настройки",
+    actTreeCopyFolder: "Скопировать папку",
+    actTreeExport : "Экспорт",
+    actTreeEditCombinedTrack: "Редактировать комбинированный трек",
+    actTreeExpand: "Развернуть/свернуть",
+    actTreeFind: "Найти",
+    actTreeGitClone: "Git clone",
+    actTreeGitCommit: "Git commit",
+    actTreeGitPull: "Git pull",
+    actTreeGitPush: "Git push",
+    actTreeImport: "Импорт",
+    actTreeDownload: "Скачать файл",
+    actTreeNewElement: "Новый элемент",
+    actTreeNewFolder: "Новая папка",
+    actTreeOpenMolecule: "Открыть молекулу",
+    actTreeOpenSequence: "Открыть последовательность",
+    actTreeOpenTable: "Открыть таблицу",
+    actTreeOpenText: "Открыть текст",
+    actTreeRemove: "Удалить",
+    actTreeRemovePrj: "Удалить проект",
+    actTreeSaveAs: "Сохранить как",
+    actTreeSetCurrentPrj: "Сделать проект текущим",
     
     end: ""
 };

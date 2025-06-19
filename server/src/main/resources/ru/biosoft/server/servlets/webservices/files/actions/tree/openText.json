@@ -3,7 +3,7 @@
  */
 {
     id: "open_text",
-    label: "Open text document",
+    label: resources.actTreeOpenText,
     icon: "icons/open.gif",
     multi: true,
     visible: "function(completePath)

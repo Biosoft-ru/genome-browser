@@ -3,7 +3,7 @@
  */
 {
     id: "find_element_fdc",
-    label: "Find",
+    label: resources.actTreeFind,
     icon: "icons/search.gif",
     visible: "function(completePath)
     {

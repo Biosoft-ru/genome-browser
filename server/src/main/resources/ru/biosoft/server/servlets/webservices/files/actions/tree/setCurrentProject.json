@@ -3,7 +3,7 @@
  */
 {
     id: "set_current_project",
-    label: "Set as current project",
+    label: resources.actTreeSetCurrentPrj,
     icon: "icons/ok.png",
     visible: "function(completePath)
     {

@@ -3,7 +3,7 @@
  */
 {
     id: "download_file",
-    label: "Download file",
+    label: resources.actTreeDownload,
 	icon: "icons/export.gif",
     visible: "function(completePath)
     {
