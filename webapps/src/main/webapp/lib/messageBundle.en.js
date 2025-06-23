@@ -438,6 +438,9 @@ var resourcesEN = {
     vpTracksTitle: "Tracks",
     vpTracksTrackOptions: "Options",
     
+    vpTrackFinderTitle: "Track finder",
+    vpTrackFinderNotAvailable: "Track finder is not available for current Sequence Document",
+    
     // Diagram-specific viewparts
     vpOverviewTitle: "Overview",
     

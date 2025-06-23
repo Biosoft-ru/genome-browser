@@ -429,7 +429,7 @@ function TracksViewPart()
 function TrackFinderViewPart()
 {
     this.tabId = "track.finder";
-    this.tabName = "Track finder";
+    this.tabName = resources.vpTrackFinderTitle;
 
     //DOM elements
     this.tabDiv;
@@ -449,6 +449,9 @@ function TrackFinderViewPart()
     {
         this.tabDiv = createViewPartContainer(this.tabId);
 
+        this.notAvailable = $('<div></div>').text(resources.vpTrackFinderNotAvailable);
+        this.tabDiv.append(this.notAvailable);
+                
         var tabContainerTable = $('<table border=0 width="100%" height="100%">'
         		+ '<tr><td width="400px" valign="top" id="properties"></td><td valign="top" id="search"></td></tr></table>');
         this.tabDiv.append(tabContainerTable);
@@ -463,6 +466,9 @@ function TrackFinderViewPart()
 
         this.propertyInspector = $('<div id="' + this.tabId + '_pi"></div>').css("margin", "5pt").text(resources.anLoading);
         propsContainer.append(this.propertyInspector);
+        
+        
+        //this.notAvailable.hide();
 
         this.searchStatus = $('<div></div>').appendTo(searchContainer);
 
@@ -478,8 +484,20 @@ function TrackFinderViewPart()
 
     this.initActions = function(toolbarBlock)
     {
-        this.runButton = createToolbarButton('Search', "simulate.gif", this.runSearch);
+        this.runButton = createDisabledToolbarButton('Search', "simulate.gif", this.runSearch);
         toolbarBlock.append(this.runButton);
+        
+        this.runButton.disable = function()
+        {
+            this.addClass('ui-state-disabled');
+            this.removeClass('ui-state-default');
+            
+        };
+        this.runButton.enable = function()
+        {
+            this.addClass('ui-state-default');
+            this.removeClass('ui-state-disabled');
+        };
     }
         
     this.isVisible = function(documentObject, callback)
@@ -527,10 +545,27 @@ function TrackFinderViewPart()
           viewpart.databaseSelect.append($('<option>')
            .text(databases[i])
            .val(databases[i]));
-        if(databases.length > 0) {
-          viewpart.databaseSelect.val(databases[0]);
-          viewpart.openProperties();
+        if(databases.length > 0) 
+        {
+            viewpart.databaseSelect.val(databases[0]);
+            viewpart.openProperties();
+            viewpart.databaseSelect.parent().show();
+            //viewpart.databaseSelect.show();
+            viewpart.notAvailable.hide();
+            viewpart.propertyInspector.hide();
+            if(viewpart.runButton)
+                viewpart.runButton.enable();
         }
+        else
+        {
+            viewpart.databaseSelect.parent().hide();
+            //viewpart.databaseSelect.hide();
+            viewpart.notAvailable.show();
+            viewpart.propertyInspector.hide();
+            if(viewpart.runButton)
+                viewpart.runButton.disable();
+        }
+        
       });
     };
 

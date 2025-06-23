@@ -549,6 +549,9 @@ var resourcesRU = {
 
     vpTracksTitle: "Треки",
     vpTracksTrackOptions: "Опции",
+    
+    vpTrackFinderTitle: "Поиск треков",
+    vpTrackFinderNotAvailable: "Поиск треков недоступен для данной последовательности",
 
     // Diagram-specific viewparts
     vpOverviewTitle: "Обзор",
