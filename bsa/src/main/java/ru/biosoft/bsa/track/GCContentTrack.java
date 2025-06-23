@@ -81,6 +81,11 @@ public class GCContentTrack extends DataElementSupport implements Track
         super(NAME, origin);
     }
 
+    public GCContentTrack(String name, DataCollection<?> origin)
+    {
+        super( name, origin );
+    }
+
     @Override
     public DataCollection<Site> getSites(String sequence, int from, int to)
     {

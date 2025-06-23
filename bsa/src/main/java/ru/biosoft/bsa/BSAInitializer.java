@@ -71,6 +71,9 @@ public class BSAInitializer extends Initializer
         TransformerRegistry.addTransformer("Frequency matrix", "ru.biosoft.bsa.transformer.WeightMatrixTransformer", "ru.biosoft.access.Entry", "ru.biosoft.bsa.analysis.FrequencyMatrix");
         TransformerRegistry.addTransformer("ChrNameMapping", "ru.biosoft.bsa.ChrNameMappingTransformer", "ru.biosoft.access.file.FileDataElement",
                 "ru.biosoft.bsa.ChrNameMapping");
+
+        TransformerRegistry.addTransformer( "GCContentFile", "ru.biosoft.bsa.transformer.GCContentFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.GCContentFileTrack" );
     }
 
     @Override protected void initTemplates()
@@ -157,6 +160,9 @@ public class BSAInitializer extends Initializer
                         "BigWig file" ) );
         FileTypeRegistry.register( new FileType( "CombinedTrack", new String[] { "comb" }, "ru.biosoft.bsa.transformer.CombinedTrackTransformer",
                 FileTypePriority.HIGH_PRIORITY, "Combined track file" ) );
+
+        FileTypeRegistry.register(
+                new FileType( "GCContent", new String[] { "gc" }, "ru.biosoft.bsa.transformer.GCContentFileTransformer", FileTypePriority.HIGH_PRIORITY, "GCContent file" ) );
     }
 
 
