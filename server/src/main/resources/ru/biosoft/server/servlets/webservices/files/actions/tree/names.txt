@@ -20,3 +20,4 @@ gitPull.json:Experimental
 gitCommit.json:Experimental
 gitPush.json:Experimental
 findElement.json
+openAlignmentViewer.json
