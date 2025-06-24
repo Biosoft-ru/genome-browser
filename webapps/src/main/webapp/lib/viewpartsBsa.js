@@ -74,7 +74,7 @@ function SitesViewPart()
     	this.trackSelector.val(this.selectedTrack);
     	var params = {
     		from: documentObject.from,
-    		to: documentObject.to,
+    		to: Math.min(documentObject.to, documentObject.sequenceStart + documentObject.sequenceLength - 1),
     		track: this.selectedTrack,
     		read: "true",
     		add_row_id: "true",

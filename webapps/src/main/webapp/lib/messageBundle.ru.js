@@ -41,7 +41,7 @@ var resourcesRU = {
         "Save document": "Сохранить документ",
         "Save a copy": "Сохранить копию",
         "Default": "По умолчанию",
-        "Detailed": "Детализированнай ыид",
+        "Detailed": "Детализированнай вид",
         "Overview": "Обзорный вид",
         "Semantic zoom in": "Семантическое увеличение",
         "Semantic zoom out": "Семантическое уменьшение",
@@ -277,6 +277,8 @@ var resourcesRU = {
     dlgCreateDiagramTypeDescription: "Описание типа диаграммы:",
     dlgCreateDiagramNoTypes: "Доступные типы диаграмм отсутствуют",
     dlgCreateDiagramDefaultName: "New diagram",
+    
+    dlgCreateGCTitle: "Создать трек нуклеотидного состава",
 
     dlgConvertDiagramTitle: "Преобразовать диаграмму",
     dlgConvertDiagramSuccess: "Диаграмма успешно преобразована",
@@ -748,6 +750,8 @@ var resourcesRU = {
              ["Содержит подстроку (без учета регистра)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) >= 0})", "C:Column", "S:Sub-string"],
              ["Начинается с подстроки (без учета регистра)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) == 0})", "C:Column", "S:Sub-string"]
             ],
+            
+    /* Tree actions */
     actTreeOpenTrack : "Открыть трек",
     actTreeChangeType: "Изменить настройки",
     actTreeCopyFolder: "Скопировать папку",
@@ -771,6 +775,9 @@ var resourcesRU = {
     actTreeRemovePrj: "Удалить проект",
     actTreeSaveAs: "Сохранить как",
     actTreeSetCurrentPrj: "Сделать проект текущим",
+    
+    /* Toolbar actions */
+    actToolbarGCTrack: "Создать GC трек",
     
     end: ""
 };

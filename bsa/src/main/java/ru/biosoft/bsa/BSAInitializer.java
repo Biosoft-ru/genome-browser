@@ -73,7 +73,7 @@ public class BSAInitializer extends Initializer
                 "ru.biosoft.bsa.ChrNameMapping");
 
         TransformerRegistry.addTransformer( "GCContentFile", "ru.biosoft.bsa.transformer.GCContentFileTransformer", "ru.biosoft.access.file.FileDataElement",
-                "ru.biosoft.bsa.track.GCContentFileTrack" );
+                "ru.biosoft.bsa.track.GCContentTrack" );
     }
 
     @Override protected void initTemplates()

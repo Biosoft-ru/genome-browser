@@ -166,6 +166,8 @@ var resourcesEN = {
     dlgCreateDiagramNoTypes: "No diagram types available",
     dlgCreateDiagramDefaultName: "New diagram",
     
+    dlgCreateGCTitle: "Create GC content track",
+    
     dlgConvertDiagramTitle: "Convert diagram",
     dlgConvertDiagramSuccess: "Diagram was successfully converted",
     
@@ -636,7 +638,8 @@ var resourcesEN = {
          ["Contains sub-string (case-insensitive)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) >= 0})", "C:Column", "S:Sub-string"],
          ["Starts with sub-string (case-insensitive)", "any($1,function(e){return e.toLowerCase().indexOf($2.toLowerCase()) == 0})", "C:Column", "S:Sub-string"]
          ],
-         
+     
+    /* Tree actions */     
     actTreeOpenTrack : "Open track",
     actTreeChangeType: "Change options",
     actTreeCopyFolder: "Copy folder",
@@ -660,6 +663,9 @@ var resourcesEN = {
     actTreeRemovePrj: "Remove project",
     actTreeSaveAs: "Save a copy",
     actTreeSetCurrentPrj: "Set as current project",
+    
+    /* Toolbar actions */
+    actToolbarGCTrack: "Create GC content track",
     
     end: ""
 };

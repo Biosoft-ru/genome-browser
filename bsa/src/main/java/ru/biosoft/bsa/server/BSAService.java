@@ -42,6 +42,7 @@ import ru.biosoft.bsa.project.Project;
 import ru.biosoft.bsa.project.ProjectAsLists;
 import ru.biosoft.bsa.project.Region;
 import ru.biosoft.bsa.project.TrackInfo;
+import ru.biosoft.bsa.track.GCContentTrack;
 //import ru.biosoft.bsa.track.big.BigBedTrack;
 //import ru.biosoft.bsa.track.big.BigTrack;
 //import ru.biosoft.bsa.track.big.BigWigTrack;
@@ -133,9 +134,11 @@ public class BSAService extends ServiceSupport
                 case BSAServiceProtocol.DB_SAVE_PROJECT:
                     sendSaveProject(request);
                     break;
-                //TODO: combined
                 case BSAServiceProtocol.CREATE_COMBINED_TRACK:
                     sendCreateCombinedTrack( request );
+                    break;
+                case BSAServiceProtocol.CREATE_GC_TRACK:
+                    sendCreateGCTrack( request );
                     break;
 
                 default:
@@ -711,6 +714,14 @@ public class BSAService extends ServiceSupport
         DataElementPath sequence = DataElementPath.create( getParam( request, BSAServiceProtocol.SEQUENCE_NAME ) );
         DataElementPath sequencesColPath = sequence != null ? sequence.getParentPath() : null;
         CombinedTrack result = CombinedTrack.createTrack( targetPath, tracksList, sequencesColPath );
+        targetPath.save( result );
+        request.send( "ok" );
+    }
+
+    private void sendCreateGCTrack(ServiceRequest request) throws Exception
+    {
+        DataElementPath targetPath = DataElementPath.create( getParam( request, BSAServiceProtocol.TARGET_PATH ) );
+        GCContentTrack result = new GCContentTrack( targetPath.getName(), targetPath.getParentCollection() );
         targetPath.save( result );
         request.send( "ok" );
     }
