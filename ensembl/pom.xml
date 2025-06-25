@@ -17,14 +17,6 @@
    <maven.compiler.target>17</maven.compiler.target>
  </properties>
  
- <repositories>
-    <repository>
-      <id>my-repo1</id>
-      <name>JEnsembl</name>
-      <url>https://jensembl.sourceforge.net/m2-repo/</url>
-    </repository>
-  </repositories>
-  
  <dependencies>
   <dependency>
     <groupId>ru.biosoft.genomebrowser</groupId>
