@@ -74,6 +74,9 @@ public class BSAInitializer extends Initializer
 
         TransformerRegistry.addTransformer( "GCContentFile", "ru.biosoft.bsa.transformer.GCContentFileTransformer", "ru.biosoft.access.file.FileDataElement",
                 "ru.biosoft.bsa.track.GCContentTrack" );
+
+        TransformerRegistry.addTransformer( "HICFile", "ru.biosoft.bsa.transformer.HICFileTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.bsa.track.hic.HICTrack" );
     }
 
     @Override protected void initTemplates()
@@ -163,6 +166,8 @@ public class BSAInitializer extends Initializer
 
         FileTypeRegistry.register(
                 new FileType( "GCContent", new String[] { "gc" }, "ru.biosoft.bsa.transformer.GCContentFileTransformer", FileTypePriority.HIGH_PRIORITY, "GCContent file" ) );
+        FileTypeRegistry
+                .register( new FileType( "HIC file", new String[] { "hic" }, "ru.biosoft.bsa.transformer.HICFileTransformer", FileTypePriority.HIGH_PRIORITY, "HIC matrix file" ) );
     }
 
 
