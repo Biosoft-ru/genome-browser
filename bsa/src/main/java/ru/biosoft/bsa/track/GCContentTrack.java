@@ -11,12 +11,14 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import ru.biosoft.access.core.AbstractDataCollection;
+import ru.biosoft.access.core.ClassIcon;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElementSupport;
 import ru.biosoft.access.core.VectorDataCollection;
 import ru.biosoft.bsa.AnnotatedSequence;
 import ru.biosoft.bsa.Interval;
 import ru.biosoft.bsa.Sequence;
+import ru.biosoft.bsa.SequenceFactory;
 import ru.biosoft.bsa.Site;
 import ru.biosoft.bsa.SiteImpl;
 import ru.biosoft.bsa.StrandType;
@@ -49,6 +51,7 @@ import com.developmentontheedge.beans.DynamicPropertySetAsMap;
  * @author lan
  *
  */
+@ClassIcon("resources/trackgc.png")
 public class GCContentTrack extends DataElementSupport implements Track
 {
     public static final String NAME = "GC content";
@@ -89,7 +92,7 @@ public class GCContentTrack extends DataElementSupport implements Track
     @Override
     public DataCollection<Site> getSites(String sequence, int from, int to)
     {
-        SubSequence seq = new SubSequence(sequence, from, to);
+        SubSequence seq = new SubSequence( sequence, from, to );
         int count = countSites(sequence, from, to);
         return count == 0 ? new VectorDataCollection<>( "Sites", Site.class, null ) : new GCContentCollection( seq, count );
     }
@@ -131,7 +134,7 @@ public class GCContentTrack extends DataElementSupport implements Track
             super("Sites", null, null);
             this.seq = seq.getCompletePath().getDataElement(AnnotatedSequence.class).getSequence();
             this.interval = seq.getInterval();
-            this.intervalList = interval.split(count);
+            this.intervalList = interval.split( count );
             this.nameList = new AbstractList<String>()
             {
                 @Override
