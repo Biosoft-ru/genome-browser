@@ -2,7 +2,7 @@
  * New folder action
  */
 {
-    id: "new_folder",
+    id: "new_gc_track",
     label: resources.actToolbarGCTrack,
     icon: "icons/trackgc.png",
     visible: "function(doc)
