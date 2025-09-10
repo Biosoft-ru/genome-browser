@@ -13,12 +13,12 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.util.TextUtil2;
 
 public class WebServletHandler
 {
 
-    private final static String docRoot = "/genomebrowser";
     private final String sessionId = "";
     private final static WebServicesServlet servlet = new WebServicesServlet();
     private final static SystemSession session = new SystemSession();
@@ -51,6 +51,8 @@ public class WebServletHandler
         //            return;
         //        }
         String target = request.getRequestURI();
+        Object docRootObj = Environment.getValue( "DocRoot" );
+        String docRoot = docRootObj != null ? docRootObj.toString() : "";
         if( !target.startsWith(docRoot) )
         {
             sendNotFound(response, target);

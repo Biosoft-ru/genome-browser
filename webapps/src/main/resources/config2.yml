@@ -34,4 +34,5 @@ perspectives:
 environment:
     ChrMappingPath: genome-browser-examples/ChrMapping
     ServerPath: "../genomebrowser/"
+    DocRoot: "/genomebrowser"
 defaultPath: genome-browser-examples
