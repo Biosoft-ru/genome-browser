@@ -5,7 +5,8 @@
         </dynamicPropertySet> 
     </property> 
     <property name="Global" type="com.developmentontheedge.beans.Preferences" display-name="Global" short-description="Global" hidden="true">
-        <dynamicPropertySet> 
+        <dynamicPropertySet>
+            <property name="IconsPath" type="java.lang.String" value="icons/" display-name="IconsPath" short-description="Server path to icons folder"/>
         </dynamicPropertySet> 
     </property> 
     <property name="Perspective" type="java.lang.String" value="Default" display-name="Perspective" short-description="Perspective" property-editor="biouml.workbench.perspective.PerspectiveSelector"/> 

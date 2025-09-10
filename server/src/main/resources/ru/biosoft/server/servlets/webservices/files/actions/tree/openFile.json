@@ -4,7 +4,7 @@
 {
     id: "download_file",
     label: resources.actTreeDownload,
-	icon: "icons/export.gif",
+	icon: "appInfo.iconsPath+'export.gif'",
     visible: "function(completePath)
     {
 		var path = getElementPath(completePath);

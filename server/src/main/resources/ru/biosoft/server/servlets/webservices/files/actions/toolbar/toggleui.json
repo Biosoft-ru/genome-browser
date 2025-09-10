@@ -4,7 +4,7 @@
 {
     id: "toggle_ui",
     label: "Toggle UI mode",
-    icon: "icons/toggleui.png",
+    icon: "appInfo.iconsPath+'toggleui.png'",
     visible: "function(doc)
     {
         if( perspective && perspective.name && 'Genome Enhancer' === perspective.name )

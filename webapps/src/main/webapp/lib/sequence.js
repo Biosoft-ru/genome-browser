@@ -1144,12 +1144,12 @@ function SequenceDocument(completeName, paramHash, customId)
         pane.waiterDiv = $('<div class="trackWaiter">&nbsp;</div>').hide();
         pane.updateTrackLabel(track.displayName);
         var scrollToDownSite = $('<span class="track-arrow-button"/>').attr("title", resources.gbPreviousSite)
-            .append($('<img class="track-arrow-button-img"/>').attr("src", "icons/plus_rtl.gif")).click(function()
+            .append($('<img class="track-arrow-button-img"/>').attr("src", appInfo.iconsPath+"plus_rtl.gif")).click(function()
         {
             _this.scrollToNextSite(track, "down");
         });
         var scrollToUpSite = $('<span class="track-arrow-button"/>').attr("title", resources.gbNextSite)
-            .append($('<img class="track-arrow-button-img"/>').attr("src", "icons/plus.gif")).click(function()
+            .append($('<img class="track-arrow-button-img"/>').attr("src", appInfo.iconsPath+"plus.gif")).click(function()
         {
             _this.scrollToNextSite(track, "up");
         });
@@ -1162,7 +1162,7 @@ function SequenceDocument(completeName, paramHash, customId)
         pane.labelDiv.attr("data-path", track.de);
         addTreeItemContextMenu(pane.labelDiv, 'tree-menu-sequence', {
             "open_genome_browser": false, 
-            "remove_from_view": {label: resources.menuRemoveFromView, icon: "icons/remove.gif", action: function(itemKey, options, originalEvent) 
+            "remove_from_view": {label: resources.menuRemoveFromView, icon: appInfo.iconsPath+"remove.gif", action: function(itemKey, options, originalEvent) 
                 {
                     var trackId = options.$trigger.attr("id").substring(6);
                     var doc = getActiveDocument();

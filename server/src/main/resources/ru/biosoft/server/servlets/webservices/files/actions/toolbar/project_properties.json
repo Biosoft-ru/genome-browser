@@ -4,7 +4,7 @@
 {
     id: "project_properties",
     label: "Project properties",
-    icon: "icons/projectProperties.gif",
+    icon: "appInfo.iconsPath+'projectProperties.gif'",
     visible: "function()
     {
         if(appInfo.disableToolbarActionProjectProperties === true)

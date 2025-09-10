@@ -4,7 +4,7 @@
 {
     id: "semantic_detailed",
     label: "Detailed",
-    icon: "icons/detailed.gif",
+    icon: "appInfo.iconsPath+'detailed.gif'",
     visible: "function(doc)
     {
     	if ((doc != null) && (doc instanceof SequenceDocument)) 

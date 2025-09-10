@@ -11,7 +11,7 @@ function GenomeBrowserAction () {
     var _this = this;
     this.id = "open_genome_browser",
     this.label = "Open track",
-    this.icon = "icons/open.gif",
+    this.icon = appInfo.iconsPath+"open.gif",
     
     this.isVisible = function(completePath)
     {
@@ -126,7 +126,7 @@ GenomeBrowserAction.prototype.doAction = function(path)
 function OpenSequenceAction () {
     this.id = "open_sequence";
     this.label ="Open sequence";
-    this.icon = "icons/open.gif";
+    this.icon = appInfo.iconsPath+"open.gif";
     this.multi = false;
     this.useOriginalPath = false;
     this.isVisible = function(completePath)

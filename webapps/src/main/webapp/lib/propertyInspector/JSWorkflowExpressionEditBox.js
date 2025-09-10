@@ -117,7 +117,7 @@ JSWorkflowExpressionEditBox.prototype.getTreeNodes = function(parentNode, callba
             };
             if(item.leaf)
             {
-                childNode.icon = 'icons/leaf.gif';
+                childNode.icon = appInfo.iconsPath + 'leaf.gif';
             } 
             elements.push(childNode);
         }

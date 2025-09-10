@@ -4,7 +4,7 @@
 {
     id: "login",
     label: "Log-in",
-    icon: "icons/login.png",
+    icon: "appInfo.iconsPath+'login.png'",
     visible: "function(doc)
     {
         if(isAnonymousSession)

@@ -4,7 +4,7 @@
 {
     id: "find_element_fdc",
     label: resources.actTreeFind,
-    icon: "icons/search.gif",
+    icon: "appInfo.iconsPath+'search.gif'",
     visible: "function(completePath)
     {
       if(!completePath) 

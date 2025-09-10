@@ -4,7 +4,7 @@
 {
     id: "remove_project",
     label: resources.actTreeRemovePrj,
-    icon: "icons/remove_de.gif",
+    icon: "appInfo.iconsPath+'remove_de.gif'",
     visible: "function(completePath)
     {
         var path = getElementPath(completePath);

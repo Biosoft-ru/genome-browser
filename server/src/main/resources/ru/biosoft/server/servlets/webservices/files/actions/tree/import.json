@@ -4,7 +4,7 @@
 {
     id: "import_element",
     label: resources.actTreeImport,
-    icon: "icons/import.gif",
+    icon: "appInfo.iconsPath+'import.gif'",
     visible: "function(completePath)
     {
         if( perspective && perspective.name && 'Genome Enhancer' === perspective.name )

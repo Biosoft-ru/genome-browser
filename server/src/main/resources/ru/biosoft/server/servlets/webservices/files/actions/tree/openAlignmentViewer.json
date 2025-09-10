@@ -4,7 +4,7 @@
 {
     id: "open_AlignView",
     label: "Open Alignment Viewer",
-	icon: "icons/sequence.png",
+	icon: "appInfo.iconsPath+'sequence.png'",
     visible: "function(completePath)
     {
 		var path = getElementPath(completePath);

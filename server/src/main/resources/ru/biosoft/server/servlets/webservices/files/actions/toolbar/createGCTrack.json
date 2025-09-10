@@ -4,7 +4,7 @@
 {
     id: "new_gc_track",
     label: resources.actToolbarGCTrack,
-    icon: "icons/trackgc.png",
+    icon: "appInfo.iconsPath+'trackgc.png'",
     visible: "function(doc)
     {
         if ((doc != null) && (doc instanceof SequenceDocument)) 

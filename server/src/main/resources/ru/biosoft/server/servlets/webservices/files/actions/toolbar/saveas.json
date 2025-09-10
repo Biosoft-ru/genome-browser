@@ -4,7 +4,7 @@
 {
     id: "save_document_as",
     label: "Save a copy",
-    icon: "icons/saveas.gif",
+    icon: "appInfo.iconsPath+'saveas.gif'",
     visible: "function(doc)
     {
         if(doc && doc.saveAs)

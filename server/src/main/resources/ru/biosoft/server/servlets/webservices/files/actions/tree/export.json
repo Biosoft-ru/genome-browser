@@ -4,7 +4,7 @@
 {
     id: "export_element",
     label: resources.actTreeExport,
-    icon: "icons/export.gif",
+    icon: "appInfo.iconsPath+'export.gif'",
     multi: true,
     visible: "function(completePath)
     {

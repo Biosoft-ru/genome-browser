@@ -388,10 +388,10 @@ instanceOf.parseClasses = function(result)
 
 function getNodeIcon(dc, name)
 {
-    var result = "url('icons/folder.png')";
+    var result = "url('"+appInfo.iconsPath + "folder.png')";
     if (dc == undefined || dc == null)
     {
-        return rootMap[name]?result:"url('icons/leaf.gif')";
+        return rootMap[name]?result:"url('"+appInfo.iconsPath + "leaf.gif')";
     }
     var icon = dc.getNodeIcon(name);
     if(icon != undefined)
@@ -404,29 +404,29 @@ function getNodeIcon(dc, name)
     switch(protection)
     {
     case 0:
-        return "url('icons/remoteNotProtectedDatabaseIcon.png')";
+        return "url('"+appInfo.iconsPath + "remoteNotProtectedDatabaseIcon.png')";
     case 1:
-        return "url('icons/remotePublicReadDatabaseIcon.png')";
+        return "url('"+appInfo.iconsPath + "remotePublicReadDatabaseIcon.png')";
     case 2:
         if(perm & 0x04) // write allowed
-            return "url('icons/remotePublicDatabaseIcon2.png')";
+            return "url('"+appInfo.iconsPath + "remotePublicDatabaseIcon2.png')";
         else
-            return "url('icons/remotePublicDatabaseIcon.png')";
+            return "url('"+appInfo.iconsPath + "remotePublicDatabaseIcon.png')";
     case 3:
         if (perm & 0x02) // read allowed
-            return "url('icons/remoteProtectedReadDatabaseIcon2.png')";
+            return "url('"+appInfo.iconsPath + "remoteProtectedReadDatabaseIcon2.png')";
         else
-            return "url('icons/remoteProtectedReadDatabaseIcon.png')";
+            return "url('"+appInfo.iconsPath + "remoteProtectedReadDatabaseIcon.png')";
     case 4:
         if (perm & 0x02) // read allowed
-            return "url('icons/remoteProtectedDatabaseIcon2.png')";
+            return "url('"+appInfo.iconsPath + "remoteProtectedDatabaseIcon2.png')";
         else
-            return "url('icons/remoteProtectedDatabaseIcon.png')";
+            return "url('"+appInfo.iconsPath + "remoteProtectedDatabaseIcon.png')";
     }
     var type = dc.getChildClass(name);
     if (!instanceOf(type,"ru.biosoft.access.core.DataCollection")) 
     {
-        result = "url('icons/leaf.gif')";
+        result = "url('"+appInfo.iconsPath + "leaf.gif')";
     }
     return result;
 }

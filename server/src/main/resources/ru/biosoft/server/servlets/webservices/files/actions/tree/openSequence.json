@@ -4,7 +4,7 @@
 {
     id: "open_sequence",
     label: resources.actTreeOpenSequence,
-    icon: "icons/open.gif",
+    icon: "appInfo.iconsPath+'open.gif'",
     visible: "function(completePath)
     {
 		var path = getElementPath(completePath);

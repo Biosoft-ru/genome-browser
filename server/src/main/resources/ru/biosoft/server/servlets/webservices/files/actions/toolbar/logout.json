@@ -4,7 +4,7 @@
 {
     id: "logout",
     label: "Log out",
-    icon: "icons/logout.gif",
+    icon: "appInfo.iconsPath+'logout.gif'",
     visible: "function(doc)
     {
         if(isAnonymousSession)

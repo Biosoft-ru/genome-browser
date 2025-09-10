@@ -4,7 +4,7 @@
 {
     id: "set_current_project",
     label: resources.actTreeSetCurrentPrj,
-    icon: "icons/ok.png",
+    icon: "appInfo.iconsPath+'ok.png'",
     visible: "function(completePath)
     {
         var path = getElementPath(completePath);

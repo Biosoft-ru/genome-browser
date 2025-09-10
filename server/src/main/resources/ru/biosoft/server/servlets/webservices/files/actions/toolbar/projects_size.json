@@ -4,7 +4,7 @@
 {
     id: "projects_size",
     label: "Occupied disk space",
-    icon: "icons/projectsSize.png",
+    icon: "appInfo.iconsPath+'projectsSize.png'",
     visible: "function()
     {
         if(appInfo.disableToolbarActionProjectProperties === true)

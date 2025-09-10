@@ -4,7 +4,7 @@
 {
     id: "shift_forward",
     label: "Shift forward",
-    icon: "icons/page_forward.gif",
+    icon: "appInfo.iconsPath+'page_forward.gif'",
     visible: "function(doc)
     {
     	if ((doc != null) && (doc instanceof SequenceDocument)) 

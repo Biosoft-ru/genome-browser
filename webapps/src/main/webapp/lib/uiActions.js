@@ -262,7 +262,7 @@ function createNewDiagram(path, name, callback, types)
     
     var dialogDiv = $('<div title="'+resources.dlgCreateDiagramTitle+'" id="new_diagram_dlg'+ rnd() + '">' + resources.dlgCreateDiagramName + '</div>');
     dialogDiv.append(dgrNode);
-    dialogDiv.append('<br/><br/>' + resources.dlgCreateDiagramType+' <span id="loading_dummy" ><img src="icons/busy.png"/>'+resources.commonLoading+'</span><div id="type_container"></div><br/><br/>'+
+    dialogDiv.append('<br/><br/>' + resources.dlgCreateDiagramType+' <span id="loading_dummy" ><img src="'+appInfo.iconsPath+'busy.png"/>'+resources.commonLoading+'</span><div id="type_container"></div><br/><br/>'+
     '<div id="type_description"></div><br/><br/>');
     this.loadingDummy = dialogDiv.find('#loading_dummy');
     this.typeContainer = dialogDiv.find('#type_container');

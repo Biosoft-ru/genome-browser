@@ -4,7 +4,7 @@
 {
     id: "new_element",
     label: resources.actTreeNewElement,
-    icon: "icons/folder.png",
+    icon: "appInfo.iconsPath+'folder.png'",
     visible: "function(completePath)
     {
 		var path = getElementPath(completePath);

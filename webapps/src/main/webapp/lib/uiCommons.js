@@ -6,7 +6,7 @@ function getIconUri(icon)
 {
     var pos = icon.indexOf("/");
     if(pos < 0)
-        return "icons/"+icon;
+        return appInfo.iconsPath+icon;
     if(pos == 0)
         return appInfo.serverPath+icon.substring(1);
     return icon.replace(/([\'\"\(\)\s])/g, '\\$1');

@@ -52,7 +52,7 @@ JSDataElementSelector.prototype.createDummy = function(parent)
 			title: "Loading..."
 		}
 	}, parent).addClass("treeitem-disabled");
-	dummy.children("a").get(0).style.backgroundImage = "url('icons/busy.png')";
+	dummy.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "busy.png')";
 	this.tree.close_branch(parent, true);
 	this.creatingItem = false;
 };

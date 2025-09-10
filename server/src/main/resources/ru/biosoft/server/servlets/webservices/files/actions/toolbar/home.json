@@ -4,7 +4,7 @@
 {
     id: "home",
     label: "Start page",
-    icon: "icons/home.gif",
+    icon: "appInfo.iconsPath+'home.gif'",
     visible: "function()
     {
         if( perspective && perspective.name && 'Genome Enhancer' === perspective.name )

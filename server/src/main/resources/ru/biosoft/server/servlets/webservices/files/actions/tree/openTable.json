@@ -4,7 +4,7 @@
 {
     id: "open_table",
     label: resources.actTreeOpenTable,
-    icon: "icons/open.gif",
+    icon: "appInfo.iconsPath+'open.gif'",
     multi: true,
     visible: "function(completePath)
     {

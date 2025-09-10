@@ -124,6 +124,7 @@ import ru.biosoft.util.ClassExtensionRegistry;
 import ru.biosoft.util.ColorUtils;
 import ru.biosoft.util.ControlCodeGenerator;
 import ru.biosoft.util.ObjectExtensionRegistry;
+import ru.biosoft.util.ServerPreferences;
 import ru.biosoft.util.TextUtil2;
 import ru.biosoft.util.Util;
 import ru.biosoft.util.j2html.tags.ContainerTag;
@@ -730,7 +731,7 @@ public class WebTablesProvider extends WebProviderSupport
             {
                 return p().withClass( "cellControl" ).attr( "style", "white-space:nowrap;" )
                     .with( input().withType( "text" ).withId( id ).withValue( value.toString() ),
-                            input().withType( "image" ).withSrc( "icons/edit.gif" ).withValue( "Edit" )
+                                input().withType( "image" ).withSrc( iconsPath + "edit.gif" ).withValue( "Edit" )
                             .attr( "onclick", "getExpressionDialog('" + id+ "', this);" ));
             }
             //TODO: commented, code related to Diagram classes
@@ -927,6 +928,7 @@ public class WebTablesProvider extends WebProviderSupport
     }
 
     protected static final DecimalFormat decFormat, expFormat;
+    private static final String iconsPath;
     static
     {
         DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols( Locale.US );
@@ -935,6 +937,7 @@ public class WebTablesProvider extends WebProviderSupport
         decFormat.setDecimalFormatSymbols( decimalFormatSymbols );
         expFormat = new DecimalFormat( "#.####E0" );
         expFormat.setDecimalFormatSymbols( decimalFormatSymbols );
+        iconsPath = ServerPreferences.getGlobalValue( "IconsPath", "icons/" );
     }
 
     public static Tag<?> getControlCode(Object value, boolean readOnly, String id, String path, ReferenceType type, boolean displayTitle)

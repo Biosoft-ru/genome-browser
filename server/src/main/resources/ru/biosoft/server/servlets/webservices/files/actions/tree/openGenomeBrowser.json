@@ -4,7 +4,7 @@
 {
     id: "open_genome_browser",
     label: resources.actTreeOpenTrack,
-    icon: "icons/open.gif",
+    icon: "appInfo.iconsPath+'open.gif'",
     visible: "function(completePath)
     {
     	if(!completePath) return -1;

@@ -4,7 +4,7 @@
 {
     id: "remove_element",
     label: resources.actTreeRemove,
-    icon: "icons/remove_de.gif",
+    icon: "appInfo.iconsPath+'remove_de.gif'",
     multi: true,
     visible: "function(completePath)
     {

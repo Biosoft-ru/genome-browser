@@ -4,7 +4,7 @@
 {
     id: "redo_in",
     label: "Redo",
-    icon: "icons/redo.gif",
+    icon: "appInfo.iconsPath+'redo.gif'",
     visible: "function(doc)
     {
     	if(doc && doc.redo) 

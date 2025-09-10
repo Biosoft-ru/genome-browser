@@ -4,7 +4,7 @@
 {
     id: "semantic_zoom_out",
     label: "Semantic zoom out",
-    icon: "icons/semanticzoomout.gif",
+    icon: "appInfo.iconsPath+'semanticzoomout.gif'",
     visible: "function(doc)
     {
     	if ((doc != null) && (doc instanceof SequenceDocument)) 

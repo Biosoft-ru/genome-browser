@@ -4,7 +4,7 @@
 {
     id: "import_document",
     label: "Import",
-    icon: "icons/import.gif",
+    icon: "appInfo.iconsPath+'import.gif'",
     visible: "function()
     {
     	if( perspective && perspective.name && 'Genome Enhancer' === perspective.name )

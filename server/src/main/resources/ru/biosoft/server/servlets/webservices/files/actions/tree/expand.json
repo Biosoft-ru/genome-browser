@@ -4,7 +4,7 @@
 {
     id: "expand",
     label: resources.actTreeExpand,
-    icon: "icons/expand.gif",
+    icon: "appInfo.iconsPath+'expand.gif'",
     useOriginalPath: true,
     multi: true,
     visible: "function(completePath)

@@ -1,7 +1,7 @@
 {
     id: "git_clone",
     label: resources.actTreeGitClone,
-    icon: "icons/Git.png",
+    icon: "appInfo.iconsPath+'Git.png'",
     visible: "function(completePath)
     {
         var path = getElementPath(completePath);

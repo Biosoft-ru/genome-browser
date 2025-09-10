@@ -4,7 +4,7 @@
 {
     id: "save_element_as",
     label: resources.actTreeSaveAs,
-    icon: "icons/saveas.gif",
+    icon: "appInfo.iconsPath+'saveas.gif'",
     visible: "function(completePath)
     {
         var clazz = getElementClass(completePath);

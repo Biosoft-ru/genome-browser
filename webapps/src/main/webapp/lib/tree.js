@@ -1016,12 +1016,12 @@ function ProtectionStatusCallback(node)
     {
         if (type == 0) 
         {
-            node.children("a").get(0).style.backgroundImage = "url('icons/remoteNotProtectedDatabaseIcon.png')";
+            node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remoteNotProtectedDatabaseIcon.png')";
         }
         else 
             if (type == 1) 
             {
-                node.children("a").get(0).style.backgroundImage = "url('icons/remotePublicReadDatabaseIcon.png')";
+                node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remotePublicReadDatabaseIcon.png')";
             }
             else if (type == 2 || type == 3 || type == 4) 
             { 
@@ -1032,25 +1032,25 @@ function ProtectionStatusCallback(node)
                     if (_type == 2) 
                     {
                         if(perm == 0)
-                            node.children("a").get(0).style.backgroundImage = "url('icons/remotePublicDatabaseIcon2.png')";
+                            node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remotePublicDatabaseIcon2.png')";
                         else
-                            node.children("a").get(0).style.backgroundImage = "url('icons/remotePublicDatabaseIcon.png')";
+                            node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remotePublicDatabaseIcon.png')";
                     }
                     else 
                         if (_type == 3) 
                         {
                             if (perm == 0) 
-                                node.children("a").get(0).style.backgroundImage = "url('icons/remoteProtectedReadDatabaseIcon2.png')";
+                                node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remoteProtectedReadDatabaseIcon2.png')";
                             else
-                                node.children("a").get(0).style.backgroundImage = "url('icons/remoteProtectedReadDatabaseIcon.png')";
+                                node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remoteProtectedReadDatabaseIcon.png')";
                         }
                         else 
                             if (_type == 4) 
                             {
                                 if(perm == 0)
-                                    node.children("a").get(0).style.backgroundImage = "url('icons/remoteProtectedDatabaseIcon2.png')";
+                                    node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remoteProtectedDatabaseIcon2.png')";
                                 else
-                                    node.children("a").get(0).style.backgroundImage = "url('icons/remoteProtectedDatabaseIcon.png')";
+                                    node.children("a").get(0).style.backgroundImage = "url('"+appInfo.iconsPath + "remoteProtectedDatabaseIcon.png')";
                             }
                 });
             }

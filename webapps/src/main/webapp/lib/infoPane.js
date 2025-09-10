@@ -63,7 +63,7 @@ $(function() {
         var editAction = new Action();
         editAction.id = "info_edit";
         editAction.label = resources.commonTooltipEditElementInfo;
-        editAction.icon = "icons/edit.gif";
+        editAction.icon = appInfo.iconsPath+"edit.gif";
         editAction.isVisible = function(path)
         {
             if (BioUML.selection.lastSelected != null) 
@@ -112,7 +112,7 @@ $(function() {
         var viewAction = new Action();
         viewAction.id = "info_view";
         viewAction.label = resources.commonTooltipViewElementInfo;
-        viewAction.icon = "icons/view.gif";
+        viewAction.icon = appInfo.iconsPath+"view.gif";
         viewAction.isVisible = function(path)
         {
             if (BioUML.selection.lastSelected != null) 

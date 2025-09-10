@@ -4,7 +4,7 @@
 {
     id: "help",
     label: "Help",
-    icon: "icons/help.gif",
+    icon: "appInfo.iconsPath+'help.gif'",
     visible: "function()
     {
     	if( perspective && perspective.name && ('Genome Enhancer' === perspective.name) )

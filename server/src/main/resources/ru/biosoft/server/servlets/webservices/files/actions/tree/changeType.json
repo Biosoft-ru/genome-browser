@@ -4,7 +4,7 @@
 {
     id: "change_type_fdc",
     label: resources.actTreeChangeType,
-    icon: "icons/edit.gif",
+    icon: "appInfo.iconsPath+'edit.gif'",
     visible: "function(completePath)
     {
       if(!completePath) return -1;

@@ -292,7 +292,7 @@ function updateToolbar()
         action.attr("data-path", path).attr("title", path);
         createTreeItemDraggable(action);
         addTreeItemContextMenu(action, 'tree-menu-toolbar', {
-        	'remove_toolbar_item': {label: resources.menuRemoveFromUserToolbar, icon: "icons/remove.gif", action: function(itemKey, options, originalEvent)
+        	'remove_toolbar_item': {label: resources.menuRemoveFromUserToolbar, icon: appInfo.iconsPath+"remove.gif", action: function(itemKey, options, originalEvent)
     		{
     			var path = options.$trigger.attr("data-path");
 	        	for(var i in userToolbarActions)
@@ -452,6 +452,8 @@ function Action()
             if(action.label.startsWith("resources"))
                 this.label = eval(action.label);
             this.icon = action.icon;
+            if(action.icon.startsWith("appInfo"))
+                this.icon = eval(action.icon);
             this.multi = action.multi;
             this.useOriginalPath = action.useOriginalPath;
             this.isVisible = evalFunction(action.visible, function(){return -1;});

@@ -1078,12 +1078,12 @@ function SearchResultViewPart()
     {
         if (_this.fullMode == true) 
         {
-            _this.fullModeAction.children('span').css('background-image', 'url(icons/fullMode.gif)');
+            _this.fullModeAction.children('span').css('background-image', "url('" + appInfo.iconsPath + "fullMode.gif')");
             _this.fullMode = false;
         }
         else 
         {
-            _this.fullModeAction.children('span').css('background-image', 'url(icons/fullMode2.gif)');
+            _this.fullModeAction.children('span').css('background-image', "url('" + appInfo.iconsPath + "fullMode2.gif')");
             _this.fullMode = true;
         }
         _this.updateData();

@@ -35,15 +35,15 @@ function User()
                 if( bioumlLocale == 'ru' )
                 {
                     langButton = '<span id="bioumlLanguageSelector" class="fg-button ui-state-default fg-button-icon-solo ui-corner-all" title="Switch to English language">'+
-                '<img class="fg-button-icon-span" src="icons/lang_en.png"></img></span>';
+                '<img class="fg-button-icon-span" src="'+appInfo.iconsPath+'lang_en.png"></img></span>';
                 }
                 else
                 {
                     langButton = '<span id="bioumlLanguageSelector" class="fg-button ui-state-default fg-button-icon-solo ui-corner-all" title="Переключиться на русский язык">'+
-                '<img class="fg-button-icon-span" src="icons/lang_ru.png"></img></span>';
+                '<img class="fg-button-icon-span" src="'+appInfo.iconsPath+'lang_ru.png"></img></span>';
                 }
                 var parentDiv = $("<div class=\"fg-buttonset \">");
-                var btn2 = $("<span class=\"fg-button ui-state-default fg-button-icon-solo ui-corner-all\" title=\"Stop selected tasks\"><img class=\"fg-button-icon-span\" src=\"icons/stopTask.gif\"></span>");
+                var btn2 = $("<span class=\"fg-button ui-state-default fg-button-icon-solo ui-corner-all\" title=\"Stop selected tasks\"><img class=\"fg-button-icon-span\" src=\""+appInfo.iconsPath+"stopTask.gif\"></span>");
                 //this.dialogDiv.append(langButton);
                 parentDiv.append(langButton);
                 this.dialogDiv.append(parentDiv);
