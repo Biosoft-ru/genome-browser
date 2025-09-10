@@ -21,21 +21,6 @@ public class YAMLPerspective implements Perspective
 {
     private static Logger log = Logger.getLogger( YAMLPerspective.class.getName() );
 
-    private static final String IMPORTERS_ATTR = "importers";
-    private static final String EXPORTERS_ATTR = "exporters";
-    private static final String VIEWPARTS_ATTR = "viewparts";
-    private static final String TAB_ATTR = "tab";
-    private static final String REPOSITORY_ATTR = "repository";
-    private static final String MESSAGEBUNDLE_ATTR = "messageBundle";
-    private static final String PRIORITY_ATTR = "priority";
-    private static final String NAME_ATTR = "name";
-    private static final String INTRO_ATTR = "intro";
-    private static final String ACTIONS_ATTR = "actions";
-    private static final String PROJECTSELECTOR_ATTR = "projectSelector";
-    private static final String TEMPLATE_ATTR = "template";
-    private static final String HIDEDIAGRAMPANEL_ATTR = "hideDiagramPanel";
-    private static final String CLOSEONLYONSESSIONEXPIRE_ATTR = "closeOnlyOnSessionExpire";
-
     private final String title;
     private final List<RepositoryTabInfo> tabInfo = new ArrayList<>();
     private final List<Rule> viewPartRules = new ArrayList<>();
@@ -51,31 +36,6 @@ public class YAMLPerspective implements Perspective
     private String defaultTemplate = null;
     private boolean hideDiagramPanel = false;
     private boolean closeOnlyOnSessionExpire = false;
-
-    /*
-     * <extension point="biouml.workbench.perspective"> <perspective
-     * name="Genome Enhancer" priority="30" intro="intro-genomeenhancer"
-     * projectSelector="false"> <repository> <tab title="GenomeEnhancer"
-     * path="GenomeEnhancer" virtual="true"/> </repository> <viewparts> <deny
-     * id="search.graph"/> <deny id="common.clipboard"/> <deny id="script.*"/>
-     * <deny id="common.log"/> </viewparts> <actions> <deny
-     * id="Apply antimony"/> <deny id="Change port"/> <deny id="Clone node"/>
-     * <deny id="Merge clone"/> <deny id="Fix in compartment"/> <deny
-     * id="Adjust reactions nodes"/> <deny id="Change Subdiagram"/> <deny
-     * id="combine_tracks"/> <deny id="rename_project"/> </actions> <importers>
-     * <deny id="*"/> <allow id="biouml.plugins.genomeenhancer.importer.*" />
-     * <allow id="ru.biosoft.access.ZipFileImporter" /> <allow
-     * id="ru.biosoft.access.TextFileImporter" /> <allow
-     * id="ru.biosoft.bsa.SequenceImporter" /> <allow
-     * id="ru.biosoft.bsa.SequenceImporter" /> <allow
-     * id="ru.biosoft.access.FileImporter" /> <allow
-     * id="ru.biosoft.bsa.SequenceImporter" /> <allow
-     * id="com.genexplain.analyses.CELFilesImporter" /> <allow
-     * id="com.genexplain.analyses.AgilentFilesImporter" /> <allow
-     * id="com.genexplain.analyses.IlluminaFilesImporter" /> <allow
-     * id="ru.biosoft.access.html.HtmlToPDFExporter" /> </importers>
-     * </perspective> </extension>
-     */
 
     public YAMLPerspective(LinkedHashMap<String, Object> element)
     {

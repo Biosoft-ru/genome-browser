@@ -1,12 +1,7 @@
 package biouml.workbench.perspective;
 
 import java.util.Map;
-
-//import org.eclipse.core.runtime.IConfigurationElement;
 import org.json.JSONObject;
-
-//import com.eclipsesource.json.JsonObject;
-
 import ru.biosoft.access.core.DataElementPath;
 
 /**
@@ -37,7 +32,7 @@ public class RepositoryTabInfo
 
     }
 
-    protected RepositoryTabInfo(Map<String, Object> tab)
+    public RepositoryTabInfo(Map<String, Object> tab)
     {
         this.title = (String) tab.get(TITLE_ATTR);
         this.helpId = (String) tab.get(HELP_ID_ATTR);
@@ -46,17 +41,6 @@ public class RepositoryTabInfo
         this.virtualTab = (Boolean) tab.getOrDefault(VIRTUAL_ATTR, false);
     }
 
-    //    protected RepositoryTabInfo(IConfigurationElement tab)
-    //    {
-    //        this.title = tab.getAttribute(TITLE_ATTR);
-    //        this.rootPath = DataElementPath.create(tab.getAttribute(PATH_ATTR));
-    //        String databasesTabStr = tab.getAttribute(DATABASES_ATTR);
-    //        this.databasesTab = databasesTabStr != null && databasesTabStr.equalsIgnoreCase("true");
-    //        String virtualTabStr = tab.getAttribute( VIRTUAL_ATTR );
-    //        this.virtualTab = virtualTabStr != null && virtualTabStr.equalsIgnoreCase( "true" );
-    //        this.helpId = tab.getAttribute(HELP_ID_ATTR);
-    //    }
-    
     /**
      * @return the human-readable title of the tab
      */

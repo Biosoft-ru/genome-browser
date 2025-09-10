@@ -10,6 +10,21 @@ import org.json.JSONObject;
  */
 public interface Perspective
 {
+    public static final String IMPORTERS_ATTR = "importers";
+    public static final String EXPORTERS_ATTR = "exporters";
+    public static final String VIEWPARTS_ATTR = "viewparts";
+    public static final String TAB_ATTR = "tab";
+    public static final String REPOSITORY_ATTR = "repository";
+    public static final String MESSAGEBUNDLE_ATTR = "messageBundle";
+    public static final String PRIORITY_ATTR = "priority";
+    public static final String NAME_ATTR = "name";
+    public static final String INTRO_ATTR = "intro";
+    public static final String ACTIONS_ATTR = "actions";
+    public static final String PROJECTSELECTOR_ATTR = "projectSelector";
+    public static final String TEMPLATE_ATTR = "template";
+    public static final String HIDEDIAGRAMPANEL_ATTR = "hideDiagramPanel";
+    public static final String CLOSEONLYONSESSIONEXPIRE_ATTR = "closeOnlyOnSessionExpire";
+
     /**
      * @return user-readable title
      */
