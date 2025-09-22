@@ -13,11 +13,12 @@ import biouml.plugins.server.access.ClientDataCollection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.biosoft.access.ClassLoading;
+//import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.exception.LoggedException;
 import ru.biosoft.access.exception.BiosoftNetworkException;
 import ru.biosoft.access.core.DataElementReadException;
@@ -76,7 +77,7 @@ public class ConnectionPool
     		if( pluginNames == null )
     			connectionClass = (Class<? extends ClientConnection>) Class.forName(connectionClassName);
     		else 
-    			connectionClass = ClassLoading.loadSubClass( connectionClassName, pluginNames, ClientConnection.class );
+                connectionClass = Environment.loadClass( connectionClassName, pluginNames, ClientConnection.class );
     		
     		conn = getConnection(connectionClass, url);
     	}

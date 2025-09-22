@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import ru.biosoft.access.file.AbstractFileTransformer;
-import ru.biosoft.access.ClassLoading;
+//import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.file.FileBasedCollection;
 import ru.biosoft.access.core.FolderCollection;
@@ -17,6 +17,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementCreateException;
 import ru.biosoft.access.core.DataElementInvalidTypeException;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.RepositoryAccessDeniedException;
 import ru.biosoft.access.core.Transformer;
 import ru.biosoft.access.exception.DataElementExistsException;
@@ -95,7 +96,7 @@ public class ClientGenericDataCollection extends ClientDataCollection<DataElemen
 		}
     	
         String transformerClass = descriptor.getProperty( DataElementFileTypeDriver.TRANSFORMER_CLASS );
-        Transformer transformer = (ClassLoading.loadSubClass(transformerClass, Transformer.class)).newInstance();
+        Transformer transformer = (Environment.loadClass( transformerClass, Transformer.class )).newInstance();
         if(transformer instanceof AbstractFileTransformer)
         {
             return (DataElement) ( (AbstractFileTransformer)transformer ).load( file, name, this );

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
@@ -66,7 +66,7 @@ public class EnsemblSequenceSetsCollection extends ReadOnlyVectorCollection<SqlD
             properties.setProperty( DataCollectionConfigConstants.CLASS_PROPERTY, EnsemblSequenceCollection.class.getName() );
             properties.setProperty(DataCollectionConfigConstants.DATA_ELEMENT_CLASS_PROPERTY, AnnotatedSequence.class.getName());
             properties.setProperty(SqlDataCollection.SQL_TRANSFORMER_CLASS, EnsemblSequenceTransformer.class.getName());
-            String pluginId = ClassLoading.getPluginForClass( getClass() );
+            String pluginId = Environment.getPluginForClass( getClass() );
             if(pluginId != null)
                 properties.setProperty( DataCollectionConfigConstants.PLUGINS_PROPERTY, pluginId );
 

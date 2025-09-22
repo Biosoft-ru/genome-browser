@@ -36,7 +36,7 @@ import org.json.JSONObject;
 //import biouml.model.Module;
 //import biouml.model.util.ModulePackager;
 import one.util.streamex.EntryStream;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.FolderCollection;
@@ -238,7 +238,7 @@ public class AccessService extends AccessProtocol implements Service
             {
                 for( String className : TextUtil2.split( classNames, ',' ) )
                 {
-                    Class<?> clazz = ClassLoading.loadClass( className );
+                    Class<?> clazz = Environment.loadClass( className );
                     classMap.put( clazz, new HashSet<Class<?>>() );
                     toAdd.add( clazz );
                 }
@@ -312,9 +312,9 @@ public class AccessService extends AccessProtocol implements Service
             String referenceTypeName = request.get(AccessProtocol.REFERENCE_TYPE_NAME);
             boolean extended = Boolean.parseBoolean(request.get(AccessProtocol.KEY_EXTENDED));
             Class<? extends DataElement> childClass = TextUtil2.isEmpty(childClassName) ? null
-                    : (Class<? extends DataElement>)ClassLoading.loadClass( childClassName );
+                    : (Class<? extends DataElement>) Environment.loadClass( childClassName );
             Class<? extends DataElement> elementClass = TextUtil2.isEmpty(elementClassName) ? null
-                    : (Class<? extends DataElement>)ClassLoading.loadClass( elementClassName );
+                    : (Class<? extends DataElement>) Environment.loadClass( elementClassName );
             Class<? extends ReferenceType> referenceType = TextUtil2.isEmpty(referenceTypeName) ? null
                     : ReferenceTypeRegistry.getReferenceType(referenceTypeName).getClass();
             int from = request.getInt(AccessProtocol.KEY_FROM, -1);
@@ -1238,7 +1238,7 @@ public class AccessService extends AccessProtocol implements Service
                 try
                 {
                     String className = request.get(AccessProtocol.CLASS_NAME);
-                    Class<? extends FolderCollection> clazz = className == null ? FolderCollection.class : ClassLoading.loadSubClass(
+                    Class<? extends FolderCollection> clazz = className == null ? FolderCollection.class : Environment.loadClass(
                             className, FolderCollection.class );
                     DataCollectionUtils.createSubCollection( DataElementPath.create( dc, de ),
                             DataCollectionUtils.CreateStrategy.REMOVE_WRONG_TYPE, clazz );

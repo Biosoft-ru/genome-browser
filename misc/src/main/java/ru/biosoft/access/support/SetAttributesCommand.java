@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetSerializer;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.util.TextUtil2;
 
 public class SetAttributesCommand implements TagCommand
@@ -101,8 +101,8 @@ public class SetAttributesCommand implements TagCommand
             DynamicPropertySet dps = (DynamicPropertySet)readMethod.invoke(obj);
             cleanDPS(dps);
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(ClassLoading.getClassLoader());
-            dpss.load(dps, is, ClassLoading.getClassLoader());
+            Thread.currentThread().setContextClassLoader( Environment.getClassLoader() );
+            dpss.load( dps, is, Environment.getClassLoader() );
             Thread.currentThread().setContextClassLoader(cl);
         }
         catch( Exception e )

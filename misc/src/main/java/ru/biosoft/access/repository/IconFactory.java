@@ -13,7 +13,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.ClassIcon;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
@@ -22,7 +22,6 @@ import ru.biosoft.access.core.DataElementDescriptor;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.biohub.ReferenceType;
 import ru.biosoft.access.biohub.ReferenceTypeRegistry;
-//import ru.biosoft.gui.Document;
 import ru.biosoft.util.ApplicationUtils;
 
 public class IconFactory
@@ -94,7 +93,7 @@ public class IconFactory
             {
                 if(annotation instanceof ClassIcon)
                 {
-                    String resource = ClassLoading.getResourceLocation( curClass, ( (ClassIcon)annotation ).value() );
+                    String resource = Environment.getResourceLocation( curClass, ((ClassIcon) annotation).value() );
                     iconIdCache.put(clazz, resource);
                     return resource;
                 }

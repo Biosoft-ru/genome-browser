@@ -3,8 +3,6 @@ package ru.biosoft.access.repository;
 import java.beans.IntrospectionException;
 import java.lang.reflect.Method;
 
-import javax.swing.JLabel;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,10 +14,10 @@ import com.developmentontheedge.beans.model.Property;
 
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.biohub.ReferenceType;
+import ru.biosoft.access.biohub.ReferenceTypeRegistry;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementPathSet;
-import ru.biosoft.exception.InternalException;
 import ru.biosoft.util.BeanUtil;
 import ru.biosoft.util.BeanWithAutoProperties;
 
@@ -60,155 +58,7 @@ public class DataElementPathEditor extends CustomEditorSupport implements JSONSe
             multiSelect = true;
     }
 
-    private JLabel createLabel()
-    {
-        String title = NONE_VALUE;
-        if( getValue() instanceof DataElementPath && !((DataElementPath)getValue()).isEmpty())
-        {
-            title = getValue().toString();
-        }
-        if( getValue() instanceof DataElementPathSet && !((DataElementPathSet)getValue()).isEmpty())
-        {
-            DataElementPathSet value = (DataElementPathSet)getValue();
-            try
-            {
-                title = value.size() == 0 ? NONE_VALUE : value.size() == 1 ? value.iterator().next().toString() : "[" + value.size() + "] "
-                        + BeanUtil.joinBeanProperties(value, "name", ";");
-            }
-            catch( Exception e )
-            {
-                throw new InternalException(e);
-            }
-        }
-        return new JLabel(title);
-    }
-
-    //TODO: commented, Dialog-related
-    //    public DataElementPathDialog getDialog()
-    //    {
-    //        init();
-    //        DataElementPathDialog dialog = new DataElementPathDialog();
-    //        dialog.setElementMustExist(elementMustExist);
-    //        dialog.setPromptOverwrite(promptOverwrite);
-    //        dialog.setMultiSelect(multiSelect);
-    //        dialog.setElementClass(elementClass);
-    //        dialog.setChildClass(childClass);
-    //        dialog.setReferenceType(referenceType);
-    //        dialog.setAlwaysOnTop(true);
-    //        if( getValue() instanceof DataElementPath )
-    //            dialog.setValue(((DataElementPath)getValue()).isEmpty()?(DataElementPath)null:(DataElementPath)getValue());
-    //        else if( getValue() instanceof DataElementPathSet )
-    //            dialog.setValue(((DataElementPathSet)getValue()).isEmpty()?(DataElementPathSet)null:(DataElementPathSet)getValue());
-    //        else
-    //            dialog.setValue((DataElementPath)null);
-    //        return dialog;
-    //    }
-
-    //    @Override
-    //    public Component getCustomRenderer(final Component parent, boolean isSelected, boolean hasFocus)
-    //    {
-    //        return getCustomEditor(parent, isSelected);
-    //    }
-    //
-    //    @Override
-    //    public Component getCustomEditor(Component parent, boolean isSelected)
-    //    {
-    //        init();
-    //        final JLabel label = createLabel();
-    //        label.setTransferHandler(new DataElementImportTransferHandler(new DataElementDroppable()
-    //        {
-    //            @Override
-    //            public boolean doImport(DataElementPath path, Point point)
-    //            {
-    //                if( !path.exists() || !DataCollectionUtils.isAcceptable(path, childClass, elementClass, referenceType) )
-    //                {
-    //                    ApplicationUtils.errorBox("Error", "This element has inacceptable type: " + path.getName());
-    //                    return false;
-    //                }
-    //                if(multiSelect)
-    //                {
-    //                    DataElementPathSet result = new DataElementPathSet();
-    //                    result.add(path);
-    //                    setValue(result);
-    //                } else
-    //                    setValue(path);
-    //                return true;
-    //            }
-    //        }));
-    //        Icon icon = null;
-    //        if(referenceType != null)
-    //        {
-    //            icon = IconFactory.getIconById(IconFactory.getClassIconId(referenceType));
-    //        } else if(elementClass != null)
-    //        {
-    //            icon = IconFactory.getIconById(IconFactory.getClassIconId(elementClass));
-    //        }
-    //        if(icon == null)
-    //        {
-    //            DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer();
-    //            if((elementClass != null && ru.biosoft.access.core.DataCollection.class.isAssignableFrom(elementClass)) || childClass != null)
-    //            {
-    //                icon = renderer.getClosedIcon();
-    //            } else
-    //            {
-    //                icon = renderer.getLeafIcon();
-    //            }
-    //        }
-    //        if(icon != null)
-    //            label.setIcon(icon);
-    //        final JCheckBox checkBox = new JCheckBox();
-    //        MouseListener mouseListener = new MouseAdapter()
-    //        {
-    //            /**
-    //             * Invoked when the mouse has been clicked on a component.
-    //             */
-    //            @Override
-    //            public void mousePressed(MouseEvent e)
-    //            {
-    //                if(e.getSource() == checkBox && checkBox.isSelected()) return;
-    //                DataElementPathDialog dialog = getDialog();
-    //                if( dialog.doModal() )
-    //                {
-    //                    if( multiSelect )
-    //                        setValue(dialog.getValues());
-    //                    else
-    //                        setValue(dialog.getValue());
-    //                    checkBox.setSelected(true);
-    //                    label.setText(createLabel().getText());
-    //                }
-    //            }
-    //        };
-    //        label.addMouseListener(mouseListener);
-    //        if( canBeNull )
-    //        {
-    //            JPanel contentPane = new JPanel(new GridBagLayout());
-    //            contentPane.setBackground(Color.WHITE);
-    //            checkBox.setBackground(Color.WHITE);
-    //            checkBox.addChangeListener(new ChangeListener()
-    //            {
-    //                @Override
-    //                public void stateChanged(ChangeEvent evt)
-    //                {
-    //                    if( !checkBox.isSelected() )
-    //                    {
-    //                        setValue(null);
-    //                        label.setText(createLabel().getText());
-    //                    }
-    //                }
-    //            });
-    //            checkBox.setSelected(getValue() != null && !getValue().toString().equals(""));
-    //            checkBox.addMouseListener(mouseListener);
-    //            contentPane.add(checkBox, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
-    //                    new Insets(0, 0, 0, 0), 0, 0));
-    //            contentPane.add(label, new GridBagConstraints(1, 0, 1, 1, 5.0, 0.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL,
-    //                    new Insets(0, 0, 0, 0), 0, 0));
-    //            contentPane.addMouseListener(mouseListener);
-    //            return contentPane;
-    //        }
-    //        return label;
-    //    }
-
-    /*
+    /**
      * Handy static methods to register editor with different parameters
      */
 
@@ -552,9 +402,8 @@ public class DataElementPathEditor extends CustomEditorSupport implements JSONSe
             result.put(CHILD_CLASS, childClass.getName());
         if( elementClass != null )
             result.put(ELEMENT_CLASS, elementClass.getName());
-        //TODO:
-        //        if( referenceType != null )
-        //            result.put(REFERENCE_TYPE, ReferenceTypeRegistry.getReferenceType(referenceType).getDisplayName());
+        if( referenceType != null )
+            result.put( REFERENCE_TYPE, ReferenceTypeRegistry.getReferenceType( referenceType ).getDisplayName() );
         result.put("canBeNull", canBeNull);
         result.put(ELEMENT_MUST_EXIST, elementMustExist);
         result.put(PROMPT_OVERWRITE, promptOverwrite);

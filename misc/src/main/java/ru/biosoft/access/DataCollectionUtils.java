@@ -41,7 +41,6 @@ import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.file.GenericFileDataCollection;
 import ru.biosoft.access.generic.GenericDataCollection;
 //import ru.biosoft.access.generic2.GenericDataCollection2;
-import ru.biosoft.access.repository.DataCollectionTreeModelAdapter;
 import ru.biosoft.access.security.Permission;
 import ru.biosoft.access.security.ProtectedDataCollection;
 import ru.biosoft.access.sql.SqlConnectionHolder;
@@ -53,6 +52,7 @@ public class DataCollectionUtils
 
     public static String SPECIES_PROPERTY = "species";
     public static String GRAPH_SEARCH = "graph-search";
+    public static final String NONE_ELEMENT = "(none)";
     /**
      * Check whether ru.biosoft.access.core.DataElement specified by path fits the constraints for element class, child element class and element reference type
      * To omit constraint pass null.
@@ -61,7 +61,7 @@ public class DataCollectionUtils
     public static boolean isAcceptable(DataElementPath path, Class<? extends DataElement> childClass,
             Class<? extends DataElement> elementClass, Class<? extends ReferenceType> referenceType)
     {
-        if( path.toString().equals(DataCollectionTreeModelAdapter.NONE_ELEMENT) )
+        if( path.toString().equals( NONE_ELEMENT ) )
             return true;
         if( childClass == null && elementClass == null && referenceType == null )
             return true;

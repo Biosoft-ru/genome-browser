@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetSerializer;
@@ -113,7 +113,7 @@ public class DPSUtils
                 Object p = ois.readObject();
                 DynamicPropertySet dps = new DynamicPropertySetSupport();
                 serializer.load( dps, new ByteArrayInputStream( p.toString().getBytes( StandardCharsets.UTF_8 ) ),
-                        ClassLoading.getClassLoader() );
+                        Environment.getClassLoader() );
                 list.add(dps);
             }
         }

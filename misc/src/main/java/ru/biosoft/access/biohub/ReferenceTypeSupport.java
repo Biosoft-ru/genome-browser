@@ -8,7 +8,7 @@ import java.util.LinkedList;
 //import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.ClassIcon;
@@ -103,7 +103,7 @@ public abstract class ReferenceTypeSupport implements ReferenceType
             {
                 if(annotation instanceof ClassIcon)
                 {
-                    String resource = ClassLoading.getResourceLocation( curClass, ( (ClassIcon)annotation ).value() );
+                    String resource = Environment.getResourceLocation( curClass, ((ClassIcon) annotation).value() );
                     iconId = resource;
                     return resource;
                 }

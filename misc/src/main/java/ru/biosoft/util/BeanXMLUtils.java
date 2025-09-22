@@ -17,7 +17,7 @@ import com.developmentontheedge.beans.DynamicPropertySet;
 import com.developmentontheedge.beans.DynamicPropertySetAsMap;
 import com.developmentontheedge.beans.DynamicPropertySetSupport;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 
 public class BeanXMLUtils
 {
@@ -32,7 +32,7 @@ public class BeanXMLUtils
     {
         Thread curThread = Thread.currentThread();
         ClassLoader oldClassLoader = curThread.getContextClassLoader();
-        Thread.currentThread().setContextClassLoader( ClassLoading.getClassLoader() );
+        Thread.currentThread().setContextClassLoader( Environment.getClassLoader() );
         
         try(XMLEncoder encoder = new XMLEncoder( os ))
         {
@@ -61,7 +61,7 @@ public class BeanXMLUtils
     
     public static Object fromXML(InputStream is) throws Exception
     {
-        try (XMLDecoder decoder = new XMLDecoder( is, null, e -> { throw new AsRuntime( e ); }, ClassLoading.getClassLoader() ))
+        try (XMLDecoder decoder = new XMLDecoder( is, null, e -> { throw new AsRuntime( e ); }, Environment.getClassLoader() ))
         {
             Object bean = decoder.readObject();
             return bean;

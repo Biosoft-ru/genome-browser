@@ -14,6 +14,7 @@ import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataCollectionEvent;
 import ru.biosoft.access.core.DataCollectionInfo;
 import ru.biosoft.access.core.DataCollectionVetoException;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.Index;
 import ru.biosoft.access.core.QuerySystem;
 
@@ -69,8 +70,8 @@ public class DefaultQuerySystem implements QuerySystem
                         indexes.put(name, index);
                     } else
                     {
-                        String plugins = properties.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY, ClassLoading.getPluginForClass( indexClassName ));
-                        Class<? extends Index> indexClass = ClassLoading.loadSubClass( indexClassName, plugins, Index.class );
+                        String plugins = properties.getProperty( DataCollectionConfigConstants.PLUGINS_PROPERTY, Environment.getPluginForClass( indexClassName ) );
+                        Class<? extends Index> indexClass = Environment.loadClass( indexClassName, plugins, Index.class );
                         Constructor<? extends Index> constructor = indexClass.getConstructor(DataCollection.class, String.class);
                         Index index = constructor.newInstance(dc, name);
                         indexes.put(name, index);

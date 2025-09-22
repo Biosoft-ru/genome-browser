@@ -42,7 +42,7 @@ import biouml.standard.type.Stub;
 //import biouml.standard.type.access.ReactionTransformer;
 import biouml.standard.type.access.TitleIndex;
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.ClassLoading;
+//import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DefaultQuerySystem;
 import ru.biosoft.access.FileCollection;
@@ -53,6 +53,7 @@ import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementSupport;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.QuerySystem;
 //import ru.biosoft.access.history.HistoryFacade;
 import ru.biosoft.access.support.BeanInfoEntryTransformer;
@@ -169,7 +170,7 @@ public class StandardModuleType extends DataElementSupport implements ModuleType
     {
         try
         {
-            ClassLoading.loadClass( c.getName(), null );
+            Environment.loadClass( c.getName() );
         }
         catch( LoggedClassNotFoundException e )
         {

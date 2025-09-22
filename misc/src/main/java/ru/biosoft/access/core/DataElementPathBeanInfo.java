@@ -33,8 +33,5 @@ public class DataElementPathBeanInfo extends BeanInfoEx
 
         pde = new PropertyDescriptorEx("empty", beanClass, "isEmpty", null);
         add(pde);
-        
-        //        pde = new PropertyDescriptorEx("defaultSpecies", beanClass, "getDefaultSpecies", null);
-        //        addHidden(pde);
     }
 }

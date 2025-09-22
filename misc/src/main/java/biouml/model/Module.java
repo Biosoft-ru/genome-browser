@@ -19,7 +19,7 @@ import com.developmentontheedge.beans.annot.PropertyName;
 
 import biouml.standard.type.Stub;
 import one.util.streamex.EntryStream;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.HtmlDescribedElement;
 import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataCollection;
@@ -185,7 +185,7 @@ public class Module extends DerivedDataCollection implements HtmlDescribedElemen
      */
     protected void applyType(String className) throws Exception
     {
-        type = ClassLoading.loadSubClass( className, pluginNames, ModuleType.class ).newInstance();
+        type = Environment.loadClass( className, pluginNames, ModuleType.class ).newInstance();
     }
 
     protected ModuleType type;

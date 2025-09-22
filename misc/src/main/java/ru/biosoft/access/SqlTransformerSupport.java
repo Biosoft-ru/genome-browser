@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import ru.biosoft.access.core.DataElement;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.sql.SqlConnectionHolder;
 import ru.biosoft.access.sql.SqlUtil;
 
@@ -246,8 +247,8 @@ abstract public class SqlTransformerSupport<T extends DataElement> implements Sq
         if( attrStr != null && !attrStr.isEmpty() )
         {
             ClassLoader oldContextClassLoader = Thread.currentThread().getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(ClassLoading.getClassLoader());
-            ( new DynamicPropertySetSerializer() ).load(dps, new ByteArrayInputStream(attrStr.getBytes()), ClassLoading.getClassLoader());
+            Thread.currentThread().setContextClassLoader( Environment.getClassLoader() );
+            (new DynamicPropertySetSerializer()).load( dps, new ByteArrayInputStream( attrStr.getBytes() ), Environment.getClassLoader() );
             Thread.currentThread().setContextClassLoader(oldContextClassLoader);
             return dps;
         }

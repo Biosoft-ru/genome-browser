@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
-import ru.biosoft.tasks.StubJobControl;
-import ru.biosoft.tasks.TaskInfo;
+//import ru.biosoft.tasks.TaskInfo;
 import ru.biosoft.util.LimitedTextBuffer;
+import ru.biosoft.util.StubJobControl;
 import ru.biosoft.util.TextUtil2;
 
 import ru.biosoft.jobcontrol.FunctionJobControl;
@@ -38,34 +38,36 @@ public class WebJob
     private JobControl jobControl;
     private final LimitedTextBuffer message = new LimitedTextBuffer(MAX_MESSAGE_ROWS);
     private final String loggerID;
-    private TaskInfo task;
+    //TODO: commented TaskInfo
+    //    private TaskInfo task;
 
-    /**
-     * Returns WebJob associated with existing task and assigns jobID to it (so later the job can be obtained with this jobID)
-     * Useful to get the job from another session
-     * @param jobID
-     * @param task
-     * @return
-     */
-    public static WebJob attach(String jobID, TaskInfo task)
-    {
-        try
-        {
-            WebJob result = (WebJob)task.getTransient( "webJob" );
-            if( result == null )
-            {
-                result = getWebJob( jobID );
-                result.setTask( task );
-                result.addJobMessage( task.getLogInfo() );
-            }
-            WebSession.getCurrentSession().putValue( "webJob/" + jobID, result );
-            return result;
-        }
-        catch( Exception e )
-        {
-            return null;
-        }
-    }
+    //    /**
+    //     * Returns WebJob associated with existing task and assigns jobID to it (so later the job can be obtained with this jobID)
+    //     * Useful to get the job from another session
+    //     * @param jobID
+    //     * @param task
+    //     * @return
+    //     */
+    //    
+    //    public static WebJob attach(String jobID, TaskInfo task)
+    //    {
+    //        try
+    //        {
+    //            WebJob result = (WebJob)task.getTransient( "webJob" );
+    //            if( result == null )
+    //            {
+    //                result = getWebJob( jobID );
+    //                result.setTask( task );
+    //                result.addJobMessage( task.getLogInfo() );
+    //            }
+    //            WebSession.getCurrentSession().putValue( "webJob/" + jobID, result );
+    //            return result;
+    //        }
+    //        catch( Exception e )
+    //        {
+    //            return null;
+    //        }
+    //    }
 
     public static WebJob getWebJob(String jobID)
     {
@@ -96,23 +98,23 @@ public class WebJob
         }
     }
 
-    public static Object getJobData(String completePath)
-    {
-        if(!completePath.startsWith(JOB_DATA_PREFIX)) return null;
-        String[] components = TextUtil2.split( completePath, '/' );
-        try
-        {
-            TaskInfo taskInfo = getWebJob(components[1]).getTask();
-            Object data = taskInfo.getTransient(components[2]);
-            if(data == null)
-                data = taskInfo.getSource().optDataElement();
-            return data;
-        }
-        catch(Exception e)
-        {
-            return null;
-        }
-    }
+    //    public static Object getJobData(String completePath)
+    //    {
+    //        if(!completePath.startsWith(JOB_DATA_PREFIX)) return null;
+    //        String[] components = TextUtil2.split( completePath, '/' );
+    //        try
+    //        {
+    //            TaskInfo taskInfo = getWebJob(components[1]).getTask();
+    //            Object data = taskInfo.getTransient(components[2]);
+    //            if(data == null)
+    //                data = taskInfo.getSource().optDataElement();
+    //            return data;
+    //        }
+    //        catch(Exception e)
+    //        {
+    //            return null;
+    //        }
+    //    }
 
     private WebJob(boolean valid, JobControl jobControl, String loggerID)
     {
@@ -176,20 +178,21 @@ public class WebJob
         this.message.add(message);
     }
 
-    public TaskInfo getTask()
-    {
-        return task;
-    }
-
-    public void setTask(TaskInfo task)
-    {
-        this.task = task;
-        if(task != null)
-        {
-            task.setTransient("webJob", this);
-            setJobControl(task.getJobControl());
-        }
-    }
+    //TODO: commented TaskInfo
+    //    public TaskInfo getTask()
+    //    {
+    //        return task;
+    //    }
+    //
+    //    public void setTask(TaskInfo task)
+    //    {
+    //        this.task = task;
+    //        if(task != null)
+    //        {
+    //            task.setTransient("webJob", this);
+    //            setJobControl(task.getJobControl());
+    //        }
+    //    }
 
     /**
      * Associates supplied jobControl with current WebJob object

@@ -11,14 +11,6 @@ import ru.biosoft.access.repository.IconFactory;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.CustomImageLoader;
 
-/**
- * Temporary interlace between ru.biosoft.access.core.IconManager used in ru.biosot.access.core.Environment 
- * and existing Icon-relates BioUML processing
- * @author anna
- *
- */
-
-//TODO: refactor code, remove duplications
 public class BiosoftIconManager implements IconManager
 {
     public BiosoftIconManager()
@@ -74,13 +66,5 @@ public class BiosoftIconManager implements IconManager
             }
         }
         return value;
-    }
-
-    @Override
-    public ImageIcon getIconById(String imagename)
-    {
-        // TODO Auto-generated method stub
-        // TODO: from IconFactory
-        return null;
     }
 }

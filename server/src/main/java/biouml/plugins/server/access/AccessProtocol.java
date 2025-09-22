@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 //import com.developmentontheedge.application.ApplicationUtils;
 
 import ru.biosoft.access.file.AbstractFileTransformer;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementPath;
@@ -249,7 +249,7 @@ public class AccessProtocol
                     transformer = new BeanInfoEntryTransformer<>();
                 } else
                 {
-                    transformer = (ClassLoading.loadSubClass(transformerClassName, Transformer.class)).getDeclaredConstructor().newInstance();
+                    transformer = (Environment.loadClass( transformerClassName, Transformer.class )).getDeclaredConstructor().newInstance();
                 }
                 transformer.init(null, dc);
             }
@@ -396,7 +396,7 @@ public class AccessProtocol
             return new FileDataElement( path.getName(), parent, file );
         }
 
-        Transformer transformer = (ClassLoading.loadSubClass(transformerName, Transformer.class)).getDeclaredConstructor().newInstance();
+        Transformer transformer = (Environment.loadClass( transformerName, Transformer.class )).getDeclaredConstructor().newInstance();
         if( transformer instanceof AbstractFileTransformer )
         {
             File dir = TempFiles.dir( "element" );

@@ -12,14 +12,13 @@ import ru.biosoft.access.core.Transformer;
 import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.access.generic.TransformerRegistry.TransformerInfo;
-import ru.biosoft.access.security.BiosoftClassLoading;
 
 public class AccessCoreInit
 {
     private static Logger log = Logger.getLogger( AccessCoreInit.class.getName() );
     public static void init()
     {
-        Environment.setClassLoading( new BiosoftClassLoading() );
+        Environment.setClassLoading( new SimpleClassLoading() );
         Environment.setIconManager(new BiosoftIconManager());
         
         

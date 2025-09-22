@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElementPath;
@@ -33,7 +33,7 @@ public class CollectionSpecificReferenceType extends ReferenceTypeSupport
     private String resolveIcon(DataCollection<?> dc, String iconId)
     {
         if(iconId == null)
-            iconId = ClassLoading.getResourceLocation( CollectionSpecificReferenceType.class, "resources/defaultTypeIcon.gif" );
+            iconId = Environment.getResourceLocation( CollectionSpecificReferenceType.class, "resources/defaultTypeIcon.gif" );
         if(!iconId.contains(":"))
         {
             String path = dc.getInfo().getProperties().getProperty(DataCollectionConfigConstants.CONFIG_PATH_PROPERTY);

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 import biouml.standard.type.Gene;
 import biouml.standard.type.Species;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
@@ -39,7 +39,7 @@ public class TrackUtils
         	String className = origin.getInfo().getProperty( TRACK_IMPLEMENTATION_PROPERTY );
         	if(className != null)
         	{
-        		clazz = (Class<? extends WritableTrack>)ClassLoading.loadClass( className );
+                clazz = (Class<? extends WritableTrack>) Environment.loadClass( className );
         	}
         }
         catch (Exception e)

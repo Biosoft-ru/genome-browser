@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.util.Properties;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
@@ -23,7 +23,7 @@ public class DataElementSQLTypeDriver implements DataElementTypeDriver
     @Override
     public DataElement doGet(GenericDataCollection gdc, DataElementInfo dei) throws Exception
     {
-        Class<? extends DataElement> elementClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+        Class<? extends DataElement> elementClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
         Constructor<? extends DataElement> constructor = elementClass.getConstructor(DataCollection.class, Properties.class);
         Properties prop = dei.getProperties();
         prop.setProperty(DataCollectionConfigConstants.NAME_PROPERTY, dei.getName());

@@ -22,7 +22,7 @@ import ru.biosoft.server.servlets.webservices.WebSession;
 import ru.biosoft.util.ServerPreferences;
 import ru.biosoft.util.TextUtil2;
 //import ru.biosoft.tasks.TasksSqlTransformer;
-import ru.biosoft.tasks.TaskInfo;
+//import ru.biosoft.tasks.TaskInfo;
 
 /**
  * @author lan

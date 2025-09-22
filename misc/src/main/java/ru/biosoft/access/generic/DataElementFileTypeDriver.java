@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import one.util.streamex.EntryStream;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.FileCollection;
 import ru.biosoft.access.file.FileDataElement;
 import ru.biosoft.access.core.CollectionFactory;
@@ -34,7 +34,7 @@ public class DataElementFileTypeDriver implements DataElementTypeDriver
     public DataElement doGet(GenericDataCollection gdc, DataElementInfo dei) throws Exception
     {
         DataCollection<?> primaryDC = gdc.getTypeSpecificCollection(this);
-        Class<? extends DataElement> deClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+        Class<? extends DataElement> deClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
         List<Class<? extends Transformer>> tClasses = TransformerRegistry.getTransformerClass(FileDataElement.class, deClass);
         DataElement de = primaryDC.get(dei.getName());
         if( !tClasses.isEmpty() )

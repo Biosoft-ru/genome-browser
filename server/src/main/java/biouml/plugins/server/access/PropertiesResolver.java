@@ -7,10 +7,11 @@ import java.util.Set;
 //import biouml.model.Diagram;
 //import biouml.plugins.server.DiagramClientCollection;
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.ClassLoading;
+//import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DerivedDataCollection;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.ProtectedElement;
 import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.exception.LoggedClassNotFoundException;
@@ -81,7 +82,7 @@ public class PropertiesResolver
             {
                 try
                 {
-                    properties.setProperty(DataCollectionConfigConstants.DATA_ELEMENT_CLASS_PROPERTY, ClassLoading.loadClass( serverProperties
+                    properties.setProperty(DataCollectionConfigConstants.DATA_ELEMENT_CLASS_PROPERTY, Environment.loadClass( serverProperties
                     .getProperty(DataCollectionConfigConstants.DATA_ELEMENT_CLASS_PROPERTY) ).getName());
                 }
                 catch( LoggedClassNotFoundException e )

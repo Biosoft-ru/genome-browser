@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import javax.annotation.Nonnull;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementDescriptor;
@@ -18,8 +18,10 @@ import ru.biosoft.access.security.SecurityAdminUtils;
  */
 public class UserGroup extends ReadOnlyVectorCollection<UserInfo>
 {
-    private static final DataElementDescriptor OFFLINE_DESCRIPTOR = new DataElementDescriptor(UserInfo.class, ClassLoading.getResourceLocation( UserGroup.class, "resources/offline.gif" ), true);
-    private static final DataElementDescriptor ONLINE_DESCRIPTOR = new DataElementDescriptor(UserInfo.class, ClassLoading.getResourceLocation( UserGroup.class, "resources/online.gif" ), true);
+    private static final DataElementDescriptor OFFLINE_DESCRIPTOR = new DataElementDescriptor( UserInfo.class,
+            Environment.getResourceLocation( UserGroup.class, "resources/offline.gif" ), true );
+    private static final DataElementDescriptor ONLINE_DESCRIPTOR = new DataElementDescriptor( UserInfo.class,
+            Environment.getResourceLocation( UserGroup.class, "resources/online.gif" ), true );
 
     public UserGroup(DataCollection<?> parent, Properties properties)
     {

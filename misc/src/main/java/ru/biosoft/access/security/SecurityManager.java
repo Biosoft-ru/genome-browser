@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import one.util.streamex.EntryStream;
 //import ru.biosoft.access.BiosoftSecurityManager;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.core.CollectionFactory;
 import ru.biosoft.access.core.DataCollection;
@@ -96,7 +96,7 @@ public class SecurityManager
         try
         {
             Class<? extends SecurityProvider> providerClass = providerClassName == null ? SQLSecurityProvider.class
-                    : ClassLoading.loadSubClass(providerClassName, SecurityProvider.class);
+                    : Environment.loadClass(providerClassName, SecurityProvider.class);
             securityProvider = providerClass.newInstance();
             securityProvider.init(properties);
             adminSession = properties.getProperty(ADMIN_SESSION_PROPERTY);

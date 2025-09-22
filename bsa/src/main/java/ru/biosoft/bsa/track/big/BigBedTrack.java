@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Repository;
 import ru.biosoft.access.core.DataCollection;
@@ -198,7 +198,7 @@ public class BigBedTrack<T> extends BigTrack
             try
             {
                 String plugins = props.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY);
-                Class<?> c = ClassLoading.loadClass( className, plugins );
+                Class<?> c = Environment.loadClass( className, plugins );
                 Constructor<?> constructor = c.getConstructor( BigBedTrack.class, Properties.class );
                 return (BedEntryConverter<T>)constructor.newInstance( this, props );
 

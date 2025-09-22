@@ -19,36 +19,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
-import java.util.Arrays;
-import java.util.List;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-//import org.eclipse.core.runtime.Platform;
-//import org.osgi.framework.Bundle;
-
-//import com.developmentontheedge.application.Application;
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.Preferences;
 
-import ru.biosoft.access.ClassLoading;
-import ru.biosoft.exception.InternalException;
+import ru.biosoft.access.core.PluginEntry;
 import ru.biosoft.jobcontrol.JobControl;
 import ru.biosoft.util.entry.RegularFileEntry;
-//import ru.biosoft.util.entry.BundleEntry;
-import ru.biosoft.access.core.PluginEntry;
-//import ru.biosoft.util.entry.RegularFileEntry;
 
 public class ApplicationUtils
 {
@@ -80,10 +70,7 @@ public class ApplicationUtils
         int idx = imagename.indexOf(':');
         if( idx > 2 )
         {
-            String pluginName = imagename.substring(0, idx);
-            log.fine( "Loading image from plugin " + pluginName );
             String resource = imagename.substring(idx + 1);
-
             URL url = ApplicationUtils.class.getClassLoader().getResource(resource);
             if( url != null )
             {
@@ -91,66 +78,6 @@ public class ApplicationUtils
                 imageMap.put(imagename, imageIcon);
                 return imageIcon;
             }
-            //            else if( resource.lastIndexOf("/") > -1 )//TODO: try only by name since maven copy all resources in target folders 
-            //            {
-            //                String resourceName = resource.substring(resource.lastIndexOf("/") + 1);
-            //                url = ApplicationUtils.class.getClassLoader().getResource(resourceName);
-            //                if( url != null )
-            //                {
-            //                    imageIcon = getImageIcon(url);
-            //                    imageMap.put(imagename, imageIcon);
-            //                    return imageIcon;
-            //                }
-            //            }
-
-            //            if(pluginName.equals("default"))
-            //            {
-            //                URL url = ApplicationUtils.class.getClassLoader().getResource(resource);
-            //                if( url != null )
-            //                {
-            //                    imageIcon = getImageIcon(url);
-            //                    imageMap.put(imagename, imageIcon);
-            //                    return imageIcon;
-            //                }
-            //            }
-            //            Bundle bundle = null;
-            //            try
-            //            {
-            //                bundle = Platform.getBundle(pluginName);
-            //            }
-            //            catch( Throwable t )
-            //            {
-            //                log.log( Level.SEVERE, "can not load plugin", t );
-            //            }
-            //            if( bundle != null )
-            //            {
-            //                log.fine( "Loading image from bundle " + bundle );
-            //                int idx2 = resource.indexOf("?");
-            //                if( idx2 != -1 ) // Probably it's CustomImageLoader
-            //                {
-            //                    try
-            //                    {
-            //                        String className = resource.substring(0, idx2);
-            //                        CustomImageLoader imageLoader = (CustomImageLoader)ClassLoading.loadClass(className).newInstance();
-            //                        String path = resource.substring(idx2 + 1);
-            //                        imageIcon = imageLoader.loadImage(pluginName + ":" + path);
-            //                        if( imageIcon != null )
-            //                            imageMap.put(imagename, imageIcon);
-            //                        return imageIcon;
-            //                    }
-            //                    catch( Exception e )
-            //                    {
-            //                        log.log( Level.WARNING, "can not load image from resource: " + resource, e );
-            //                    }
-            //                }
-            //                URL url = bundle.getResource(resource);
-            //                if( url != null )
-            //                {
-            //                    imageIcon = getImageIcon(url);
-            //                    imageMap.put(imagename, imageIcon);
-            //                    return imageIcon;
-            //                }
-            //            }
         }
 
         URL url = ClassLoader.getSystemResource(imagename);
@@ -173,9 +100,6 @@ public class ApplicationUtils
             return imageIcon;
         }
         
-        //In some cases we try to get image by the path to file. Here we check if such file exists 
-        //However not sure what should happened if such file does not exist  or is of wrong type
-        //TODO: do something in that regard
         if( !new File( imagename ).exists() )
         {   
             log.log( Level.SEVERE, "Image file doesn't exists: " + imagename, new Exception() );

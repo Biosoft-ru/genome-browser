@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 //import org.eclipse.core.runtime.IConfigurationElement;
 
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DataCollectionListenerSupport;
 import ru.biosoft.access.core.DataCollection;
@@ -267,7 +267,7 @@ public class BioHubRegistry extends ObjectExtensionRegistry<ru.biosoft.access.bi
             {
                 try
                 {
-                    Class<? extends BioHub> c = ClassLoading.loadSubClass( classNames[i], BioHub.class );
+                    Class<? extends BioHub> c = Environment.loadClass( classNames[i], BioHub.class );
                     Constructor<? extends BioHub> constructor = c.getConstructor( new Class[] {Properties.class} );
                     Properties properties = new Properties( dcProperties );
                     properties.setProperty( DataCollectionConfigConstants.COMPLETE_NAME_PROPERTY, path.toString() );
@@ -292,7 +292,7 @@ public class BioHubRegistry extends ObjectExtensionRegistry<ru.biosoft.access.bi
         ExProperties.getSubProperties( dcProperties, "bioHub" ).forEach( (key, props) -> {
             try
             {
-                Class<? extends BioHub> c = ClassLoading.loadSubClass( props.get( "default" ), BioHub.class );
+                Class<? extends BioHub> c = Environment.loadClass( props.get( "default" ), BioHub.class );
                 Constructor<? extends BioHub> constructor = c.getConstructor( new Class[] {Properties.class} );
                 Properties properties = new Properties( dcProperties );
                 properties.setProperty( DataCollectionConfigConstants.COMPLETE_NAME_PROPERTY, path.toString() );

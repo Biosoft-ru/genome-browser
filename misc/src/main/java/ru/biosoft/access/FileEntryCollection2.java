@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.Index;
 import ru.biosoft.access.core.Index.IndexEntry;
 import ru.biosoft.access.core.QuerySystem;
@@ -383,7 +384,7 @@ public class FileEntryCollection2 extends EntryCollection
 
         Properties properties = getInfo().getProperties();
         String indexType = properties.getProperty(INDEX_TYPE_PROPERTY, DEFAULT_INDEX_TYPE);
-        Class<? extends Index> clazz = ClassLoading.loadSubClass( indexType, Index.class );
+        Class<? extends Index> clazz = Environment.loadClass( indexType, Index.class );
         Constructor<? extends Index> constructor = clazz.getConstructor(File.class, String.class, String.class, int.class);
         index = constructor.newInstance(fileName, indexName, indexPath, blockSize);
 

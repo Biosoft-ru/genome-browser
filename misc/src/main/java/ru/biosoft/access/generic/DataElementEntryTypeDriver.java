@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.EntryCollection;
 import ru.biosoft.access.FileEntryCollection2;
@@ -31,7 +31,7 @@ public class DataElementEntryTypeDriver implements DataElementTypeDriver
     public DataElement doGet(GenericDataCollection gdc, DataElementInfo dei) throws Exception
     {
         DataCollection primaryDC = gdc.getTypeSpecificCollection(this);
-        Class<? extends DataElement> deClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), DataElement.class );
+        Class<? extends DataElement> deClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), DataElement.class );
         Transformer transformer = getEntryTransformer(primaryDC, gdc, deClass);
         return transformer.transformInput(primaryDC.get(dei.getName()));
     }

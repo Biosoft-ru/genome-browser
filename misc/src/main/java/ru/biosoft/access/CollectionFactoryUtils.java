@@ -27,6 +27,7 @@ import ru.biosoft.access.core.DataElementCreateException;
 import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.core.DataElementPutException;
 import ru.biosoft.access.core.DerivedDataCollection;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.FolderCollection;
 import ru.biosoft.access.core.SymbolicLinkDataCollection;
 import ru.biosoft.access.core.TransformedDataCollection;
@@ -136,8 +137,8 @@ public class CollectionFactoryUtils
         {
             String pluginNames = properties.getProperty( DataCollectionConfigConstants.PLUGINS_PROPERTY );
             if( pluginNames == null )
-                pluginNames = ClassLoading.getPluginForClass( className );
-            Class<? extends DataCollection> c = ClassLoading.loadSubClass( className, pluginNames, DataCollection.class );
+                pluginNames = Environment.getPluginForClass( className );
+            Class<? extends DataCollection> c = Environment.loadClass( className, pluginNames, DataCollection.class );
             Constructor<? extends DataCollection> constructor = c.getConstructor( DataCollection.class, Properties.class );
             return constructor.newInstance( parent, properties );
         }

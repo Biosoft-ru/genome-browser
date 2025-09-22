@@ -35,7 +35,7 @@ public class UsersRepository extends ReadOnlyVectorCollection<UserGroup>
         //        {
         //            try
         //            {
-        //                this.jabberProvider = ClassLoading.loadSubClass( jabberProviderName, JabberProvider.class )
+        //                this.jabberProvider = Environment.loadClass( jabberProviderName, JabberProvider.class )
         //                        .getConstructor( Properties.class ).newInstance( properties );
         //            }
         //            catch( Exception e )

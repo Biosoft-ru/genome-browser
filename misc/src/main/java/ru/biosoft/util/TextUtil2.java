@@ -41,7 +41,6 @@ import com.developmentontheedge.beans.model.ComponentFactory.Policy;
 import com.developmentontheedge.beans.model.ComponentModel;
 import com.developmentontheedge.beans.model.Property;
 
-import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.support.SerializableAsText;
 import ru.biosoft.exception.InternalException;
@@ -584,7 +583,7 @@ public class TextUtil2
         {
             try
             {
-                return valueStr.isEmpty() ? null : ClassLoading.loadClass(valueStr);
+                return valueStr.isEmpty() ? null : Environment.loadClass(valueStr);
             }
             catch (LoggedClassNotFoundException e)
             {
@@ -680,7 +679,7 @@ public class TextUtil2
         {
             JSONObject jsonDynamicProperty = jsonDPS.getJSONObject(i);
 
-            Class<?> type = ClassLoading.loadClass(jsonDynamicProperty.getString("type"));
+            Class<?> type = Environment.loadClass(jsonDynamicProperty.getString("type"));
             Object value = TextUtil2.fromString(type, jsonDynamicProperty.getString("value"));
 
             String name = jsonDynamicProperty.getString("name");
@@ -693,7 +692,7 @@ public class TextUtil2
             descriptor.setPreferred(jsonDynamicProperty.optBoolean("preffered", false));
 
             Object editorClass = jsonDynamicProperty.get("propertyEditorClass");
-            descriptor.setPropertyEditorClass(editorClass instanceof String ? ClassLoading.loadClass((String) editorClass) : null);
+            descriptor.setPropertyEditorClass(editorClass instanceof String ? Environment.loadClass((String) editorClass) : null);
 
             descriptor.setShortDescription(jsonDynamicProperty.optString("shortDescription", ""));
 

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 //import com.eclipsesource.json.JsonObject;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.exception.LoggedClassNotFoundException;
 import ru.biosoft.util.TextUtil2;
 
@@ -39,7 +39,7 @@ public class Rule
         {
             try
             {
-                ClassLoading.loadClass((String) element.get("class"));
+                Environment.loadClass((String) element.get("class"));
                 return true;
             }
             catch( LoggedClassNotFoundException e )

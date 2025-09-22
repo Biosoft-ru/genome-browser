@@ -1,6 +1,6 @@
 package ru.biosoft.access.generic;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.DataElement;
@@ -29,7 +29,7 @@ public class DataElementTypeRegistry
         DataElementTypeDriver driver = drivers.getExtension(driverClassName);
         if(driver == null)
         {
-            Class<? extends DataElement> elementClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+            Class<? extends DataElement> elementClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
             driver = lookForDriver(elementClass);
         }
         return driver.doGet(gdc, dei);
@@ -41,7 +41,7 @@ public class DataElementTypeRegistry
         DataElementTypeDriver driver = drivers.getExtension(driverClassName);
         if(driver == null)
         {
-            Class<? extends DataElement> elementClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+            Class<? extends DataElement> elementClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
             driver = lookForDriver(elementClass);
         }
         driver.doRemove(gdc, dei);

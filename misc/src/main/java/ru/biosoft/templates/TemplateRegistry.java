@@ -12,7 +12,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.util.ExtensionRegistrySupport;
 import ru.biosoft.util.ObjectExtensionRegistry;
 import ru.biosoft.util.TextUtil2;
@@ -64,7 +64,7 @@ public class TemplateRegistry extends ExtensionRegistrySupport<TemplateInfo>
             props.setProperty( "parser.pool.size", "50" );
         
             ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
-            Thread.currentThread().setContextClassLoader(ClassLoading.getClassLoader());
+            Thread.currentThread().setContextClassLoader( Environment.getClassLoader() );
             synchronized( TemplateRegistry.class )
             {
                 try

@@ -35,6 +35,7 @@ import ru.biosoft.access.core.DataElementDescriptor;
 import ru.biosoft.access.core.DataElementGetException;
 import ru.biosoft.access.core.DataElementPutException;
 import ru.biosoft.access.core.DataElementReadException;
+import ru.biosoft.access.core.Environment;
 //import ru.biosoft.access.security.NetworkDataCollection;
 //import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.exception.ExceptionRegistry;
@@ -357,9 +358,9 @@ public class LocalRepository extends AbstractDataCollection<DataCollection<?>> i
         try
         {
             if(plugins == null)
-                collectionClass = ClassLoading.loadClass( properties.getProperty(DataCollectionConfigConstants.CLASS_PROPERTY) );
+                collectionClass = Environment.loadClass( properties.getProperty(DataCollectionConfigConstants.CLASS_PROPERTY) );
             else
-                collectionClass = ClassLoading.loadClass( properties.getProperty(DataCollectionConfigConstants.CLASS_PROPERTY), plugins );
+                collectionClass = Environment.loadClass( properties.getProperty(DataCollectionConfigConstants.CLASS_PROPERTY), plugins );
         }
         catch( LoggedClassNotFoundException e )
         {

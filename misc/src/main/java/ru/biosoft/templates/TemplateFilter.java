@@ -3,7 +3,7 @@ package ru.biosoft.templates;
 import java.lang.reflect.Method;
 import java.util.Collection;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.util.BeanUtil;
 
 /**
@@ -31,7 +31,7 @@ public class TemplateFilter
 
     public TemplateFilter(String className, Boolean subclasses, Collection<PropertyFilter> properties)
     {
-        this.clazz = ClassLoading.loadClass( className );
+        this.clazz = Environment.loadClass( className );
         this.subclasses = subclasses;
         this.properties = properties.toArray( new PropertyFilter[properties.size()] );
     }
@@ -105,7 +105,7 @@ public class TemplateFilter
                             result = false;
                             break;
                         }
-                        Class<?> targetClass = ClassLoading.loadClass( pFilter.getClassName() );
+                        Class<?> targetClass = Environment.loadClass( pFilter.getClassName() );
                         if( !targetClass.isInstance(value) )
                         {
                             result = false;
@@ -133,7 +133,7 @@ public class TemplateFilter
                 String methodName = completeMethodName.substring( pos + 1 );
                 try
                 {
-                    Class<?> c = ClassLoading.loadClass( className );
+                    Class<?> c = Environment.loadClass( className );
                     Method method = c.getMethod( methodName, bean.getClass() );
                     Object res = method.invoke( null, bean );
                     if( res instanceof Boolean )

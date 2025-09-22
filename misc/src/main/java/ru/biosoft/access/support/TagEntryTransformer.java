@@ -16,7 +16,7 @@ import one.util.streamex.StreamEx;
 import java.util.logging.Logger;
 
 import ru.biosoft.access.core.AbstractTransformer;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.Entry;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
@@ -214,7 +214,7 @@ abstract public class TagEntryTransformer<O extends DataElement> extends Abstrac
             {
                 try
                 {
-                    outputType = ClassLoading.loadSubClass( name, plugins, DataElement.class );
+                    outputType = Environment.loadClass( name, plugins, DataElement.class );
                 }
                 catch( LoggedClassNotFoundException e )
                 {

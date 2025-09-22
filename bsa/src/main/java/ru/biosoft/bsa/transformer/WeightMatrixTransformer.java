@@ -11,7 +11,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.Entry;
@@ -292,8 +292,8 @@ public class WeightMatrixTransformer extends AbstractTransformer<Entry, Frequenc
         Properties primary = new ExProperties();
         primary.setProperty(DataCollectionConfigConstants.CLASS_PROPERTY, FileEntryCollection2.class.getName());
         primary.setProperty(DataCollectionConfigConstants.FILE_PROPERTY, library.getName() + ".lib");
-        primary.setProperty(DataCollectionConfigConstants.NODE_IMAGE, ClassLoading.getResourceLocation( FrequencyMatrix.class, "resources/matrixlib.gif" ));
-        primary.setProperty(DataCollectionConfigConstants.CHILDREN_NODE_IMAGE, ClassLoading.getResourceLocation( FrequencyMatrix.class, "resources/matrix.gif" ));
+        primary.setProperty( DataCollectionConfigConstants.NODE_IMAGE, Environment.getResourceLocation( FrequencyMatrix.class, "resources/matrixlib.gif" ) );
+        primary.setProperty( DataCollectionConfigConstants.CHILDREN_NODE_IMAGE, Environment.getResourceLocation( FrequencyMatrix.class, "resources/matrix.gif" ) );
         primary.setProperty(FileEntryCollection2.ENTRY_DELIMITERS_PROPERTY, " \t");
         primary.setProperty(FileEntryCollection2.ENTRY_START_PROPERTY, "ID");
         primary.setProperty(FileEntryCollection2.ENTRY_ID_PROPERTY, "ID");
@@ -303,8 +303,8 @@ public class WeightMatrixTransformer extends AbstractTransformer<Entry, Frequenc
         transformed.setProperty(DataCollectionConfigConstants.CLASS_PROPERTY, WeightMatrixCollection.class.getName());
         transformed.setProperty(DataCollectionConfigConstants.TRANSFORMER_CLASS, WeightMatrixTransformer.class.getName());
         transformed.setProperty(DataCollectionConfigConstants.DATA_ELEMENT_CLASS_PROPERTY, FrequencyMatrix.class.getName());
-        transformed.setProperty(DataCollectionConfigConstants.NODE_IMAGE, ClassLoading.getResourceLocation( FrequencyMatrix.class, "resources/matrixlib.gif" ));
-        transformed.setProperty(DataCollectionConfigConstants.CHILDREN_NODE_IMAGE, ClassLoading.getResourceLocation( FrequencyMatrix.class, "resources/matrix.gif" ));
+        transformed.setProperty( DataCollectionConfigConstants.NODE_IMAGE, Environment.getResourceLocation( FrequencyMatrix.class, "resources/matrixlib.gif" ) );
+        transformed.setProperty( DataCollectionConfigConstants.CHILDREN_NODE_IMAGE, Environment.getResourceLocation( FrequencyMatrix.class, "resources/matrix.gif" ) );
 
         Repository parentRepository = (Repository)DataCollectionUtils.getTypeSpecificCollection(library.optParentCollection(),
                 TransformedDataCollection.class);

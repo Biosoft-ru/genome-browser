@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.exception.BiosoftNetworkException;
 import ru.biosoft.bsa.Interval;
 import ru.biosoft.bsa.Sequence;
@@ -71,7 +71,7 @@ public class BSAClient extends BSAServiceProtocol
             JSONObject descriptorJSON = descriptorsJSON.getJSONObject(name);
             PropertyDescriptor descriptor = StaticDescriptor.create(name, descriptorJSON.getString("displayName"), descriptorJSON.getString("description"), null, true, false);
             descriptors.put(name, descriptor);
-            propertyClasses.put( name, ClassLoading.loadClass( descriptorJSON.getString( "class" ) ) );
+            propertyClasses.put( name, Environment.loadClass( descriptorJSON.getString( "class" ) ) );
         }
         JSONArray sitesJSON = result.getJSONArray(1);
         Site[] sites = new Site[sitesJSON.length()];

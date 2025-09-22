@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 import one.util.streamex.EntryStream;
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.exception.InitializationException;
 import ru.biosoft.exception.ExceptionRegistry;
 import ru.biosoft.templates.TemplateInfo;
@@ -146,7 +146,7 @@ public abstract class ExtensionRegistrySupport<T> implements Iterable<T>
         Class<? extends K> clazz;
         try
         {
-            clazz = (Class<? extends K>) ClassLoading.loadClass(className);
+            clazz = (Class<? extends K>) Environment.loadClass(className);
         }
         catch (Exception e)
         {
@@ -160,7 +160,7 @@ public abstract class ExtensionRegistrySupport<T> implements Iterable<T>
         Class<? extends K> clazz;
         try
         {
-            clazz = ClassLoading.loadSubClass(className, parentClass);
+            clazz = Environment.loadClass( className, parentClass );
         }
         catch (Exception e)
         {

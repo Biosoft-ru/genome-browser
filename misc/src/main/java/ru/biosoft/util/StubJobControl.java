@@ -1,4 +1,4 @@
-package ru.biosoft.tasks;
+package ru.biosoft.util;
 
 import ru.biosoft.jobcontrol.JobControl;
 import ru.biosoft.jobcontrol.JobControlListener;

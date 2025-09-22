@@ -20,7 +20,7 @@ import java.util.TreeMap;
 
 import one.util.streamex.EntryStream;
 import one.util.streamex.StreamEx;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.PluginEntry;
@@ -140,7 +140,7 @@ public class ExProperties extends Properties
     
     public static String getPluginsString(Properties properties, Class<?> clazz)
     {
-        return getPluginsString(properties, ClassLoading.getPluginForClass( clazz ));
+        return getPluginsString( properties, Environment.getPluginForClass( clazz ) );
     }
     
     public static void addPlugins(Properties properties, String newPlugins)
@@ -154,7 +154,7 @@ public class ExProperties extends Properties
     
     public static void addPlugin(Properties properties, Class<?> clazz)
     {
-        addPlugins(properties, ClassLoading.getPluginForClass( clazz ));
+        addPlugins( properties, Environment.getPluginForClass( clazz ) );
     }
     
     /**

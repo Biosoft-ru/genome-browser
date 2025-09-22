@@ -22,7 +22,7 @@ import gnu.trove.map.hash.TObjectLongHashMap;
 //import com.developmentontheedge.application.ApplicationUtils;
 
 import one.util.streamex.EntryStream;
-import ru.biosoft.access.ClassLoading;
+import ru.biosoft.access.core.Environment;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DataCollectionUtils;
 import ru.biosoft.access.DefaultQuerySystem;
@@ -325,7 +325,7 @@ public class GenericDataCollection extends DerivedDataCollection<ru.biosoft.acce
             {
                 DataElementInfo dei = getChildInfo(name);
                 if(dei == null) continue;
-                Class<? extends DataElement> deClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+                Class<? extends DataElement> deClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
                 DataElementTypeDriver driver = lookForDriver(deClass);
                 if(driver == null) continue;
                 long childSize = driver.estimateSize(this, dei, true);
@@ -363,7 +363,7 @@ public class GenericDataCollection extends DerivedDataCollection<ru.biosoft.acce
             }
             DataElementInfo dei = getChildInfo(name);
             if(dei == null) return -1;
-            Class<? extends DataElement> deClass = ClassLoading.loadSubClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+            Class<? extends DataElement> deClass = Environment.loadClass( dei.getStrictProperty(DataElementInfo.ELEMENT_CLASS), dei.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
             DataElementTypeDriver driver = lookForDriver(deClass);
             if(driver == null) return -1;
             long size = driver.estimateSize(this, dei, false);
@@ -725,7 +725,7 @@ public class GenericDataCollection extends DerivedDataCollection<ru.biosoft.acce
         Class<? extends DataElement> deClass;
         try
         {
-            deClass = ClassLoading.loadSubClass( childProperties.getProperty(DataElementInfo.ELEMENT_CLASS), childProperties.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
+            deClass = Environment.loadClass( childProperties.getProperty(DataElementInfo.ELEMENT_CLASS), childProperties.getProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY), DataElement.class );
         }
         catch( Exception e )
         {
@@ -864,7 +864,7 @@ public class GenericDataCollection extends DerivedDataCollection<ru.biosoft.acce
         derived.setProperty(DataCollectionConfigConstants.CLASS_PROPERTY, type.getName());
         derived.setProperty(DataCollectionConfigConstants.ELEMENT_SIZE_PROPERTY, "0");
 
-        String plugins = ClassLoading.getPluginForClass( type );
+        String plugins = Environment.getPluginForClass( type );
         if( plugins != null )
         {
             derived.setProperty(DataCollectionConfigConstants.PLUGINS_PROPERTY, plugins);
