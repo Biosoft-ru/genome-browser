@@ -15,18 +15,10 @@
    <maven.compiler.target>17</maven.compiler.target>
  </properties>
 
-  <repositories>
-    <repository>
-      <id>samtools</id>
-      <name>samtools</name>
-      <url>https://hadoop-bam.sourceforge.net/maven/</url>
-    </repository>
-  </repositories>
-  
   <parent>
-  <groupId>ru.biosoft</groupId>
-  <artifactId>genomebrowser</artifactId>
-  <version>2.0.1-SNAPSHOT</version>
+    <groupId>ru.biosoft</groupId>
+    <artifactId>genomebrowser</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
  </parent>
 
  <dependencies>
@@ -79,10 +71,11 @@
     <version>3.0.4</version>
   </dependency>
 
+  <!-- https://mvnrepository.com/artifact/com.github.samtools/htsjdk -->
   <dependency>
-    <groupId>net.sf.samtools</groupId>
-    <artifactId>samtools</artifactId>
-    <version>1.93</version>
+    <groupId>com.github.samtools</groupId>
+    <artifactId>htsjdk</artifactId>
+    <version>4.3.0</version>
   </dependency>
  
   <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -120,7 +113,6 @@
   </dependency>
 
 </dependencies>
- 
 
  <build>
  
