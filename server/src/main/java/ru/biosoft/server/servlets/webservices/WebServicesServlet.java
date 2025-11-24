@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Array;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -171,7 +172,6 @@ public class WebServicesServlet extends AbstractServlet
                 login(arguments, arguments.get("Remote-address"), new JSONResponse(resp));
                 return;
             }
-
             if( arguments.containsKey("sessionId") )
             {
                 sessionId = arguments.get("sessionId");
@@ -673,7 +673,7 @@ public class WebServicesServlet extends AbstractServlet
 
                 if( item != null && item.getClass().getSimpleName().contains("FileItem") )
                 {
-                    item.getClass().getMethod("write", new Class<?>[] {File.class}).invoke(item, new Object[] {destinationFile});
+                    item.getClass().getMethod( "write", new Class<?>[] { Path.class } ).invoke( item, new Object[] { destinationFile.toPath() } );
                 }
                 else if( fileContent != null ) //Load file by content
                 {
