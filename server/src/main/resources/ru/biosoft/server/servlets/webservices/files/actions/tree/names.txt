@@ -6,7 +6,7 @@ openText.json
 expand.json
 newElement.json
 newFolder.json
-import.json:Import
+import.json
 saveas.json
 copyFolder.json
 removeElement.json

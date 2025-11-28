@@ -4,6 +4,7 @@ import biouml.plugins.server.access.AccessService;
 import ru.biosoft.server.servlets.webservices.providers.DocumentProvider;
 import ru.biosoft.server.servlets.webservices.providers.HtmlTemplateProvider;
 import ru.biosoft.server.servlets.webservices.providers.ImageProvider;
+import ru.biosoft.server.servlets.webservices.providers.ImportProvider;
 import ru.biosoft.server.servlets.webservices.providers.PerspectivesProvider;
 import ru.biosoft.server.servlets.webservices.providers.PreferencesProvider;
 import ru.biosoft.server.servlets.webservices.providers.ServiceProvider;
@@ -40,6 +41,7 @@ public class ServerInitializer extends Initializer
         WebProviderFactory.registerProvider("perspective", new PerspectivesProvider());
         WebProviderFactory.registerProvider("action", new WebActionsProvider());
         WebProviderFactory.registerProvider("doc", new DocumentProvider());
+        WebProviderFactory.registerProvider( "import", new ImportProvider() );
     }
 
     public static void initialize()

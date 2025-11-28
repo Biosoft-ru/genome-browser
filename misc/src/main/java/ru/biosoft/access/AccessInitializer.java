@@ -44,5 +44,34 @@ public class AccessInitializer extends Initializer
         BeanRegistry.registerBeanProvider("properties/fdc", "ru.biosoft.access.FDCBeanProvider");
     }
 
+    /**
+     * <extension id="Import zip-archive" point="ru.biosoft.access.import">
+     * <export
+     * format="ZIP-archive (*.zip)"
+     * displayName="Archived file (*.zip, *.tar, *.gz etc.)"
+     * importer="ru.biosoft.access.ZipFileImporter"
+     * description="ru/biosoft/access/resources/ZIPFormat.html"
+     * />
+     * </extension>
+     * 
+     * 
+     * <extension id="Import html file" point="ru.biosoft.access.import">
+     * <export
+     * format="HTML file (*.html, *.htm)"
+     * importer="ru.biosoft.access.HtmlFileImporter"
+     * description="ru/biosoft/access/resources/HtmlFormat.html"
+     * />
+     * </extension>
+     */
+
+    @Override
+    protected void initImporters()
+    {
+        DataElementImporterRegistry.registerImporter( "Import generic file", "ru.biosoft.access.FileImporter", "Generic file", null );
+        DataElementImporterRegistry.registerImporter( "Import image file", "ru.biosoft.access.ImageFileImporter", "Image file (*.png, *jpeg, *.gif etc)", null );
+        DataElementImporterRegistry.registerImporter( "Import text file", "ru.biosoft.access.TextFileImporter", "Text file (*.txt)", null );
+
+    }
+
 
 }

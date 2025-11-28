@@ -33,6 +33,7 @@ public abstract class Initializer
                         initTableResolvers();
                         initPerspectives();
                         initFileTypes();
+                        initImporters();
 
                     }
                     finally
@@ -105,5 +106,10 @@ public abstract class Initializer
     protected void initPerspectives()
     {
         //PerspectiveRegistry.registerPerspective("NAME", "CLASS", args);
+    }
+
+    protected void initImporters()
+    {
+        //DataElementImporterRegistry.registerImporter("NAME", "CLASS", String format, Properties properties)
     }
 }
