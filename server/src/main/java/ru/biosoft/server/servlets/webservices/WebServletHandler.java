@@ -127,6 +127,7 @@ public class WebServletHandler
 
             //TODO: modified
             //servlet.service(subTarget, session, arguments, out, new ServerHttpResponseWrapper(response));
+            Object session = request.getSession() != null ? request.getSession() : WebServletHandler.session;
             servlet.service(subTarget, session, arguments, out, response);
 
         }
