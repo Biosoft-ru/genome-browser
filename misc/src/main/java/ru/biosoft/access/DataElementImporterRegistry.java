@@ -9,9 +9,6 @@ import one.util.streamex.StreamEx;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import org.eclipse.core.runtime.IConfigurationElement;
-
-//import com.developmentontheedge.application.Application;
 import com.developmentontheedge.beans.Preferences;
 
 import biouml.workbench.perspective.Perspective;
@@ -228,16 +225,18 @@ public class DataElementImporterRegistry extends DataElementRegistry<DataElement
         init();
         Class<? extends DataElementImporter> elementClass = getClass( className, DataElementImporter.class );
         DataElementImporter importerInstance = elementClass.getDeclaredConstructor().newInstance();
+        if( args == null || args.length == 0 )
+            throw new IllegalArgumentException( "Error registering importer " + elementName + ": import format should be specified." );
         String format = (String) args[0];
-        if( args[1] != null && !importerInstance.init( (Properties) args[1] ) )
+        Properties properties = new Properties();
+        properties.put( DataElementRegistry.FORMAT, format );
+
+        if( args.length > 1 && args[1] != null && args[1] instanceof Properties )
+            properties.putAll( (Properties) args[1] );
+        if( !importerInstance.init( properties ) )
             throw new BiosoftCustomException( null, "Importer does not support required format " + format );
-        Properties props = new Properties();
-        props.put( DataElementRegistry.FORMAT, format );
-        if( args[1] != null && args[1] instanceof Properties )
-        {
-            props.putAll( (Properties) args[1] );
-        }
-        ImporterInfo info = new ImporterInfo( importerInstance, props );
+
+        ImporterInfo info = new ImporterInfo( importerInstance, properties );
         addElementInternal( format, info );
         return info;
     }
@@ -249,11 +248,11 @@ public class DataElementImporterRegistry extends DataElementRegistry<DataElement
 
     }
 
-    public static void registerImporter(String elementName, String className, String format, Object... args)
+    public static void registerImporter(String elementName, String className, String format, Properties properties)
     {
         try
         {
-            instance.registerElement( elementName, className, format, args );
+            instance.registerElement( elementName, className, format, properties );
         }
         catch (Exception e)
         {

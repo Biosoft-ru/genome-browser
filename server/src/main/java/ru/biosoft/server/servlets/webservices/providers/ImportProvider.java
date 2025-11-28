@@ -1,7 +1,6 @@
 package ru.biosoft.server.servlets.webservices.providers;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,29 +10,16 @@ import ru.biosoft.access.DataElementImporterRegistry.ImporterInfo;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementImporter;
-import ru.biosoft.access.core.DataElementPath;
 import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.access.security.SessionCache;
-import ru.biosoft.access.task.RunnableTask;
-import ru.biosoft.access.task.TaskPool;
-import ru.biosoft.exception.ExceptionRegistry;
-import ru.biosoft.jobcontrol.FunctionJobControl;
-import ru.biosoft.jobcontrol.JobControl;
-import ru.biosoft.jobcontrol.JobControlEvent;
-import ru.biosoft.jobcontrol.JobControlListenerAdapter;
 import ru.biosoft.server.JSONUtils;
 import ru.biosoft.server.servlets.webservices.BiosoftWebRequest;
 import ru.biosoft.server.servlets.webservices.JSONResponse;
-import ru.biosoft.server.servlets.webservices.WebJob;
 import ru.biosoft.server.servlets.webservices.WebServicesServlet;
 import ru.biosoft.server.servlets.webservices.WebSession;
 import ru.biosoft.util.BeanUtil;
 import ru.biosoft.util.FileItem;
 
-/**
- * @author lan
- *
- */
 public class ImportProvider extends WebJSONProviderSupport
 {
     private static final String TYPE_DELETE_UPLOAD = "deleteUpload";
@@ -208,44 +194,17 @@ public class ImportProvider extends WebJSONProviderSupport
             sessionCache.removeObject(WebBeanProvider.BEANS_PREFIX + jobID + "/format");
             sessionCache.removeObject(WebBeanProvider.BEANS_PREFIX + jobID + "/fileID");
             sessionCache.removeObject(WebBeanProvider.BEANS_PREFIX + jobID);
-            // TODO pass logger messages to the client
-            TaskPool.getInstance().submit(
-                    new RunnableTask("Import of " + origFileName + " (format: " + format + "; user: " + SecurityManager.getSessionUser()
-                            + ")", () -> {
-                                final WebJob webJob = WebJob.getWebJob(jobID);
-                                ImportJobControl job = new ImportJobControl(webJob.getJobLogger());
-                                job.addListener( new JobControlListenerAdapter() {
-                                    @Override
-                                    public void jobTerminated(JobControlEvent event)
-                                    {
-                                        if(event.getException() != null)
-                                        {
-                                            webJob.addJobMessage( ExceptionRegistry.log(event.getException().getError()) );
-                                        }
-                                    }
-                                });
-                                webJob.setJobControl(job);
-                                job.functionStarted();
-                                DataElement result = null;
-                                try
-                                {
-                                    result = importer.doImport(dc, file, fileName, job, log);
-                                }
-                                catch( Exception e )
-                                {
-                                    job.functionTerminatedByError(e);
-                                }
-                                if( webJob.getJobControl().getStatus() == JobControl.COMPLETED)
-                                    WebSession.getCurrentSession().pushRefreshPath( DataElementPath.create( dc ) );
 
-                                if( result != null )
-                                {
-                                    job.resultsAreReady(new Object[] {result});
-                                    webJob.addJobMessage(DataElementPath.create(result).toString());
-                                    job.reallyFinished();
-                                }
-                            }));
-            resp.sendString(jobID);
+            DataElement result = null;
+            try
+            {
+                result = importer.doImport( dc, file, fileName, null, log );
+                resp.sendString( result.getCompletePath().toString() );
+            }
+            catch (Exception e)
+            {
+                resp.error( "Error during import: " + e.getMessage() );
+            }
         }
     }
 
@@ -255,22 +214,5 @@ public class ImportProvider extends WebJSONProviderSupport
         jsonFormat.put( "format", importer.getFormat() );
         jsonFormat.put( "displayName", importer.getDisplayName() );
         return jsonFormat;
-    }
-
-    private static class ImportJobControl extends FunctionJobControl
-    {
-        public ImportJobControl(Logger l)
-        {
-            super( l );
-        }
-        @Override
-        public void functionFinished(String msg)
-        {
-        }
-
-        public void reallyFinished()
-        {
-            super.functionFinished();
-        }
     }
 }
