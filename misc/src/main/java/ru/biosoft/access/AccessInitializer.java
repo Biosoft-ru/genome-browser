@@ -1,5 +1,8 @@
 package ru.biosoft.access;
 
+import ru.biosoft.access.file.FileType;
+import ru.biosoft.access.file.FileTypePriority;
+import ru.biosoft.access.file.FileTypeRegistry;
 import ru.biosoft.access.generic.DataElementTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
 import ru.biosoft.util.Initializer;
@@ -31,7 +34,8 @@ public class AccessInitializer extends Initializer
     @Override protected void initTransformers()
     {
         //ACCESS
-        //TransformerRegistry.addTransformer("Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.ImageDataElement");
+        TransformerRegistry.addTransformer( "Image", "ru.biosoft.access.support.FileImageTransformer", "ru.biosoft.access.file.FileDataElement",
+                "ru.biosoft.access.ImageDataElement" );
         //TransformerRegistry.addTransformer("HTML file", "ru.biosoft.access.support.FileHtmlTransformer", "ru.biosoft.access.file.FileDataElement", "ru.biosoft.access.HtmlDataElement");
         TransformerRegistry.addTransformer( "Plain text", "ru.biosoft.access.file.FileTextTransformer", "ru.biosoft.access.file.FileDataElement",
                 "ru.biosoft.access.core.TextDataElement");
@@ -73,5 +77,11 @@ public class AccessInitializer extends Initializer
 
     }
 
+    @Override
+    protected void initFileTypes()
+    {
+        FileTypeRegistry.register( new FileType( "Image", new String[] { "png", "gif", "jpg", "bmp", "jpeg" }, "ru.biosoft.access.support.FileImageTransformer",
+                FileTypePriority.HIGH_PRIORITY, "Image file" ) );
+    }
 
 }
