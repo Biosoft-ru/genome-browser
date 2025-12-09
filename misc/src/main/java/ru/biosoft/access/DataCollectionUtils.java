@@ -23,6 +23,7 @@ import ru.biosoft.access.biohub.ReferenceType;
 import ru.biosoft.access.biohub.ReferenceTypeRegistry;
 import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
+import ru.biosoft.access.core.DataCollectionHelper;
 import ru.biosoft.access.core.DataElement;
 import ru.biosoft.access.core.DataElementCreateException;
 import ru.biosoft.access.core.DataElementDescriptor;
@@ -676,6 +677,16 @@ public class DataCollectionUtils
             }
         }
         return null;
+    }
+
+    public static class DataCollectionHelperImpl implements DataCollectionHelper
+    {
+        @Override
+        public File getChildFile(DataCollection<?> collection, String name)
+        {
+            return DataCollectionUtils.getChildFile( collection, name );
+        }
+
     }
 
 }
