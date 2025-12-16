@@ -21,12 +21,9 @@ import java.util.TreeMap;
 import one.util.streamex.EntryStream;
 import one.util.streamex.StreamEx;
 import ru.biosoft.access.core.Environment;
-import ru.biosoft.access.core.DataCollection;
 import ru.biosoft.access.core.DataCollectionConfigConstants;
 import ru.biosoft.access.core.PluginEntry;
 import ru.biosoft.util.entry.RegularFileEntry;
-
-//import com.developmentontheedge.application.Application;
 
 /**
  * This class stores properties in more user-friendly way (though compatible with original format, thus load is not redefined)
@@ -205,9 +202,7 @@ public class ExProperties extends Properties
 
     private void store0(BufferedWriter bw, String comments, boolean escUnicode) throws IOException
     {
-        //TODO: commented, Application
-        //bw.write( "#Created by " + Application.getGlobalValue("BioUML" ) + "\n" );
-        bw.write("#Created by BioUML\n");
+        bw.write( "#Created by " + ServerPreferences.getGlobalValue( "ApplicationName", "app" ) + "\n" );
         if( comments != null && !comments.isEmpty() )
         {
             writeComments(bw, comments);

@@ -7,10 +7,10 @@ import java.util.Iterator;
 import org.apache.commons.codec.binary.Base64;
 
 import ru.biosoft.access.core.DataElementPath;
+import ru.biosoft.util.ServerPreferences;
 
 import com.developmentontheedge.beans.DynamicProperty;
 import com.developmentontheedge.beans.Preferences;
-//import com.developmentontheedge.application.Application;
 
 /**
  * Support SSO operations
@@ -201,9 +201,7 @@ public class SingleSignOnSupport
      */
     protected static Preferences getSSOPreferences() throws Exception
     {
-        //TODO: commented, Application
-        //Preferences preferences = Application.getPreferences();
-        Preferences preferences = new Preferences();
+        Preferences preferences = ServerPreferences.getPreferences();
         Preferences ssoPreferences = (Preferences)preferences.getValue(PREFERENCES_SSO);
         if( ssoPreferences == null )
         {

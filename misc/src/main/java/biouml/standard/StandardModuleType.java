@@ -41,7 +41,6 @@ import biouml.standard.type.Stub;
 //import biouml.standard.type.Unit;
 //import biouml.standard.type.access.ReactionTransformer;
 import biouml.standard.type.access.TitleIndex;
-import one.util.streamex.StreamEx;
 //import ru.biosoft.access.ClassLoading;
 import ru.biosoft.access.CollectionFactoryUtils;
 import ru.biosoft.access.DefaultQuerySystem;
@@ -58,7 +57,7 @@ import ru.biosoft.access.core.QuerySystem;
 //import ru.biosoft.access.history.HistoryFacade;
 import ru.biosoft.access.support.BeanInfoEntryTransformer;
 import ru.biosoft.exception.LoggedClassNotFoundException;
-import ru.biosoft.util.ObjectExtensionRegistry;
+import ru.biosoft.util.ServerPreferences;
 
 //TODO: class changed!
 /**
@@ -100,9 +99,7 @@ public class StandardModuleType extends DataElementSupport implements ModuleType
 
     public StandardModuleType()
     {
-        //TODO: commented, Application
-        //super(Application.getGlobalValue("ApplicationName") + " standard", null);
-        super("ApplicationName standard", null);
+        super( ServerPreferences.getGlobalValue( "ApplicationName" ) + " standard", null );
         initCategories();
     }
 

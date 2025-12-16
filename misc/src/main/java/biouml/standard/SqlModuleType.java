@@ -1,7 +1,7 @@
 
 package biouml.standard;
 
-//import com.developmentontheedge.application.Application;
+import ru.biosoft.util.ServerPreferences;
 
 public class SqlModuleType extends StandardModuleType
 {
@@ -14,9 +14,7 @@ public class SqlModuleType extends StandardModuleType
 
     public SqlModuleType ( )
     {
-        //TODO: commented, Application
-        //super ( Application.getGlobalValue("ApplicationName")+" standard (SQL)" );
-        super("Application standard (SQL)");
+        super( ServerPreferences.getGlobalValue( "ApplicationName" ) + " standard (SQL)" );
     }
 
 }

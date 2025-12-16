@@ -4,8 +4,6 @@ import java.lang.annotation.Annotation;
 import java.util.Deque;
 import java.util.LinkedList;
 
-//TODO: commented, library package changed use method StringEscapeUtils.escapeHtml4 insetead of StringEscapeUtils.escapeHtml
-//import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
 import ru.biosoft.access.core.Environment;

@@ -37,6 +37,7 @@ import ru.biosoft.access.exception.DataElementExistsException;
 import ru.biosoft.util.ApplicationUtils;
 //import ru.biosoft.access.security.SecurityManager;
 import ru.biosoft.util.ExProperties;
+import ru.biosoft.util.ServerPreferences;
 import ru.biosoft.util.TempFiles;
 
 public class CollectionFactoryUtils
@@ -368,10 +369,9 @@ public class CollectionFactoryUtils
 
     public static DataElementPath getUserProjectsPath()
     {
-        //TODO: commented, Application
-        //        DataElementPath path = DataElementPath.create( Application.getGlobalValue( "UserProjectsPath" ) );
-        //        if( !path.exists() )
-        DataElementPath path = DataElementPath.create("data/Collaboration");
+        DataElementPath path = DataElementPath.create( ServerPreferences.getGlobalValue( "UserProjectsPath" ) );
+        if( !path.exists() )
+            path = DataElementPath.create( "data/Collaboration" );
         return path;
     }
 

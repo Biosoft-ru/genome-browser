@@ -3,9 +3,7 @@ package biouml.plugins.server;
 
 import java.util.ListResourceBundle;
 
-import javax.swing.Action;
-
-//import com.developmentontheedge.application.Application;
+import ru.biosoft.util.ServerPreferences;
 
 public class MessageBundle extends ListResourceBundle
 {
@@ -88,12 +86,7 @@ public class MessageBundle extends ListResourceBundle
 
             //SQL Editor bean info
             { "RB_DIRECT_CONNECTION", "Direct SQL connection" },
-                    //TODO: commented, Application
-                    { "RB_SERVER_CONNECTION",
-                            /*
-                             * Application.getGlobalValue("ApplicationName")
-                             * +" server connection"
-                             */ "" },
+            { "RB_SERVER_CONNECTION", ServerPreferences.getGlobalValue("ApplicationName")+" server connection"},
             { "CURRENT_CONNECTION", "Current connection:" },
             
     };

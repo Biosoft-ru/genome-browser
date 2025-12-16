@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-//import com.developmentontheedge.application.Application;
 //import com.developmentontheedge.application.ApplicationUtils;
 
 //import biouml.plugins.download.FileDownloader;
@@ -43,6 +42,7 @@ import ru.biosoft.server.servlets.webservices.providers.WebProvider;
 import ru.biosoft.server.servlets.webservices.providers.WebProviderFactory;
 import ru.biosoft.util.ApplicationUtils;
 import ru.biosoft.util.FileItem;
+import ru.biosoft.util.ServerPreferences;
 import ru.biosoft.util.TextUtil;
 import ru.biosoft.util.TextUtil2;
 
@@ -374,9 +374,7 @@ public class WebServicesServlet extends AbstractServlet
                     throw new WebException("EX_QUERY_PARAM_MISSING", "username");
                 if( password == null )
                     throw new WebException("EX_QUERY_PARAM_MISSING", "password");
-                //TODO: commented Application
-                //if( username.isEmpty() && password.isEmpty() && !Application.getPreferences().getValue("Global/DisableAnonymous", "").equals("true") )
-                if( username.isEmpty() && password.isEmpty() )
+                if( username.isEmpty() && password.isEmpty()  && !ServerPreferences.getPreferences().getValue("Global/DisableAnonymous", "").equals("true"))
                 {
 
                     SecurityManager.anonymousLogin();
