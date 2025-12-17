@@ -111,6 +111,13 @@
       <artifactId>javastraw</artifactId>
       <version>1.0.0</version>
   </dependency>
+  
+  <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core -->
+    <dependency>
+        <groupId>org.apache.velocity</groupId>
+        <artifactId>velocity-engine-core</artifactId>
+        <version>2.4.1</version>
+    </dependency>
 
 </dependencies>
 
