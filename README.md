@@ -1,7 +1,7 @@
 
 # To Build
 
-Java 17 should be installed
+Java 21 should be installed
 
 Build Genome browser
 
@@ -33,4 +33,6 @@ mvn jetty:run
 ```
 
 Use your browser to open it at http://localhost:8000/
+
+For the latest github version project ru.biosoft.access might be required to install manually https://github.com/Biosoft-ru/access
 
