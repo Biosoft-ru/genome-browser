@@ -36,8 +36,8 @@ import ru.biosoft.access.ImageElement;
 import ru.biosoft.access.repository.IconFactory;
 import ru.biosoft.graphics.HtmlView;
 import ru.biosoft.graphics.ImageGenerator;
-//import ru.biosoft.graphics.access.ChartDataElement;
-//import ru.biosoft.graphics.chart.Chart;
+import ru.biosoft.graphics.access.ChartDataElement;
+import ru.biosoft.graphics.chart.Chart;
 import ru.biosoft.graphics.font.ColorFont;
 //import ru.biosoft.server.servlets.support.SVGDomImplementation;
 import ru.biosoft.server.servlets.webservices.BiosoftWebRequest;
@@ -181,11 +181,10 @@ public class ImageProvider extends WebProviderSupport
                 else
                 {
                     Object value = WebBeanProvider.getBean(pathStr);
-                    //TODO: commented Chart
-                    //                    if( value instanceof Chart )
-                    //                    {
-                    //                        ie = new ChartDataElement("", null, (Chart)value);
-                    //                    }
+                    if( value instanceof Chart )
+                    {
+                        ie = new ChartDataElement( "", null, (Chart) value );
+                    }
                 }
             }
 

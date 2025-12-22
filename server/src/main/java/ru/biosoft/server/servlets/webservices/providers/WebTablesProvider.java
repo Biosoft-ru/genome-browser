@@ -69,7 +69,7 @@ import ru.biosoft.graphics.ColorEditor;
 import ru.biosoft.graphics.CompositeView;
 import ru.biosoft.graphics.Pen;
 import ru.biosoft.graphics.View;
-//import ru.biosoft.graphics.chart.Chart;
+import ru.biosoft.graphics.chart.Chart;
 import ru.biosoft.jobcontrol.JobControlException;
 import ru.biosoft.jobcontrol.StackProgressJobControl;
 import ru.biosoft.server.servlets.webservices.BiosoftWebRequest;
@@ -936,14 +936,13 @@ public class WebTablesProvider extends WebProviderSupport
             return input().withType( "checkbox" ).condAttr( readOnly, "disabled", null )
                     .condAttr( ( (Boolean)value ).booleanValue(), "checked", null ).withClass( "cellControl" ).withId( id );
         }
-        //TODO: commented, Chart
-        //        else if( value instanceof Chart )
-        //        {
-        //            if( ( (Chart)value ).isEmpty() )
-        //                return getEmptyControlCode();
-        //            return input().withType( "button" ).withClass( "ui-state-default" ).withValue( "View" ).attr( "onclick",
-        //                    "showImage('" + StringEscapeUtils.escapeJavaScript( path ) + "')" );
-        //        }
+        else if( value instanceof Chart )
+        {
+            if( ((Chart) value).isEmpty() )
+                return getEmptyControlCode();
+            return input().withType( "button" ).withClass( "ui-state-default" ).withValue( "View" ).attr( "onclick",
+                    "showImage('" + StringEscapeUtils.escapeEcmaScript( path ) + "')" );
+        }
         else if( value instanceof CompositeView )
         {
             String json = null;
