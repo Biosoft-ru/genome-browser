@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.Map;
 
@@ -18,12 +19,13 @@ import javax.imageio.ImageIO;
 import javax.imageio.metadata.IIOMetadata;
 import javax.swing.ImageIcon;
 
-//import org.apache.batik.transcoder.TranscoderException;
-//import org.apache.batik.transcoder.TranscoderInput;
-//import org.apache.batik.transcoder.TranscoderOutput;
-//import org.apache.batik.transcoder.TranscodingHints;
-//import org.apache.batik.transcoder.image.ImageTranscoder;
-//import org.apache.batik.util.SVGConstants;
+import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscodingHints;
+import org.apache.batik.transcoder.image.ImageTranscoder;
+import org.apache.batik.util.SVGConstants;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONException;
 
@@ -39,7 +41,6 @@ import ru.biosoft.graphics.ImageGenerator;
 import ru.biosoft.graphics.access.ChartDataElement;
 import ru.biosoft.graphics.chart.Chart;
 import ru.biosoft.graphics.font.ColorFont;
-//import ru.biosoft.server.servlets.support.SVGDomImplementation;
 import ru.biosoft.server.servlets.webservices.BiosoftWebRequest;
 import ru.biosoft.server.servlets.webservices.BiosoftWebResponse;
 import ru.biosoft.server.servlets.webservices.JSONResponse;
@@ -160,9 +161,8 @@ public class ImageProvider extends WebProviderSupport
                             if ( imageURL != null )
                             {
                                 InputStream settings = imageURL.openStream();
-                                //TODO: commented SVG
-                                //image = rasterize(settings, 45, 45);
-                            images.put(pathStr, image);
+                                image = rasterize( settings, 45, 45 );
+                                images.put( pathStr, image );
                             }
                         }
                         else
@@ -270,62 +270,61 @@ public class ImageProvider extends WebProviderSupport
         }
     }
 
-    //TODO: commented SVG
-    //    public static BufferedImage rasterize(InputStream svgFile, int width, int height) throws IOException
-    //    {
-    //
-    //        final BufferedImage[] imagePointer = new BufferedImage[1];
-    //
-    //        String css = "svg {" + "shape-rendering: geometricPrecision;" + "text-rendering:  geometricPrecision;" + "color-rendering: optimizeQuality;"
-    //                + "image-rendering: optimizeQuality;" + "}";
-    //        File cssFile = File.createTempFile("batik-default-override-", ".css");
-    //        FileUtils.writeStringToFile(cssFile, css);
-    //
-    //        TranscodingHints transcoderHints = new TranscodingHints();
-    //        transcoderHints.put(ImageTranscoder.KEY_XML_PARSER_VALIDATING, Boolean.FALSE);
-    //        transcoderHints.put(ImageTranscoder.KEY_DOM_IMPLEMENTATION, SVGDomImplementation.getDOMImplementation());
-    //        transcoderHints.put(ImageTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, SVGConstants.SVG_NAMESPACE_URI);
-    //        transcoderHints.put(ImageTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
-    //        transcoderHints.put(ImageTranscoder.KEY_USER_STYLESHEET_URI, cssFile.toURI().toString());
-    //        if ( width > 0 )
-    //            transcoderHints.put(ImageTranscoder.KEY_WIDTH, (float) width);
-    //        if ( height > 0 )
-    //            transcoderHints.put(ImageTranscoder.KEY_HEIGHT, (float) height);
-    //
-    //        try
-    //        {
-    //
-    //            TranscoderInput input = new TranscoderInput(svgFile);
-    //
-    //            ImageTranscoder t = new ImageTranscoder()
-    //            {
-    //
-    //                @Override
-    //                public BufferedImage createImage(int w, int h)
-    //                {
-    //                    return new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-    //                }
-    //
-    //                @Override
-    //                public void writeImage(BufferedImage image, TranscoderOutput out) throws TranscoderException
-    //                {
-    //                    imagePointer[0] = image;
-    //                }
-    //            };
-    //            t.setTranscodingHints(transcoderHints);
-    //            t.transcode(input, null);
-    //        }
-    //        catch (TranscoderException ex)
-    //        {
-    //            // Requires Java 6
-    //            ex.printStackTrace();
-    //            throw new IOException("Couldn't convert " + svgFile);
-    //        }
-    //        finally
-    //        {
-    //            cssFile.delete();
-    //        }
-    //
-    //        return imagePointer[0];
-    //    }
+    public static BufferedImage rasterize(InputStream svgFile, int width, int height) throws IOException
+    {
+
+        final BufferedImage[] imagePointer = new BufferedImage[1];
+
+        String css = "svg {" + "shape-rendering: geometricPrecision;" + "text-rendering:  geometricPrecision;" + "color-rendering: optimizeQuality;"
+                + "image-rendering: optimizeQuality;" + "}";
+        File cssFile = File.createTempFile( "batik-default-override-", ".css" );
+        FileUtils.writeStringToFile( cssFile, css, StandardCharsets.UTF_8 );
+
+        TranscodingHints transcoderHints = new TranscodingHints();
+        transcoderHints.put( ImageTranscoder.KEY_XML_PARSER_VALIDATING, Boolean.FALSE );
+        transcoderHints.put( ImageTranscoder.KEY_DOM_IMPLEMENTATION, SVGDOMImplementation.getDOMImplementation() );
+        transcoderHints.put( ImageTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, SVGConstants.SVG_NAMESPACE_URI );
+        transcoderHints.put( ImageTranscoder.KEY_DOCUMENT_ELEMENT, "svg" );
+        transcoderHints.put( ImageTranscoder.KEY_USER_STYLESHEET_URI, cssFile.toURI().toString() );
+        if( width > 0 )
+            transcoderHints.put( ImageTranscoder.KEY_WIDTH, (float) width );
+        if( height > 0 )
+            transcoderHints.put( ImageTranscoder.KEY_HEIGHT, (float) height );
+
+        try
+        {
+
+            TranscoderInput input = new TranscoderInput( svgFile );
+
+            ImageTranscoder t = new ImageTranscoder()
+            {
+
+                @Override
+                public BufferedImage createImage(int w, int h)
+                {
+                    return new BufferedImage( w, h, BufferedImage.TYPE_INT_ARGB );
+                }
+
+                @Override
+                public void writeImage(BufferedImage image, TranscoderOutput out) throws TranscoderException
+                {
+                    imagePointer[0] = image;
+                }
+            };
+            t.setTranscodingHints( transcoderHints );
+            t.transcode( input, null );
+        }
+        catch (TranscoderException ex)
+        {
+            // Requires Java 6
+            ex.printStackTrace();
+            throw new IOException( "Couldn't convert " + svgFile );
+        }
+        finally
+        {
+            cssFile.delete();
+        }
+
+        return imagePointer[0];
+    }
 }

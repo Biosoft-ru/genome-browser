@@ -99,8 +99,12 @@
         <artifactId>jsoup</artifactId>
         <version>1.18.3</version>
     </dependency>
-
-
+    
+    <dependency>
+       <groupId>org.apache.batik</groupId>
+       <artifactId>batik-all</artifactId>
+       <version>1.7.0</version>
+    </dependency>
     
   </dependencies>
 
