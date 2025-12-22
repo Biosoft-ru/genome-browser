@@ -5,6 +5,7 @@ import ru.biosoft.access.file.FileTypePriority;
 import ru.biosoft.access.file.FileTypeRegistry;
 import ru.biosoft.access.generic.DataElementTypeRegistry;
 import ru.biosoft.access.generic.TransformerRegistry;
+import ru.biosoft.table.datatype.DataType;
 import ru.biosoft.util.Initializer;
 
 public class AccessInitializer extends Initializer
@@ -82,6 +83,18 @@ public class AccessInitializer extends Initializer
     {
         FileTypeRegistry.register( new FileType( "Image", new String[] { "png", "gif", "jpg", "bmp", "jpeg" }, "ru.biosoft.access.support.FileImageTransformer",
                 FileTypePriority.HIGH_PRIORITY, "Image file" ) );
+    }
+
+    @Override
+    protected void initDataTypes()
+    {
+        DataType.addDataType( "ru.biosoft.table.datatype.ChartDataType" );
+        DataType.addDataType( "ru.biosoft.table.datatype.ViewDataType" );
+        DataType.addDataType( "ru.biosoft.table.datatype.SetDataType" );
+        DataType.addDataType( "ru.biosoft.table.datatype.PathDataType" );
+        DataType.addDataType( "ru.biosoft.table.datatype.PathSetDataType" );
+        DataType.addDataType( "ru.biosoft.table.datatype.DescribedStringDataType" );
+
     }
 
 }
