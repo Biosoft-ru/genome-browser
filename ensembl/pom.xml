@@ -1,41 +1,71 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <name>Ensembl database module</name>
- <description>Classes for representation of Ensembl database structure.</description>
-  <parent>
-    <groupId>ru.biosoft</groupId>
-    <artifactId>genomebrowser</artifactId>
-    <version>2.0.1</version>
-  </parent>
-  <groupId>ru.biosoft.genomebrowser</groupId>
-  <artifactId>ensembl</artifactId>
-  <version>2.0.1</version>
-  
-  <properties>
-   <encoding>UTF-8</encoding>
-   <maven.compiler.source>17</maven.compiler.source>
-   <maven.compiler.target>17</maven.compiler.target>
- </properties>
- 
- <dependencies>
-  <dependency>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>Ensembl database module</name>
+    <description>Classes for representation of Ensembl database structure.</description>
+    <url>https://github.com/Biosoft-ru/genome-browser</url>
+
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License (AGPL) version 3.0</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <organization>Biosoft.Ru LLC</organization>
+            <organizationUrl>https://github.com/Biosoft-ru</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/Biosoft-ru/genome-browser.git</connection>
+        <developerConnection>
+            scm:git:ssh://github.com/Biosoft-ru/genome-browser.git</developerConnection>
+        <url>https://github.com/Biosoft-ru/genome-browser</url>
+    </scm>
+
+    <parent>
+        <groupId>ru.biosoft</groupId>
+        <artifactId>genomebrowser</artifactId>
+        <version>2.0.1</version>
+    </parent>
     <groupId>ru.biosoft.genomebrowser</groupId>
-    <artifactId>misc</artifactId>
+    <artifactId>ensembl</artifactId>
     <version>2.0.1</version>
-  </dependency>
-  
-  <dependency>
-    <groupId>ru.biosoft.genomebrowser</groupId>
-    <artifactId>bsa</artifactId>
-    <version>2.0.1</version>
-  </dependency>
-    
-    <!--dependency>
+    <packaging>jar</packaging>
+
+    <properties>
+        <encoding>UTF-8</encoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.biosoft.genomebrowser</groupId>
+            <artifactId>misc</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.biosoft.genomebrowser</groupId>
+            <artifactId>bsa</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!--dependency>
         <groupId>uk.ac.roslin</groupId>
         <artifactId>ensembl-data-access</artifactId>
         <version>1.76</version>
     </dependency-->
-  </dependencies>
-  
-  
+    </dependencies>
+
+    <build>
+        <plugins>
+
+        </plugins>
+    </build>
 </project>

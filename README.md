@@ -22,8 +22,8 @@ roots:
 - databases
 ```
 
-"repositories" list should contain absolute path to folders that will be loaded as repositories
-"roots" list is a list of top folder names used as tree tab roots. It replaces 'perspective' root fields.
+- "repositories" list should contain absolute path to folders that will be loaded as repositories
+- "roots" list is a list of top folder names used as tree tab roots. It replaces 'perspective' root fields.
 
 
 Then launch Genome browser Web edition.

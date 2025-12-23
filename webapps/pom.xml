@@ -6,6 +6,7 @@
   <packaging>war</packaging>
   <version>2.0.1</version>
   <name>Genomebrowser webapp</name>
+  <description>WebApp of the GenomeBrowser</description>
   
   <parent>
     <groupId>ru.biosoft</groupId>
