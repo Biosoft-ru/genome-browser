@@ -133,11 +133,17 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.batik</groupId>
+            <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-all</artifactId>
-            <version>1.7.0</version>
+            <version>1.19</version>
+            <type>pom</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.19</version> <!-- Use the latest version -->
+        </dependency>
     </dependencies>
 
     <build>
