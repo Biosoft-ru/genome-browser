@@ -4,7 +4,7 @@
 
     <groupId>ru.biosoft</groupId>
     <artifactId>genomebrowser</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <packaging>pom</packaging>
     <name>Genome browser</name>
     <description>Genome browser - a web-based tool for operations with

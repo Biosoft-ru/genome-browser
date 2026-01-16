@@ -4,14 +4,14 @@
   <groupId>ru.biosoft.genomebrowser</groupId>
   <artifactId>webapps</artifactId>
   <packaging>war</packaging>
-  <version>2.0.1</version>
+  <version>2.0.2</version>
   <name>Genomebrowser webapp</name>
   <description>WebApp of the GenomeBrowser</description>
   
   <parent>
     <groupId>ru.biosoft</groupId>
     <artifactId>genomebrowser</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
   </parent>
   
   <properties>
@@ -37,19 +37,19 @@
     <dependency>
     	<groupId>ru.biosoft.genomebrowser</groupId>
     	<artifactId>server</artifactId>
-    	<version>2.0.1</version>
+    	<version>2.0.2</version>
     </dependency>
     
     <dependency>
         <groupId>ru.biosoft.genomebrowser</groupId>
         <artifactId>bsa</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
     </dependency>
     
     <dependency>
         <groupId>ru.biosoft.genomebrowser</groupId>
         <artifactId>ensembl</artifactId>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
     </dependency>
     
     <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
